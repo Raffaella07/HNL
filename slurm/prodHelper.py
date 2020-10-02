@@ -77,27 +77,52 @@ class Job(object):
       decay_table = [
        'Alias myB+ B+',
        'Alias myB- B-',
+       'Alias myB0 B0',
+       'Alias myB0bar anti-B0',
+       'Alias myB0s B_s0',
+       'Alias myB0sbar anti-B_s0',
        '',
        'ChargeConj myB+ myB-',
+       'ChargeConj myB0 myB0bar',
+       'ChargeConj myB0s myB0sbar', 
        'ChargeConj hnl anti_hnl',
-       'ChargeConj D0  anti-D0',
-       'ChargeConj D*0 anti-D*0',
-       'ChargeConj pi0 pi0',
-       'ChargeConj rho0 rho0',
+    #   'ChargeConj D0  anti-D0',
+    #   'ChargeConj D*0 anti-D*0',
+    #   'ChargeConj pi0 pi0',
+    #   'ChargeConj rho0 rho0',
+    # should I define them all? or only for the aliases???? 
+    # let's try with no alias, and then we see... 
        '',
-       'Decay myB-',
-       '{br0:.10f}          mu-    anti_hnl    PHSP;',
-       '{br1:.10f}    D0    mu-    anti_hnl    PHSP;',
-       '{br2:.10f}    D*0   mu-    anti_hnl    PHSP;',
-       '{br3:.10f}    pi0   mu-    anti_hnl    PHSP;',
-       '{br4:.10f}   rho0   mu-    anti_hnl    PHSP;',
+       'Decay myB+',
+       '{Bp_br0:.10f}               mu+    hnl    PHSP;',
+       '{Bp_br1:.10f}    anti-D0    mu+    hnl    PHSP;',
+       '{Bp_br2:.10f}    anti-D*0   mu+    hnl    PHSP;',
+       '{Bp_br3:.10f}    pi0        mu+    hnl    PHSP;',
+       '{Bp_br4:.10f}    rho0       mu+    hnl    PHSP;',
        'Enddecay',
-       'CDecay myB+',
+       'CDecay myB-',
        '',
-       'Decay anti_hnl',
-       '1.0     mu+    pi-    PHSP;',
+       'Decay myB0',
+       '{B0_br1:.10f}    D-    mu+    hnl    PHSP;',
+       '{B0_br2:.10f}    D*-   mu+    hnl    PHSP;',
+       '{B0_br3:.10f}    pi-   mu+    hnl    PHSP;',
+       '{B0_br4:.10f}   rho-   mu+    hnl    PHSP;',
        'Enddecay',
-       'CDecay hnl',
+       'CDecay myB0bar',
+       '',
+
+       'Decay myB0s',
+       '{B0s_br1:.10f}    D_s-    mu+    hnl    PHSP;',
+       '{B0s_br2:.10f}    D_s*-   mu+    hnl    PHSP;',
+       '{B0s_br3:.10f}    K-      mu+    hnl    PHSP;',
+       '{B0s_br4:.10f}    K*-     mu+    hnl    PHSP;',
+       'Enddecay',
+       'CDecay myB0sbar',
+       '',
+       'Decay hnl',
+       '1.0     mu-    pi+    PHSP;',
+       'Enddecay',
+       'CDecay anti_hnl',
        '',
        'End',      
        '',
@@ -106,11 +131,23 @@ class Job(object):
       decay_table = '\n'.join(decay_table)
       dec = Decays(mass=p.mass, mixing_angle_square=1)
 
-      decay_table = decay_table.format(br0=dec.B_to_uHNL.BR,
-                         br1=dec.B_to_D0uHNL.BR,
-                         br2=dec.B_to_D0staruHNL.BR,
-                         br3=dec.B_to_pi0uHNL.BR,
-                         br4=dec.B_to_rho0uHNL.BR)
+      decay_table = decay_table.format(
+                         Bp_br0=dec.B_to_uHNL.BR,
+                         Bp_br1=dec.B_to_D0uHNL.BR,
+                         Bp_br2=dec.B_to_D0staruHNL.BR,
+                         Bp_br3=dec.B_to_pi0uHNL.BR,
+                         Bp_br4=dec.B_to_rho0uHNL.BR,
+
+                         B0_br1=dec.B0_to_DuHNL.BR,
+                         B0_br2=dec.B0_to_DstaruHNL.BR,
+                         B0_br3=dec.B0_to_piuHNL.BR,
+                         B0_br4=dec.B0_to_rhouHNL.BR,
+
+                         B0s_br1=dec.Bs_to_DsuHNL.BR,
+                         B0s_br2=dec.Bs_to_DsstaruHNL.BR,
+                         B0s_br3=dec.Bs_to_KuHNL.BR,
+                         B0s_br4=dec.Bs_to_KstaruHNL.BR,
+                         )
 
       with open('../evtGenData/HNLdecay_mass{m}.DEC'.format(m=p.mass), 'w') as fout:
         fout.write(decay_table)
@@ -238,7 +275,7 @@ class Job(object):
         'pwd',
         'echo "Going to run step1"',
         'DATE_START_step1=`date +%s`',
-        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID',
+        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf}',
         'DATE_END_step1=`date +%s`',
         'echo "Finished running step1"',
         'echo "Content of current directory"',
@@ -268,6 +305,7 @@ class Job(object):
           pl=self.prodLabel,
           user=self.user,
           jop1=self.jop1,
+          dsmf=self.doskipmuonfilter,
           nevtsjob=self.nevtsjob,
           nthr=self.nthr,
           jop2=self.jop2,
@@ -323,6 +361,7 @@ def getOptions():
   parser.add_argument('--domultijob', dest='domultijob', help='run several separate jobs', action='store_true', default=False)
   parser.add_argument('--dosubmit', dest='dosubmit', help='submit to slurm', action='store_true', default=False)
   parser.add_argument('--dogenonly', dest='dogenonly', help='produce sample until gen', action='store_true', default=False)
+  parser.add_argument('--doskipmuonfilter', dest='doskipmuonfilter', help='skip the muon filter', action='store_true', default=False)
 
   return parser.parse_args()
 

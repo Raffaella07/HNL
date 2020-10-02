@@ -34,7 +34,16 @@ options.register('ctau',
                  VarParsing.multiplicity.singleton,
                  VarParsing.varType.float,
                  'ctau of the HNL [mm]')
-
+options.register('do',
+                 100,
+                 VarParsing.multiplicity.singleton,
+                 VarParsing.varType.float,
+                 'ctau of the HNL [mm]')
+options.register('doSkipMuonFilter',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'Skip the muon filter' )
 #options.register ("doDirac",
 #                  1, # default value
 #                  VarParsing.multiplicity.singleton, # singleton or list
@@ -131,8 +140,18 @@ process.MuFilter = cms.EDFilter("MCParticlePairFilter",
 ###  - there is at least one particle with specified pdgID in the entire HepMC::GenEvent
 ###  - any status (but can be specified)
 process.BpFilter = cms.EDFilter("PythiaFilter",
-    #ParticleID = cms.untracked.int32(14) # nu_mu anti_numu filter
+###process.BpFilter = cms.EDFilter("PythiaFilterMultiMother",
     ParticleID = cms.untracked.int32(521) # B+ B- filter 
+    ### ParticleID = cms.untracked.vint32(521, 511, 531) # B+ B- B0 B0s
+)
+
+process.BFilter = cms.EDFilter("MCMultiParticleFilter",
+   NumRequired = cms.int32(1),
+   AcceptMore = cms.bool(True),
+   ParticleID = cms.vint32(521,511,531), # abs not needed
+   PtMin = cms.vdouble(0.,0.,0.),
+   EtaMax = cms.vdouble(3.,3.,3.),
+   Status = cms.vint32(0,0,0), 
 )
 
 #process.SingleMuFilter = cms.EDFilter("PythiaFilter", # using PythiaFilter instead of MCParticleFilter because the particleID is taken in abs value
@@ -152,7 +171,7 @@ process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister",
     MinPt = cms.untracked.double(5), # <=== keep it a bit lower than the pt cut at reco level... 
     ParticleID = cms.untracked.int32(13), # abs value is taken
     #Status = cms.untracked.int32(1),
-    MotherID = cms.untracked.int32(521), # require muon to come from B+/B- decay
+    MotherIDs = cms.untracked.vint32(521, 511, 531), # require muon to come from B+/B- decay
     SisterID = cms.untracked.int32(9900015), # require HNL sister
 )
 
@@ -167,13 +186,17 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             ### the list of particles that are aliased and forced to be decayed by EvtGen
             list_forced_decays = cms.vstring(       
                 'myB+', 
-                'myB-'
+                'myB-',
+                'myB0',
+                'myB0bar',
+                'myB0s',
+                'myB0sbar',
             ),
             
             ### the list of particles that remain undecayed by Pythia for EvtGen to operate on. 
             ### If the vector has a size 0 or size of 1 with a value of 0, the default list is used. 
             ### These are are hard-coded in: GeneratorInterface/EvtGenInterface/plugins/EvtGen/EvtGenInterface.cc., in the function SetDefault_m_PDGs().            
-            operates_on_particles = cms.vint32(521, -521), 
+            operates_on_particles = cms.vint32(521, -521, 511, -511, 531, -531), #B+, B-, B0, B0bar, B0s, B0sbar   # 541 is Bc+
 
             ### The file with properties of all particles
             particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}.pdl'.format(m=options.mass,ctau=options.ctau)), 
@@ -267,8 +290,11 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
 )
 
 
-process.ProductionFilterSequence = cms.Sequence(process.generator+process.BpFilter+process.SingleMuFilter)
-#process.ProductionFilterSequence = cms.Sequence(process.generator+process.BpFilter) 
+if options.doSkipMuonFilter:
+  process.ProductionFilterSequence = cms.Sequence(process.generator+process.BFilter) 
+else:
+  process.ProductionFilterSequence = cms.Sequence(process.generator+process.BFilter+process.SingleMuFilter)
+
 
 # Path and EndPath definitions
 process.generation_step = cms.Path(process.pgen)
