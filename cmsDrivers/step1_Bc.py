@@ -76,10 +76,11 @@ process.maxEvents = cms.untracked.PSet(
 
 # Input source
 ### LHE->root files, each file has 1 M events, _1.root does not work, +1 offset needed
-LHErootfiles = ['file:/pnfs/psi.ch/cms/trivcat/store/user/manzoni/RJPsi_Bc_LHEGEN_11oct20_v3/RJpsi-BcToXToJpsiMuMu-RunIISummer19UL18GEN_step1_{i}.root'.format(i=options.seedOffset+1)]  
+LHErootfiles = ['root://t3dcachedb.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/manzoni/RJPsi_Bc_LHEGEN_11oct20_v3/RJpsi-BcToXToJpsiMuMu-RunIISummer19UL18GEN_step1_{i}.root'.format(i=options.seedOffset+1)]  
 process.source = cms.Source("PoolSource",
   dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
   fileNames = cms.untracked.vstring(LHErootfiles),
+  skipEvents=cms.untracked.uint32(2), ## not sure if needed
   inputCommands = cms.untracked.vstring(
       'keep *', 
       'drop LHEXMLStringProduct_*_*_*'
@@ -202,7 +203,7 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nDecay anti_hnl\n1.0     mu+    pi-    PHSP;\nEnddecay\nCDecay hnl\n\nEnd\n")
             
             # new way, instead of a long string, write things in a file 
-            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}.DEC'.format(m=options.mass)),
+            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_Bc.DEC'.format(m=options.mass)),
 
         ),
         parameterSets = cms.vstring('EvtGen130')

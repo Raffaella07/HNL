@@ -24,11 +24,13 @@ class Job(object):
     if self.domultijob and self.domultithread: raise RuntimeError('either multijob or multithread, choose, otherwise seed for generation will repeat')
     self.njobs = self.njobs if self.domultijob else 1
     self.nevtsjob = self.nevts if not self.domultijob else self.nevts/self.njobs
+    # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
     self.prodLabel = '{v}_n{n}_njt{nj}'.format(v=self.ver,n=self.nevts,nj=self.njobs)
     self.nthr = 8 if self.domultithread else 1
     self.npremixfiles = 20 # the number of events per file being 1200
     self.user = os.environ["USER"]
-    self.jop1 = 'step1.py' if not self.dobc else 'step1_Bc.py'
+    self.jop1_in = 'step1.py' if not self.dobc else 'step1_Bc.py'
+    self.jop1 = 'step1.py'
     self.jop2 = 'step2.py'
     self.jop3 = 'step3.py'
     self.jop4 = 'step4.py'
@@ -357,7 +359,7 @@ class Job(object):
       f.write('Run genHelper.py with following options\n')
       for k,v in sorted(vars(self.opt).items()):
         f.write('{:15s}: {:10s}\n'.format(str(k),str(v)))
-    os.system('cp ../cmsDrivers/{jop} ./{pl}/.'.format(jop=self.jop1,pl=self.prodLabel))
+    os.system('cp ../cmsDrivers/{jop_in} ./{pl}/{jop}'.format(jop=self.jop1,jop_in=self.jop1_in,pl=self.prodLabel))
     if not self.dogenonly:
       os.system('cp ../cmsDrivers/{jop} ./{pl}/.'.format(jop=self.jop2,pl=self.prodLabel))
       os.system('cp ../cmsDrivers/{jop} ./{pl}/.'.format(jop=self.jop3,pl=self.prodLabel))
