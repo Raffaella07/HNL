@@ -100,6 +100,7 @@ branches = [
     #'b_invmass',
     'bpartial_invmass',
 
+    'Lz',  # 1D longitudinal displacement for the HNL
     'Lxy', # 2D transverse displacement for the HNL
     'Lxyz',  # 3D displacement for the HNL
     'Lxy_cos', # cosine of the pointing angle in the transverse plane
@@ -119,7 +120,7 @@ new_vvs = [
     1e-07, 
     5e-07, 
     1e-06, 
-    5e-06, 
+    3e-06, 
     6e-06, 
     8e-06, 
     1e-05, 
@@ -225,7 +226,7 @@ def runGenTreeProducer(infiles='./step*root',outfilename='out.root',this_mass=1,
     
     # find the B mother  
     event.the_hn.mothers = [event.the_hn.mother(jj) for jj in range(event.the_hn.numberOfMothers())]
-    the_b_mothers = sorted([ii for ii in event.the_hn.mothers if abs(ii.pdgId())==521], key = lambda x : x.pt(), reverse=True)
+    the_b_mothers = sorted([ii for ii in event.the_hn.mothers if (abs(ii.pdgId())==521 or abs(ii.pdgId())==511 or abs(ii.pdgId())==531)], key = lambda x : x.pt(), reverse=True)
     if len(the_b_mothers):
       event.the_b_mother = the_b_mothers[0]
     else:
@@ -320,13 +321,15 @@ def runGenTreeProducer(infiles='./step*root',outfilename='out.root',this_mass=1,
     
     # 2D transverse and 3D displacement, Pythagoras
     if len(the_pls) and len(the_lep_daughters):
+      event.Lz  =  np.sqrt((event.the_hn.the_pv.z() - event.the_hn.the_sv.z())**2) * 10 # everything in mm
+      
       event.Lxy  = np.sqrt((event.the_hn.the_pv.x() - event.the_hn.the_sv.x())**2 + \
                            (event.the_hn.the_pv.y() - event.the_hn.the_sv.y())**2) * 10 # everything in mm
 
       event.Lxyz = np.sqrt((event.the_hn.the_pv.x() - event.the_hn.the_sv.x())**2 + \
                            (event.the_hn.the_pv.y() - event.the_hn.the_sv.y())**2 + \
                            (event.the_hn.the_pv.z() - event.the_hn.the_sv.z())**2) * 10 # everything in mm
-  
+ 
     # per event ct, as derived from the flight distance and Lorentz boost  
     event.the_hn.beta  = event.the_hn.p4().Beta()
     event.the_hn.gamma = event.the_hn.p4().Gamma()
@@ -374,6 +377,7 @@ def runGenTreeProducer(infiles='./step*root',outfilename='out.root',this_mass=1,
         tofill['b_ct_reco'] = event.the_b_mother.ct_reco   
      
     tofill['hnl_pt'     ] = event.the_hn.pt()     
+    #tofill['hnl_p'      ] = event.the_hn.pt() * ROOT.TMath.CosH(event.the_hn.eta())
     tofill['hnl_eta'    ] = event.the_hn.eta()    
     tofill['hnl_phi'    ] = event.the_hn.phi()    
     tofill['hnl_mass'   ] = event.the_hn.mass()   
@@ -443,6 +447,7 @@ def runGenTreeProducer(infiles='./step*root',outfilename='out.root',this_mass=1,
     tofill['hnl_q'      ] = event.the_hn.lep.charge() + event.the_hn.pi.charge() 
     
     if len(the_pls) and len(the_lep_daughters):
+      tofill['Lz'        ] = event.Lz
       tofill['Lxy'        ] = event.Lxy
       tofill['Lxyz'       ] = event.Lxyz
       #tofill['Lxy_cos'    ] = event.cos_pointing
@@ -484,6 +489,7 @@ if __name__ == "__main__":
 
     user = os.environ["USER"] 
     expr = '/pnfs/psi.ch/cms/trivcat/store/user/{usr}/BHNLsGen/{pl}/mass{m}_ctau{ctau}/{ex}'.format(usr=user,pl=opt.pl,m=p.mass,ctau=p.ctau,ex=opt.expr)
+    #expr = '/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/slurm/testManyChan_n100_njt1/BPH-step1_numEvent1000.root'
     outfilename = './outputfiles/{pl}/mass{m}_ctau{ctau}_miniGenTree.root'.format(pl=opt.pl,m=p.mass,ctau=p.ctau)
     os.system('mkdir ./outputfiles/{pl}'.format(pl=opt.pl))    
 
