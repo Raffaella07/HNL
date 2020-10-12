@@ -34,11 +34,6 @@ options.register('ctau',
                  VarParsing.multiplicity.singleton,
                  VarParsing.varType.float,
                  'ctau of the HNL [mm]')
-options.register('do',
-                 100,
-                 VarParsing.multiplicity.singleton,
-                 VarParsing.varType.float,
-                 'ctau of the HNL [mm]')
 options.register('doSkipMuonFilter',    
                   False, 
                   VarParsing.multiplicity.singleton, 
@@ -150,7 +145,7 @@ process.BFilter = cms.EDFilter("MCMultiParticleFilter",
    AcceptMore = cms.bool(True),
    ParticleID = cms.vint32(521,511,531), # abs not needed
    PtMin = cms.vdouble(0.,0.,0.),
-   EtaMax = cms.vdouble(3.,3.,3.),
+   EtaMax = cms.vdouble(10.,10.,10.),
    Status = cms.vint32(0,0,0), 
 )
 
@@ -201,8 +196,6 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
 
             ### The file with properties of all particles
             particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}.pdl'.format(m=options.mass,ctau=options.ctau)), 
-            #particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mod.pdl'),
-            #particle_property_file = cms.FileInPath('GeneratorInterface/EvtGenInterface/data/evt_2014_mod.pdl'),  
             #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath
 
             ### Decay chain
@@ -274,7 +267,7 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
         # do we want pythia8PSweightsSettings ?
     ),
     comEnergy = cms.double(13000.0),
-    filterEfficiency = cms.untracked.double(0.0013),  # this will not be used by Pythia, only saved in GenInfo
+    #filterEfficiency = cms.untracked.double(0.0013),  # this will not be used by Pythia, only saved in GenInfo
     maxEventsToPrint = cms.untracked.int32(0),        # max events to print the complete event list information
     pythiaHepMCVerbosity = cms.untracked.bool(False), # to display HepMC information: vertices and particles (not interesting)
     pythiaPylistVerbosity = cms.untracked.int32(1)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
