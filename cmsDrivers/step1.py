@@ -168,11 +168,12 @@ process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister",
     #MinPt = cms.untracked.double(0.5), # <=== keep it a bit lower than the pt cut at reco level... 
     MaxEta = cms.untracked.double(1.6),
     MinEta = cms.untracked.double(-1.6),
-    MinPt = cms.untracked.double(5), # <=== keep it a bit lower than the pt cut at reco level... 
+    MinPt = cms.untracked.double(5.), # <=== keep it a bit lower than the pt cut at reco level... #### FIXME should be raised to 6.5 - 7
     ParticleID = cms.untracked.int32(13), # abs value is taken
     #Status = cms.untracked.int32(1),
     MotherIDs = cms.untracked.vint32(521, 511, 531), # require muon to come from B+/B- decay
     SisterID = cms.untracked.int32(9900015), # require HNL sister
+    MaxSisterDisplacement = cms.untracked.double(-1), # max Lxy displacement to generate, -1 for no max
 )
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
@@ -204,20 +205,10 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             #particle_property_file = cms.FileInPath('GeneratorInterface/EvtGenInterface/data/evt_2014_mod.pdl'),  
             #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath
 
-
             ### Decay chain
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias mytau+ tau+\nAlias mytau- tau-\nChargeConj myB+ myB-\nChargeConj mytau+ mytau-\n\nDecay myB-\n0.259     anti-D0       mytau-     nu_tau    ISGW2;\n0.592     anti-D*0      mytau-     nu_tau    ISGW2;\n0.074     anti-D_2*0    mytau-     nu_tau    ISGW2;\n0.074     anti-D\'_10    mytau-     nu_tau    ISGW2;\nEnddecay\nCDecay myB+\n\nDecay mytau-\n1.0 mu-    mu+    mu-             PHOTOS PHSP;\nEnddecay\nCDecay mytau+\n\nEnd\n")
-            
-            # decay to neutrino
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nDecay myB-\n1.0     myD0    mu-    anti-nu_mu    ISGW2;\nEnddecay\nCDecay myB+\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nEnd\n")
-            
-
             # decay to HNL, majorana, no need to define charge conjugation
             #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nDecay myB-\n1.0     myD0    mu-    hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\n\nEnd\n")
-            
-      
-            # decay to HNL, dirac: charge conjugate of hnl -> anti_hnl
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\n\nEnd\n")
+                  
             # decay to HNL, dirac, and decay also HNL 
             #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nDecay anti_hnl\n1.0     mu+    pi-    PHSP;\nEnddecay\nCDecay hnl\n\nEnd\n")
             
