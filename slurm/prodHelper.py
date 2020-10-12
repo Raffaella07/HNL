@@ -28,7 +28,7 @@ class Job(object):
     self.nthr = 8 if self.domultithread else 1
     self.npremixfiles = 20 # the number of events per file being 1200
     self.user = os.environ["USER"]
-    self.jop1 = 'step1.py'
+    self.jop1 = 'step1.py' if not self.dobc else 'step1_Bc.py'
     self.jop2 = 'step2.py'
     self.jop3 = 'step3.py'
     self.jop4 = 'step4.py'
@@ -72,7 +72,43 @@ class Job(object):
     print('===> Created evtGen particle property files\n')
 
 
+  def makeEvtGenDecayBc(self):
+    for p in self.points:
+      decay_table = [
+       'Alias myBc+ B_c+',
+       'Alias myBc- B_c-',
+       '',
+       'ChargeConj myBc+ myBc-',
+       '',
+       'Decay myBc+',
+       '{Bc_br0:.10f}               mu+    hnl    PHSP;',
+       '',
+       'Enddecay',
+       'CDecay myB-',
+       '',
+       'Decay hnl',
+       '1.0     mu-    pi+    PHSP;',
+       'Enddecay',
+       'CDecay anti_hnl',
+       '',
+       'End',      
+       '',      
+      ]
+      
+      decay_table = '\n'.join(decay_table)
+      dec = Decays(mass=p.mass, mixing_angle_square=1)
+
+      decay_table = decay_table.format(
+                         Bc_br0=dec.Bc_to_uHNL.BR
+                         )
+
+      with open('../evtGenData/HNLdecay_mass{m}_Bc.DEC'.format(m=p.mass), 'w') as fout:
+        fout.write(decay_table)
+      print('===> Created evtGen decay files for Bc \n')
+
+
   def makeEvtGenDecay(self):
+
     for p in self.points:
       decay_table = [
        'Alias myB+ B+',
@@ -86,12 +122,6 @@ class Job(object):
        'ChargeConj myB0 myB0bar',
        'ChargeConj myB0s myB0sbar', 
        'ChargeConj hnl anti_hnl',
-    #   'ChargeConj D0  anti-D0',
-    #   'ChargeConj D*0 anti-D*0',
-    #   'ChargeConj pi0 pi0',
-    #   'ChargeConj rho0 rho0',
-    # should I define them all? or only for the aliases???? 
-    # let's try with no alias, and then we see... 
        '',
        'Decay myB+',
        '{Bp_br0:.10f}               mu+    hnl    PHSP;',
@@ -362,6 +392,7 @@ def getOptions():
   parser.add_argument('--dosubmit', dest='dosubmit', help='submit to slurm', action='store_true', default=False)
   parser.add_argument('--dogenonly', dest='dogenonly', help='produce sample until gen', action='store_true', default=False)
   parser.add_argument('--doskipmuonfilter', dest='doskipmuonfilter', help='skip the muon filter', action='store_true', default=False)
+  parser.add_argument('--dobc', dest='dobc', help='do the Bc generation instead of other B species', action='store_true', default=False)
 
   return parser.parse_args()
 
@@ -375,7 +406,10 @@ if __name__ == "__main__":
 
   job.makeEvtGenData()
 
-  job.makeEvtGenDecay()
+  if opt.dobc:
+    job.makeEvtGenDecayBc()
+  else:
+    job.makeEvtGenDecay()
 
   job.makeTemplates()
 
