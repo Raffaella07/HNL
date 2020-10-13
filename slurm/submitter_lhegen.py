@@ -130,6 +130,10 @@ if not os.path.exists('/pnfs/psi.ch/cms/trivcat/store/user/mratti/BHNLsGen/{se_d
             
 for ijob in range(njobs):
 
+    # relaunch only some
+    #if ijob not in [104,105,106,13,24,57,75,86,87]:
+    #  continue
+
     #input file
     fin = open("../cmsDrivers/BHNL_Bc_LHEtoRoot_TEMPLATE.py", "rt")
     #output file to write the result to
@@ -140,7 +144,7 @@ for ijob in range(njobs):
         if   'HOOK_MAX_EVENTS' in line: fout.write(line.replace('HOOK_MAX_EVENTS' , '%s' %events_per_job))
         elif 'HOOK_FIRST_LUMI' in line: fout.write(line.replace('HOOK_FIRST_LUMI' , '%d' %(ijob+1) ))
         elif 'HOOK_FILE_IN'    in line: fout.write(line.replace('HOOK_FILE_IN'    , lhe_files[ijob] ))
-        elif 'HOOK_FILE_OUT'   in line: fout.write(line.replace('HOOK_FILE_OUT'   , '/scratch/mratti/%s/BHNL_Bc_LHEtoRoot_step0_nj%d.root' %(out_dir, ijob)))
+        elif 'HOOK_FILE_OUT'   in line: fout.write(line.replace('HOOK_FILE_OUT'   , '/scratch/mratti/{scratch_dir}/BHNL_Bc_LHEtoRoot_step0_nj{ijob}.root'.format(scratch_dir=out_dir+'_nj%d' %(ijob),ijob=ijob)))
 #         elif 'HOOK_SKIP_EVENTS'in line: fout.write(line.replace('HOOK_SKIP_EVENTS', '%d' %(events_per_job*ijob)))
         else: fout.write(line)
     #close input and output files
@@ -155,19 +159,18 @@ source $VO_CMS_SW_DIR/cmsset_default.sh
 shopt -s expand_aliases
 cmsenv
 mkdir -p /scratch/mratti/{scratch_dir}
-ls /scratch/mratti/
+ls /scratch/mratti/{scratch_dir}
 cmsRun {cfg}
 xrdcp /scratch/mratti/{scratch_dir}/BHNL_Bc_LHEtoRoot_step0_nj{ijob}.root root://t3dcachedb.psi.ch:1094///pnfs/psi.ch/cms/trivcat/store/user/mratti/BHNLsGen/{se_dir}/BHNL_Bc_LHEtoRoot_step0_nj{ijob}.root
-rm /scratch/mratti/{scratch_dir}/BHNL_Bc_LHEtoRoot_step0_nj{ijob}.root
-
-'''.format(dir='/'.join([os.getcwd(), out_dir]), scratch_dir=out_dir, cfg='BHNL_Bc_LHEtoRoot_cfg_nj%d.py' %(ijob), ijob=ijob, se_dir=out_dir)
+rm -r /scratch/mratti/{scratch_dir}/
+'''.format(dir='/'.join([os.getcwd(), out_dir]), scratch_dir=out_dir+'_nj%d' %(ijob), cfg='BHNL_Bc_LHEtoRoot_cfg_nj%d.py' %(ijob), ijob=ijob, se_dir=out_dir)
     )
     flauncher.close()
     
     command_sh_batch = 'sbatch -p wn --account=t3 -o %s/logs/step0_nj%d.log -e %s/logs/step0_nj%d.log --job-name=%s --time=01:00:00 %s/submitter_nj%d.sh' %(out_dir, ijob, out_dir, ijob, out_dir, out_dir, ijob)
 
     print(command_sh_batch)
-    #os.system(command_sh_batch)
+    os.system(command_sh_batch)
     
     
     

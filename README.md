@@ -56,24 +56,27 @@ Therefore adopt different strategy:
 BPH_start_cfg.py                  => mod tau->3mu  with Fall18, starting point
 BPH_mod_cfg.py                    => FROZEN DRIVER, for sharing
 step1.py                          =>                for development
+step1_Bc.py                       =>                for decelopment, Bc showering
 ```
 
 ## Production
-### GEN-SIM
+### vacuum ==> GEN-SIM ==> miniAOD
 Submission to slurm:
 ```
 cd slurm
 ```
 Create a VXX_points.py files starting from points.py, then submit
 ```
-python genHelper.py --help
-```
-### Up to miniAOD
-```
 python prodHelper.py --help
 ```
 Note that using the --dogenonly option is equivalent to using genHelper.py
 
+### Notes for Bc production
+We currently shower Bc+ events, starting from LHE files produced by someone else.
+
+The LHE => ROOT conversion is done via ```cmsDrivers/BHNL_Bc_LHEtoRoot_TEMPLATE.py``` and submitted via ```slurm/submitter_lhegen.py```
+
+For showering, instead of using the ```GeneratorFilter```, we use the ```HadronizerFilter```, details in ```cmsDrivers/step1_Bc.py```
 
 ## Analyze
 To visualize the decay chain in a tree (printout to screen), using ```vector<reco::genParticles>```
