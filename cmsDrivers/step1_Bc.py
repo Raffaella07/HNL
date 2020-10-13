@@ -75,12 +75,12 @@ process.maxEvents = cms.untracked.PSet(
 
 
 # Input source
-### LHE->root files, each file has 1 M events, _1.root does not work, +1 offset needed
-LHErootfiles = ['root://t3dcachedb.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/manzoni/RJPsi_Bc_LHEGEN_11oct20_v3/RJpsi-BcToXToJpsiMuMu-RunIISummer19UL18GEN_step1_{i}.root'.format(i=options.seedOffset+1)]  
+### LHE->root files, each file has 1 M events, _0.root does not work, start from 1
+LHErootfile = 'root://t3dcachedb.psi.ch:1094//pnfs/psi.ch/cms/trivcat/store/user/mratti/BHNLsGen/BHNL_Bc_LHEGEN_v0/BHNL_Bc_LHEtoRoot_step0_nj{ijob}.root'.format(ijob=options.seedOffset)
 process.source = cms.Source("PoolSource",
   dropDescendantsOfDroppedBranches = cms.untracked.bool(False),
-  fileNames = cms.untracked.vstring(LHErootfiles),
-  skipEvents=cms.untracked.uint32(2), ## not sure if needed
+  fileNames = cms.untracked.vstring(LHErootfile),
+  #skipEvents=cms.untracked.uint32(2), ## not needed
   inputCommands = cms.untracked.vstring(
       'keep *', 
       'drop LHEXMLStringProduct_*_*_*'
@@ -172,7 +172,8 @@ process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister",
     MaxSisterDisplacement = cms.untracked.double(-1), # max Lxy displacement to generate, -1 for no max
 )
 
-process.generator = cms.EDFilter("Pythia8GeneratorFilter",
+#process.generator = cms.EDFilter("Pythia8GeneratorFilter",
+process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     ExternalDecays = cms.PSet(
         EvtGen130 = cms.untracked.PSet(
             ### for info, see https://twiki.cern.ch/twiki/bin/view/CMS/EvtGenInterface
