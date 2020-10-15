@@ -226,7 +226,7 @@ def runGenTreeProducer(infiles='./step*root',outfilename='out.root',this_mass=1,
     
     # find the B mother  
     event.the_hn.mothers = [event.the_hn.mother(jj) for jj in range(event.the_hn.numberOfMothers())]
-    the_b_mothers = sorted([ii for ii in event.the_hn.mothers if (abs(ii.pdgId())==521 or abs(ii.pdgId())==511 or abs(ii.pdgId())==531)], key = lambda x : x.pt(), reverse=True)
+    the_b_mothers = sorted([ii for ii in event.the_hn.mothers if (abs(ii.pdgId())==521 or abs(ii.pdgId())==511 or abs(ii.pdgId())==531 or abs(ii.pdgId())==541)], key = lambda x : x.pt(), reverse=True)
     if len(the_b_mothers):
       event.the_b_mother = the_b_mothers[0]
     else:
@@ -490,6 +490,7 @@ if __name__ == "__main__":
     user = os.environ["USER"] 
     expr = '/pnfs/psi.ch/cms/trivcat/store/user/{usr}/BHNLsGen/{pl}/mass{m}_ctau{ctau}/{ex}'.format(usr=user,pl=opt.pl,m=p.mass,ctau=p.ctau,ex=opt.expr)
     #expr = '/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/slurm/testManyChan_n100_njt1/BPH-step1_numEvent1000.root'
+    #expr = '/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/slurm/testBc_n10_njt1/BPH-step1_numEvent1000.root'
     outfilename = './outputfiles/{pl}/mass{m}_ctau{ctau}_miniGenTree.root'.format(pl=opt.pl,m=p.mass,ctau=p.ctau)
     os.system('mkdir ./outputfiles/{pl}'.format(pl=opt.pl))    
 

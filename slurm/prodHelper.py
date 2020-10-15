@@ -16,15 +16,10 @@ class Job(object):
     for k,v in sorted(vars(opt).items()):
       setattr(self,k,v)
 
-    if not os.path.isfile(self.pointFile): raise RuntimeError('Provided file for points to scan does not exist, {}'.format(self.pointFile))
     ps = __import__(self.pointFile.split('.py')[0])
     self.points = ps.points
-    if self.domultijob and self.njobs <= 1: raise RuntimeError('when running multiple jobs, the number of parallel jobs should be larger than 1')
-    if self.domultijob and self.nevts % self.njobs != 0: raise RuntimeError('cannot split events in njobs evenly, please change njobs / nevts')
-    if self.domultijob and self.domultithread: raise RuntimeError('either multijob or multithread, choose, otherwise seed for generation will repeat')
     self.njobs = self.njobs if self.domultijob else 1
     self.nevtsjob = self.nevts if not self.domultijob else self.nevts/self.njobs
-    # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
     self.prodLabel = '{v}_n{n}_njt{nj}'.format(v=self.ver,n=self.nevts,nj=self.njobs)
     self.nthr = 8 if self.domultithread else 1
     self.npremixfiles = 20 # the number of events per file being 1200
@@ -35,6 +30,14 @@ class Job(object):
     self.jop3 = 'step3.py'
     self.jop4 = 'step4.py'
    
+    # run checks
+    if not os.path.isfile(self.pointFile): raise RuntimeError('Provided file for points to scan does not exist, {}'.format(self.pointFile))
+    if self.domultijob and self.njobs <= 1: raise RuntimeError('when running multiple jobs, the number of parallel jobs should be larger than 1')
+    if self.domultijob and self.nevts % self.njobs != 0: raise RuntimeError('cannot split events in njobs evenly, please change njobs / nevts')
+    if self.domultijob and self.domultithread: raise RuntimeError('either multijob or multithread, choose, otherwise seed for generation will repeat')
+    if self.dobc and self.nevtsjob > 1000000: raise RuntimeError('Not enough events in the Bc LHE->ROOT files, please reduce number of events per job')
+    if self.dobc and self.njobs > 107: raise RuntimeError('Currently we access only 107 M Bc events, either find more Bc events or reduce the total number of jobs')
+    # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
 
   def makeProdDir(self):
     if not os.path.isdir(self.prodLabel):
