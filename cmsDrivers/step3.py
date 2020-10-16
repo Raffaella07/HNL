@@ -121,6 +121,7 @@ process=convertToUnscheduled(process)
 
 
 # Customisation from command line
+process.MessageLogger.cerr.FwkReport.reportEvery=1000
 
 #Have logErrorHarvester wait for the same EDProducers to finish as those providing data for the OutputModule
 from FWCore.Modules.logErrorHarvester_cff import customiseLogErrorHarvesterUsingOutputCommands

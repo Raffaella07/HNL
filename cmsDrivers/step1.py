@@ -168,7 +168,7 @@ process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister",
     #Status = cms.untracked.int32(1),
     MotherIDs = cms.untracked.vint32(521, 511, 531), # require muon to come from B+/B- decay
     SisterID = cms.untracked.int32(9900015), # require HNL sister
-    MaxSisterDisplacement = cms.untracked.double(-1), # max Lxy displacement to generate, -1 for no max
+    MaxSisterDisplacement = cms.untracked.double(-1), # max Lxyz displacement to generate in mm, -1 for no max
 )
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
