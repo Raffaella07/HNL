@@ -224,23 +224,24 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             ##     http://home.thep.lu.se/~torbjorn/pythia81html/QCDProcesses.html
             ##     eventually use SoftQCD if you#'re interested in the full bottom production at high energies
 
-            ### original settings for tau->3mu   
-            #'SoftQCD:nonDiffractive = on',            # default is off     
-            #'SoftQCD:singleDiffractive = on',         # default is off
-            #'SoftQCD:doubleDiffractive = on',         # default is off
-            #'PTFilter:filter = on',                   # default is off  # could not find **ANYWHERE** in the Pythia code PTFilter 
-            #'PTFilter:quarkToFilter = 5',                               # it's something that exists in CMSSW only, see Py8InterfaceBase.cc
-            #'PTFilter:scaleToFilter = 1.0'            # default is 0.4 
+            ### softqcd, includes gluon splitting and flavor excitation (b g ->  b g)
+            'SoftQCD:nonDiffractive = on',             # default is off     
+            'SoftQCD:singleDiffractive = off',         # default is off
+            'SoftQCD:doubleDiffractive = off',         # default is off
+            'PTFilter:filter = on',                    # default is off  # could not find **ANYWHERE** in the Pythia code PTFilter 
+            'PTFilter:quarkToFilter = 5',                               # it's something that exists in CMSSW only, see Py8InterfaceBase.cc
+            'PTFilter:scaleToFilter = 1.0'            # default is 0.4 
            
-            ### settings to generate bbar only as per tip https://twiki.cern.ch/twiki/bin/view/CMS/EvtGenInterface#Tips_for_Pythia8   
-            'SoftQCD:nonDiffractive = off',            # 
-            'SoftQCD:singleDiffractive = off',         #
-            'SoftQCD:doubleDiffractive = off',         #
-            'PTFilter:filter = off',                   #
-            'HardQCD:gg2bbbar = on ',                  # default is off 
-            'HardQCD:qqbar2bbbar = on ',               # default is off  
-            'HardQCD:hardbbbar = off',                 # default is off  # should be set to off if gg2bbbar and hardbbbar on, otherwise double-counting
-            'PhaseSpace:pTHatMin = 5.',               # default is 0    # minimum invariant pT
+            ### settings to generate back-to-back b-jet production
+            ### tip https://twiki.cern.ch/twiki/bin/view/CMS/EvtGenInterface#Tips_for_Pythia8   
+            #'SoftQCD:nonDiffractive = off',            # 
+            #'SoftQCD:singleDiffractive = off',         #
+            #'SoftQCD:doubleDiffractive = off',         #
+            #'PTFilter:filter = off',                   #
+            #'HardQCD:gg2bbbar = on ',                  # default is off 
+            #'HardQCD:qqbar2bbbar = on ',               # default is off  
+            #'HardQCD:hardbbbar = off',                 # default is off  # should be set to off if gg2bbbar and hardbbbar on, otherwise double-counting
+            #'PhaseSpace:pTHatMin = 5.',               # default is 0    # minimum invariant pT
             ## 'PhaseSpace' to constrain the kinematics of a 2->2 process, 
             ##              for hard physics only, 
             ##              in the rest frame of the hard process, 
