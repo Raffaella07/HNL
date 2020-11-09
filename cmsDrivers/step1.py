@@ -39,6 +39,11 @@ options.register('doSkipMuonFilter',
                   VarParsing.multiplicity.singleton, 
                   VarParsing.varType.bool, 
                   'Skip the muon filter' )
+options.register('doDisplFilter',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'In muon filter, add a cut on the HNL displacement' )
 #options.register ("doDirac",
 #                  1, # default value
 #                  VarParsing.multiplicity.singleton, # singleton or list
@@ -157,10 +162,16 @@ process.BFilter = cms.EDFilter("MCMultiParticleFilter",
 #    #Status = cms.untracked.int32(1),
 #    MotherID = cms.untracked.int32(521), # require muon to come from B+/B- decay
 #)
+
+if options.doDisplFilter:
+  maxDispl = cms.untracked.double(1500) 
+else:
+  maxDispl = cms.untracked.double(-1)
+
 process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister", 
-    #MaxEta = cms.untracked.double(3),
-    #MinEta = cms.untracked.double(-3),
-    #MinPt = cms.untracked.double(0.5), # <=== keep it a bit lower than the pt cut at reco level... 
+  #  MaxEta = cms.untracked.double(6),
+  #  MinEta = cms.untracked.double(-6),
+  #  MinPt = cms.untracked.double(0.0), # <=== keep it a bit lower than the pt cut at reco level... 
     MaxEta = cms.untracked.double(1.6),
     MinEta = cms.untracked.double(-1.6),
     MinPt = cms.untracked.double(5.), # <=== keep it a bit lower than the pt cut at reco level... #### FIXME should be raised to 6.5 - 7
@@ -168,7 +179,7 @@ process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister",
     #Status = cms.untracked.int32(1),
     MotherIDs = cms.untracked.vint32(521, 511, 531), # require muon to come from B+/B- decay
     SisterID = cms.untracked.int32(9900015), # require HNL sister
-    MaxSisterDisplacement = cms.untracked.double(-1), # max Lxyz displacement to generate in mm, -1 for no max
+    MaxSisterDisplacement = maxDispl, # max Lxyz displacement to generate in mm, -1 for no max
 )
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
@@ -225,23 +236,23 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             ##     eventually use SoftQCD if you#'re interested in the full bottom production at high energies
 
             ### softqcd, includes gluon splitting and flavor excitation (b g ->  b g)
-            'SoftQCD:nonDiffractive = on',             # default is off     
-            'SoftQCD:singleDiffractive = off',         # default is off
-            'SoftQCD:doubleDiffractive = off',         # default is off
-            'PTFilter:filter = on',                    # default is off  # could not find **ANYWHERE** in the Pythia code PTFilter 
-            'PTFilter:quarkToFilter = 5',                               # it's something that exists in CMSSW only, see Py8InterfaceBase.cc
-            'PTFilter:scaleToFilter = 1.0'            # default is 0.4 
+            #'SoftQCD:nonDiffractive = on',             # default is off     
+            #'SoftQCD:singleDiffractive = off',         # default is off
+            #'SoftQCD:doubleDiffractive = off',         # default is off
+            #'PTFilter:filter = on',                    # default is off  # could not find **ANYWHERE** in the Pythia code PTFilter 
+            #'PTFilter:quarkToFilter = 5',                               # it's something that exists in CMSSW only, see Py8InterfaceBase.cc
+            #'PTFilter:scaleToFilter = 1.0'            # default is 0.4 
            
             ### settings to generate back-to-back b-jet production
             ### tip https://twiki.cern.ch/twiki/bin/view/CMS/EvtGenInterface#Tips_for_Pythia8   
-            #'SoftQCD:nonDiffractive = off',            # 
-            #'SoftQCD:singleDiffractive = off',         #
-            #'SoftQCD:doubleDiffractive = off',         #
-            #'PTFilter:filter = off',                   #
-            #'HardQCD:gg2bbbar = on ',                  # default is off 
-            #'HardQCD:qqbar2bbbar = on ',               # default is off  
-            #'HardQCD:hardbbbar = off',                 # default is off  # should be set to off if gg2bbbar and hardbbbar on, otherwise double-counting
-            #'PhaseSpace:pTHatMin = 5.',               # default is 0    # minimum invariant pT
+            'SoftQCD:nonDiffractive = off',            # 
+            'SoftQCD:singleDiffractive = off',         #
+            'SoftQCD:doubleDiffractive = off',         #
+            'PTFilter:filter = off',                   #
+            'HardQCD:gg2bbbar = on ',                  # default is off 
+            'HardQCD:qqbar2bbbar = on ',               # default is off  
+            'HardQCD:hardbbbar = off',                 # default is off  # should be set to off if gg2bbbar and hardbbbar on, otherwise double-counting
+            'PhaseSpace:pTHatMin = 5.',               # default is 0    # minimum invariant pT
             ## 'PhaseSpace' to constrain the kinematics of a 2->2 process, 
             ##              for hard physics only, 
             ##              in the rest frame of the hard process, 
