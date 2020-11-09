@@ -9,7 +9,7 @@ import math
 
 const_GF =  1.1663787e-05
 const_pi = math.pi
-
+const_sinThW_square =  0.23121 # from https://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf 
   
 class Particle(object):
   def __init__(self, name, particle_type, mass=None, decay_constant=None, lifetime=None, fraction=None):
@@ -20,10 +20,8 @@ class Particle(object):
     self.lifetime       = lifetime
     self.fraction       = fraction
     
-
-    if self.particle_type not in ['meson', 'lepton']: 
+    if self.particle_type not in ['meson', 'lepton', 'neutrino', 'quark']: 
       raise RuntimeError('You entered an unkown type of particles, please check')
-
 
 class FormFactor(object):
   def __init__(self, label, chi, m1, m2):
@@ -369,7 +367,111 @@ class Decay(object):
     self.BR = self.decay_rate * self.mother.lifetime
 
 
+#def loopCorr_quarkToHadrons(scale):
+#  alphaS_over_pi = 
+#  return (1 + alphaS_over_pi + 5.2 * alphaS_over_pi**2 + 26.4 * alphaS_over_pi**3 )
+def L(x):
+  num = 1. - 3 * x**2 - (1. - x**2) * math.sqrt(1 - 4. * x**2)
+  den = x**2 * (1. + math.sqrt(1 - 4. * x**2) ) 
+  #print('x={}, num={}, den={}, num/den={}'.format(x,num,den,num/den))
+  #print('l(x) = {}'.format(math.log( num / den )))
+  if num==0 or den==0: return 0
+  else: return math.log( num / den )
 
 
+class HNLDecay(object):
+  def __init__(self, hnl, daughters, mixing_angle_square, ckm_coupling, decay_type):
+    self.hnl = hnl
+    self.daughters = daughters
+    self.mixing_angle_square = mixing_angle_square
+    self.ckm_coupling = ckm_coupling
+    self.decay_type = decay_type
 
+    allowed_decay_types = ['cc_lep','cc_had', 'nc_lep', 'nc_had', 'nc_nn']
+    if self.decay_type not in allowed_decay_types: raise RuntimeError('Decay type %s not allowed, please check' % self.decay_type)
+
+    # mass check
+    if len(self.daughters)!=3: raise RuntimeError('Expected exactly three particles for this decay')
+    mass_check = ( (self.daughters[0].mass + self.daughters[1].mass + self.daughters[2].mass) < self.hnl.mass  )
+    print('mass check = {}'.format(mass_check))
+    print('daugters mass = {} , hnl mass = {}'.format((self.daughters[0].mass + self.daughters[1].mass + self.daughters[2].mass), self.hnl.mass))
+      #raise RuntimeError('')
+
+    if not mass_check:
+      self.decay_rate = 0.
+    else:
+      ### charged-current leptonic and quarks
+      if self.decay_type == 'cc_lep' or self.decay_type == 'cc_had':
+        
+        lep = self.daughters[0]
+        U = self.daughters[1]
+        D = self.daughters[2]
+
+        if lep.particle_type != 'lepton': raise RuntimeError('For this decay first daughter must be a charged lepton, please check')
+        # other checks
+
+        if self.decay_type == 'cc_lep':
+          NW = 1.
+        else: 
+          NW = 3. * self.ckm_coupling**2
+
+        xl =    float(lep.mass) / float(hnl.mass)
+        xU =    float(U.mass)   / float(hnl.mass)
+        xD =    float(D.mass    / float(hnl.mass))
+
+        # integration
+        upper_bound = (1-xU)**2
+        lower_bound = (xD+xl)**2
+        integrand = lambda x : 12. * (x-xl**2-xD**2) / x * (1 + xU**2 - x) * math.sqrt( Lambda(x,xl**2,xD**2) * Lambda(1,x,xU**2) )
+        (integral,error) = integrate(integrand, lower_bound, upper_bound)
+        if error/integral > 0.1: print('Warning: error on integral higher than 10\% ') 
+
+        self.decay_rate =  NW * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (192 * const_pi**3) * integral
+
+      ### neutral-currents (leptons and quarks)
+      elif self.decay_type == 'nc_lep' or self.decay_type == 'nc_had':
+
+        nu_alpha = self.daughters[0]
+        f    = self.daughters[1]
+        fbar = self.daughters[2]
+
+        if nu_alpha.particle_type != 'neutrino': raise RuntimeError('For this decay first daughter must be a neutrino, please check')
+
+        if self.decay_type == 'nc_lep':
+          if f.particle_type == 'neutrino' : raise RuntimeError('should not be a neutrino')
+          NZ = 1.
+          if nu_alpha.name == f.name:
+           C1f = 0.25 * ( 1 + 4 * const_sinThW_square + 8 * const_sinThW_square**2 )
+           C2f = 0.5 * const_sinThW_square * ( 2 * const_sinThW_square + 1 )
+          else:
+           C1f = 0.25 * ( 1 - 4 * const_sinThW_square + 8 * const_sinThW_square**2 )
+           C2f = 0.5 * const_sinThW_square * ( 2 * const_sinThW_square - 1 )
+        else:
+          NZ = 3.
+          if f.name == 'uq' or f.name == 'cq' or f.name == 'tq':
+            C1f = 0.25 * ( 1 - 8./3. * const_sinThW_square + 32./9. * const_sinThW_square**2 ) 
+            C2f = 1./3. * const_sinThW_square * (4./3. * const_sinThW_square - 1)
+          elif f.name == 'dq' or f.name == 'sq' or f.name == 'bq':
+            C1f = 0.25 * ( 1 - 4./3. * const_sinThW_square + 8./9. * const_sinThW_square**2 )
+            C2f = 1./6. * const_sinThW_square * (2./3. * const_sinThW_square - 1)
+
+        x = f.mass / self.hnl.mass
+        print(f.__dict__)
+        par1 = (1. - 14. * x**2 - 2 * x**4 - 12. * x**6) * math.sqrt(1. - 4. * x**2) + 12. * x**4 * (x**4 - 1.) * L(x)
+        par2 = x**2 * (2. + 10. * x**2 - 12 * x**4) * math.sqrt(1 - 4. * x**2) + 6 * x**4 * (1 - 2. * x**2 + 2 * x**4) * L(x) 
+        bigpar = C1f * par1 + 4. * C2f * par2
+
+        self.decay_rate = NZ * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (192 * const_pi**3) * bigpar
+
+      ### neutral-current (all neutrinos)
+      elif self.decay_type == 'nc_nn':
+        
+        nu_alpha = self.daughters[0]
+        nu_beta = self.daughters[1]
+        nubar_beta = self.daughters[2]
+
+        if nu_alpha.particle_type != 'neutrino': raise RuntimeError('For this decay first daughter must be a neutrino, please check')
+
+        delta_alpha_beta = 1. if nu_alpha.name == nu_beta.name else 0.
+        self.decay_rate = (1. + delta_alpha_beta) * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (768 * const_pi**3) 
 

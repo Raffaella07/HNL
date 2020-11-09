@@ -3,7 +3,7 @@ This script collects the particle definition and creates the ProductionRates cla
 the production rates of interest, with respect to the HNL mass and the mixing angle
 '''
 
-from objects import Particle, Decay
+from objects import Particle, Decay, HNLDecay
 import math
 
 
@@ -35,6 +35,13 @@ m_el_pdg  = 0.510999 * 1e-3
 m_mu_pdg  = 0.105658 
 m_tau_pdg = 1.77686
 
+# quarks
+m_uq_pdg = 2.16 * 1e-3
+m_dq_pdg = 4.67 * 1e-3
+m_sq_pdg = 93   * 1e-3
+m_cq_pdg = 1.27
+m_bq_pdg = 4.18
+m_tq_pdg = 172.76  # here for completeness
 
 # meson decay constant --> to be checked
 # in [GeV]
@@ -66,7 +73,9 @@ Vub_pdg = 0.00409
 Vcb_pdg = 40.5e-3
 Vcd_pdg = 0.220
 Vcs_pdg = 0.995
-
+Vtd_pdg = 0.0080   # for completeness
+Vts_pdg = 0.00388  # ""
+Vtb_pdg = 1.01     # ""
 
 ## PARTICLES ##
 
@@ -100,6 +109,19 @@ pi_meson          = Particle('pi_meson'         , 'meson', m_pi_pdg)
 el                = Particle('el'               , 'lepton', m_el_pdg) 
 mu                = Particle('mu'               , 'lepton', m_mu_pdg) 
 tau               = Particle('tau'              , 'lepton', m_tau_pdg) 
+
+# neutrinos
+nu_el             = Particle('nu_el'            , 'neutrino', 0.)
+nu_mu             = Particle('nu_mu'            , 'neutrino', 0.)
+nu_tau            = Particle('nu_tau'           , 'neutrino', 0.)
+
+# quarks
+uq                = Particle('uq'              , 'quark',  m_uq_pdg)
+dq                = Particle('dq'              , 'quark',  m_dq_pdg)
+cq                = Particle('cq'              , 'quark',  m_cq_pdg)
+sq                = Particle('sq'              , 'quark',  m_sq_pdg)
+bq                = Particle('bq'              , 'quark',  m_bq_pdg)
+tq                = Particle('tq'              , 'quark',  m_tq_pdg)
 
 
 ## DECAYS ##
@@ -191,4 +213,63 @@ class Decays(object):
     self.Bs_to_DsstartHNL = Decay(B_sub_s_meson, [D_sub_sstar_meson, tau], hnl, V_tau_square, Vcb_pdg, 'semileptonic_vector', formFactorLabel='Bs_to_Dsstar') 
     self.Bs_to_KstartHNL  = Decay(B_sub_s_meson, [Kstar_meson, tau]      , hnl, V_tau_square, Vub_pdg, 'semileptonic_vector', formFactorLabel='Bs_to_Kstar' )
 
+## HNL DECAYS ##
 
+def ctau_from_gamma(gamma):
+    const_hbar = 6.582119569e-22 * 1e-03 # GeV s  # from http://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf
+    const_c = 299792458. # m / s   
+    tau_natural = 1. / gamma                  # 1/GeV
+    tau = tau_natural * const_hbar            # s
+    ctau = tau * const_c * 1000               # mm
+    return ctau
+
+
+class HNLDecays(object):
+  def __init__(self, mass, mixing_angle_square): 
+    self.mass = mass
+    self.mixing_angle_square = mixing_angle_square
+
+    # define the HNL
+    hnl = Particle('hnl', 'lepton', self.mass)
+    
+    # get the model
+    V_mu_square = self.mixing_angle_square
+    V_tau_square = 0.
+    V_el_square = 0.
+
+    # list of the decays of interest
+    # cc leptons
+    self.decay_rates = {}
+    self.decay_rates['cc_lep'] =  HNLDecay(hnl, [mu,el,nu_el],   V_mu_square, 1, 'cc_lep').decay_rate + \
+                                  HNLDecay(hnl, [mu,tau,nu_tau], V_mu_square, 1, 'cc_lep').decay_rate  
+                                  #HNLDecay(hnl, [mu,mu,nu_mu],   V_mu_square, 1, 'cc_lep').decay_rate + \  i != j, see e.g. Bondarenko et al.
+                                  # if e.g. V_el_square was != 0, corresponding terms should be added
+
+    self.decay_rates['cc_had'] = ( HNLDecay(hnl, [mu,uq,dq], V_mu_square, Vud_pdg, 'cc_had').decay_rate + \
+                                   HNLDecay(hnl, [mu,uq,sq], V_mu_square, Vus_pdg, 'cc_had').decay_rate + \
+                                   HNLDecay(hnl, [mu,uq,bq], V_mu_square, Vub_pdg, 'cc_had').decay_rate + \
+                                   HNLDecay(hnl, [mu,cq,dq], V_mu_square, Vcd_pdg, 'cc_had').decay_rate + \
+                                   HNLDecay(hnl, [mu,cq,sq], V_mu_square, Vcs_pdg, 'cc_had').decay_rate + \
+                                   HNLDecay(hnl, [mu,cq,bq], V_mu_square, Vcb_pdg, 'cc_had').decay_rate ) * (1 + 0.18) 
+                                   # (three-loop correction for quark->hadrons, with alphas_s(m_tau=1.8 GeV) ) 
+                                 # decays to top not possible for hNL mass < 6 GeV
+
+
+    self.decay_rates['nc_lep'] = HNLDecay(hnl, [nu_mu,el,el],   V_mu_square, 1, 'nc_lep').decay_rate + \
+                                 HNLDecay(hnl, [nu_mu,mu,mu],   V_mu_square, 1, 'nc_lep').decay_rate + \
+                                 HNLDecay(hnl, [nu_mu,tau,tau], V_mu_square, 1, 'nc_lep').decay_rate 
+
+    self.decay_rates['nc_had'] = ( HNLDecay(hnl, [nu_mu,uq,uq],      V_mu_square, 1, 'nc_had').decay_rate + \
+                                   HNLDecay(hnl, [nu_mu,dq,dq],      V_mu_square, 1, 'nc_had').decay_rate + \
+                                   HNLDecay(hnl, [nu_mu,cq,cq],      V_mu_square, 1, 'nc_had').decay_rate + \
+                                   HNLDecay(hnl, [nu_mu,sq,sq],      V_mu_square, 1, 'nc_had').decay_rate ) * (1. + 0.18)
+                                   # (three-loop correction for quark->hadrons, with alphas_s(m_tau=1.8 GeV) ) 
+                                   #HNLDecay(hnl, [nu_mu,bq,bq],      V_mu_square, 1, 'nc_had').decay_rate + \ 
+                                   # decays to bbbar and ttbar not possible for HNL mass < 6 GeV
+
+    self.decay_rates['nc_nn'] = HNLDecay(hnl, [nu_mu,nu_el,nu_el],   V_mu_square, 1, 'nc_nn').decay_rate + \
+                                HNLDecay(hnl, [nu_mu,nu_mu,nu_mu],   V_mu_square, 1, 'nc_nn').decay_rate + \
+                                HNLDecay(hnl, [nu_mu,nu_tau,nu_tau], V_mu_square, 1, 'nc_nn').decay_rate 
+
+    self.decay_rate  = self.decay_rates['cc_lep'] + self.decay_rates['cc_had'] + self.decay_rates['nc_lep'] + self.decay_rates['nc_had'] + self.decay_rates['nc_nn']
+    self.ctau = ctau_from_gamma(gamma=self.decay_rate) 
