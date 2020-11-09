@@ -113,40 +113,40 @@ class Job(object):
       print('===> Created evtGen decay files for Bc \n')
 
 
-  def makeEvtGenDecayBleptonic(self):
-    for p in self.points:
-      decay_table = [
-       'Alias myB+ B+',
-       'Alias myB- B-',
-       '',
-       'ChargeConj myB+ myB-',
-       'ChargeConj hnl anti_hnl',
-       '',
-       'Decay myB+',
-       '{Bp_br0:.10f}               mu+    hnl    PHSP;',
-       '',
-       'Enddecay',
-       'CDecay myB-',
-       '',
-       'Decay hnl',
-       '1.0     mu-    pi+    PHSP;',
-       'Enddecay',
-       'CDecay anti_hnl',
-       '',
-       'End',      
-       '',      
-      ]
-      
-      decay_table = '\n'.join(decay_table)
-      dec = Decays(mass=p.mass, mixing_angle_square=1)
-
-      decay_table = decay_table.format(
-                         Bp_br0=dec.B_to_uHNL.BR,
-                         )
-
-      with open('../evtGenData/HNLdecay_mass{m}.DEC'.format(m=p.mass), 'w') as fout:
-        fout.write(decay_table)
-      print('===> Created evtGen decay files for B+/- leptonic \n')
+#  def makeEvtGenDecayBleptonic(self):
+#    for p in self.points:
+#      decay_table = [
+#       'Alias myB+ B+',
+#       'Alias myB- B-',
+#       '',
+#       'ChargeConj myB+ myB-',
+#       'ChargeConj hnl anti_hnl',
+#       '',
+#       'Decay myB+',
+#       '{Bp_br0:.10f}               mu+    hnl    PHSP;',
+#       '',
+#       'Enddecay',
+#       'CDecay myB-',
+#       '',
+#       'Decay hnl',
+#       '1.0     mu-    pi+    PHSP;',
+#       'Enddecay',
+#       'CDecay anti_hnl',
+#       '',
+#       'End',      
+#       '',      
+#      ]
+#      
+#      decay_table = '\n'.join(decay_table)
+#      dec = Decays(mass=p.mass, mixing_angle_square=1)
+#
+#      decay_table = decay_table.format(
+#                         Bp_br0=dec.B_to_uHNL.BR,
+#                         )
+#
+#      with open('../evtGenData/HNLdecay_mass{m}.DEC'.format(m=p.mass), 'w') as fout:
+#        fout.write(decay_table)
+#      print('===> Created evtGen decay files for B+/- leptonic \n')
 
   def makeEvtGenDecay(self):
 
@@ -345,7 +345,7 @@ class Job(object):
         'pwd',
         'echo "Going to run step1"',
         'DATE_START_step1=`date +%s`',
-        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf}',
+        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf} doDisplFilter={ddf}',
         'DATE_END_step1=`date +%s`',
         'echo "Finished running step1"',
         'echo "Content of current directory"',
@@ -376,6 +376,7 @@ class Job(object):
           user=self.user,
           jop1=self.jop1,
           dsmf=self.doskipmuonfilter,
+          ddf=self.dodisplfilter,
           nevtsjob=self.nevtsjob,
           nthr=self.nthr,
           jop2=self.jop2,
@@ -432,8 +433,8 @@ def getOptions():
   parser.add_argument('--dosubmit', dest='dosubmit', help='submit to slurm', action='store_true', default=False)
   parser.add_argument('--dogenonly', dest='dogenonly', help='produce sample until gen', action='store_true', default=False)
   parser.add_argument('--doskipmuonfilter', dest='doskipmuonfilter', help='skip the muon filter', action='store_true', default=False)
+  parser.add_argument('--dodisplfilter', dest='dodisplfilter', help='add a filter on the HNL displacement, Lxyz<1.5m', action='store_true', default=False)
   parser.add_argument('--dobc', dest='dobc', help='do the Bc generation instead of other B species', action='store_true', default=False)
-  parser.add_argument('--doblep', dest='doblep', help='do B+ => mu HNL instead of inclusive multi-B ', action='store_true', default=False)
 
   return parser.parse_args()
 
@@ -449,8 +450,8 @@ if __name__ == "__main__":
 
   if opt.dobc:
     job.makeEvtGenDecayBc()
-  elif opt.doblep:
-    job.makeEvtGenDecayBleptonic()  # FIXME: remove me after you're done
+  #elif opt.doblep:
+  #  job.makeEvtGenDecayBleptonic()  # DOES NOT WORK
   else:
     job.makeEvtGenDecay()
 
