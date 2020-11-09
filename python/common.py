@@ -21,7 +21,7 @@ def Lambda(a=None,b=None,c=None):
 def mass_correction_factor(mass):
     x_mu = const_mumass/mass
     x_pi = const_pimass/mass
-    mcf = ( (1-x_mu*x_mu)*(1-x_mu*x_mu) - x_pi*x_pi*(1+x_mu*x_mu) ) * np.sqrt( Lambda(1,x_mu*x_mu,x_pi*x_pi))   # eq 3.5 of
+    mcf = ( (1-x_mu*x_mu)*(1-x_mu*x_mu) - x_pi*x_pi*(1+x_mu*x_mu) ) * np.sqrt( Lambda(1,x_mu*x_mu,x_pi*x_pi))   # eq 3.5 of Bondarenko 
     return mcf
 
 def ctau_from_gamma(gamma):
