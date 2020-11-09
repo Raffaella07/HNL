@@ -4,9 +4,11 @@ from FWCore.ParameterSet.VarParsing import VarParsing
 
 options = VarParsing ('analysis')
 # define the defaults here, changed from command line
-options.maxEvents = -1 
+options.maxEvents = 100
 #options.inputFiles = 'file:/work/mratti/GEN_HNL/CMSSW_10_2_3/src/HNLsGen/genFiles/March19_BPH-test.root'
-options.inputFiles = 'file:/pnfs/psi.ch/cms/trivcat/store/user/mratti/BHNLsGen/testIncl_n3000_njt1/mass1.5_ctau51.922757246/step1_nj1.root'
+#options.inputFiles = 'file:/pnfs/psi.ch/cms/trivcat/store/user/mratti/BHNLsGen/testIncl_n3000_njt1/mass1.5_ctau51.922757246/step1_nj1.root'
+#options.inputFiles = 'file:/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/slurm/testManyChan_n100_njt1/BPH-step1_numEvent1000.root'
+options.inputFiles = 'file:/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/slurm/testBc_n10_njt1/BPH-step1_numEvent1000.root'
 options.parseArguments()
 print options
 
