@@ -375,7 +375,7 @@ def L(x):
   den = x**2 * (1. + math.sqrt(1 - 4. * x**2) ) 
   #print('x={}, num={}, den={}, num/den={}'.format(x,num,den,num/den))
   #print('l(x) = {}'.format(math.log( num / den )))
-  if num==0 or den==0: return 0
+  if num==0 or den==0 or x<0.005: return 0
   else: return math.log( num / den )
 
 
@@ -387,17 +387,19 @@ class HNLDecay(object):
     self.ckm_coupling = ckm_coupling
     self.decay_type = decay_type
 
-    allowed_decay_types = ['cc_lep','cc_had', 'nc_lep', 'nc_had', 'nc_nn']
+    allowed_decay_types = ['cc_lep','cc_had', 'nc_lep', 'nc_had', 'nc_neu']
     if self.decay_type not in allowed_decay_types: raise RuntimeError('Decay type %s not allowed, please check' % self.decay_type)
 
     # mass check
     if len(self.daughters)!=3: raise RuntimeError('Expected exactly three particles for this decay')
     mass_check = ( (self.daughters[0].mass + self.daughters[1].mass + self.daughters[2].mass) < self.hnl.mass  )
-    print('mass check = {}'.format(mass_check))
-    print('daugters mass = {} , hnl mass = {}'.format((self.daughters[0].mass + self.daughters[1].mass + self.daughters[2].mass), self.hnl.mass))
-      #raise RuntimeError('')
 
     if not mass_check:
+      print('mass check not passed')
+      print('daugters mass = {} , hnl mass = {}'.format((self.daughters[0].mass + self.daughters[1].mass + self.daughters[2].mass), self.hnl.mass))
+      print(self.daughters[0].__dict__)
+      print(self.daughters[1].__dict__)
+      print(self.daughters[2].__dict__)
       self.decay_rate = 0.
     else:
       ### charged-current leptonic and quarks
@@ -456,7 +458,6 @@ class HNLDecay(object):
             C2f = 1./6. * const_sinThW_square * (2./3. * const_sinThW_square - 1)
 
         x = f.mass / self.hnl.mass
-        print(f.__dict__)
         par1 = (1. - 14. * x**2 - 2 * x**4 - 12. * x**6) * math.sqrt(1. - 4. * x**2) + 12. * x**4 * (x**4 - 1.) * L(x)
         par2 = x**2 * (2. + 10. * x**2 - 12 * x**4) * math.sqrt(1 - 4. * x**2) + 6 * x**4 * (1 - 2. * x**2 + 2 * x**4) * L(x) 
         bigpar = C1f * par1 + 4. * C2f * par2
@@ -464,7 +465,7 @@ class HNLDecay(object):
         self.decay_rate = NZ * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (192 * const_pi**3) * bigpar
 
       ### neutral-current (all neutrinos)
-      elif self.decay_type == 'nc_nn':
+      elif self.decay_type == 'nc_neu':
         
         nu_alpha = self.daughters[0]
         nu_beta = self.daughters[1]
