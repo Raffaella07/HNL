@@ -255,7 +255,7 @@ class Sample(object):
     self.effnum = ROOT.TH1F('effnum', 'effnum', 1, 0, 13000) #dict([(k, ROOT.TH1F('effnum_%s' % k, 'effnum_%s' % k, 1, 0, 1)) for k in self.settings])
     self.effden = ROOT.TH1F('effden', 'effden', 1, 0, 13000)
 
-
+ FIXME : uncomment
     if doInclusive:
       cutsnum = '(l0_pt>{mp} && abs(l0_eta)<1.5'.format(mp=muTrigPt)
     else: 
@@ -274,6 +274,8 @@ class Sample(object):
       cutsnum += '&& l1_pt>3 && abs(l1_eta)<2.5 && pi1_pt>0.8 && abs(pi1_eta)<2.5'
     
     cutsnum += ')'
+
+    #cutsnum = '(l0_pt>{mp} && abs(l0_eta)<1.5 &&  Lxyz < 1500)'.format(mp=muTrigPt)
 
     cutsden = '(l0_pt>{mp} && abs(l0_eta)<1.5)'.format(mp=muTrigPt)
     #cutsden = '(l0_pt>{mp} && abs(l0_eta)<1.5 && Lxy<1000)'.format(mp=muTrigPt)
@@ -773,10 +775,10 @@ if __name__ == "__main__":
   doSkipDispl = False #
   doDisplZ = False #
   doSkipHNLptEta = False
-  doCompareAnalysis = True #
+  doCompareAnalysis = False #
   doTestAnalysis = False
   doFixedMassAnalysis = False
-  doRwAnalysis = False
+  doRwAnalysis = True
   doFixedVVAnalysis = False
   muTrigPt = 9 # 0 1 2 5 7 9
   ####
@@ -952,19 +954,18 @@ if __name__ == "__main__":
   if doRwAnalysis:
 
     points = [
-      Point(mass=2.0,ctau=None,vv=1.5e-05,isrw=False),
-      Point(mass=2.0,ctau=None,vv=3e-06,isrw=True,orig_vv=1.5e-05),
-      #Point(mass=2.0,ctau=None,vv=2e-05,isrw=True,orig_vv=1.5e-05),
-      #Point(mass=2.0,ctau=None,vv=3e-05,isrw=True,orig_vv=1.5e-05),
-      Point(mass=2.0,ctau=None,vv=4e-05,isrw=True,orig_vv=1.5e-05),
-      Point(mass=2.0,ctau=None,vv=5e-05,isrw=True,orig_vv=1.5e-05),
-      Point(mass=2.0,ctau=None,vv=0.0001,isrw=True,orig_vv=1.5e-05),
+      #Point(mass=2.0,ctau=None,vv=1.5e-05,isrw=False),
+      Point(mass=3.0,ctau=None,vv=1e-06,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=3e-06,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=2e-05,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=7e-05,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=3e-04,isrw=True,orig_vv=2.0e-06),
       #Point(mass=2.0,ctau=None,vv=0.0002,isrw=True,orig_vv=1.5e-05),
     ]
     for p in points:
       p.stamp()
-    #existing_points=checkFiles(path=path,points=points)
-    #slist_rw = doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedMass2.0_rwFrom1.5em05')
+    existing_points=checkFiles(path=path,points=points)
+    slist_rw = doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedMass1.0')
   
     ## compare the graphs w/ and w/o reweighting
     #doGraphComparison(slist_norw,slist_rw,what='accVSvv')
@@ -978,7 +979,7 @@ if __name__ == "__main__":
       Point(mass=2.0,ctau=None,vv=3.0e-06,isrw=False),
     ]
     existing_points = checkFiles(path,points)
-    doAnalysis(path=path,pl=opt.pl,points=existing_points,name='closureRw_Mass2.0_VV3em06')
+    #doAnalysis(path=path,pl=opt.pl,points=existing_points,name='closureRw_Mass2.0_VV3em06')
 
 
   if doFixedVVAnalysis:
