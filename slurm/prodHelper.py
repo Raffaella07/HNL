@@ -66,13 +66,16 @@ class Job(object):
 
   def makeEvtGenData(self):
     for p in self.points:      
-      hnl_lines = 'add  p Particle  hnl                          9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}    9900015\nadd  p Particle  anti_hnl                    -9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}   -9900015\n'.format(p.mass,p.ctau,p.mass,p.ctau)
+      if self.domajorana:
+        hnl_lines = 'add  p Particle  hnl                          9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}    9900015\n'.format(p.mass,p.ctau,p.mass,p.ctau)
+      else:
+        hnl_lines = 'add  p Particle  hnl                          9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}    9900015\nadd  p Particle  anti_hnl                    -9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}   -9900015\n'.format(p.mass,p.ctau,p.mass,p.ctau)
 
       with open('../evtGenData/evt_2014.pdl', 'r') as fin:
         contents = fin.readlines()
         contents.insert(4, hnl_lines)
         contents = ''.join(contents)
-      with open('../evtGenData/evt_2014_mass{m}_ctau{ctau}.pdl'.format(m=p.mass, ctau=p.ctau), 'w') as fout:
+      with open('../evtGenData/evt_2014_mass{m}_ctau{ctau}_{dm}.pdl'.format(m=p.mass, ctau=p.ctau, dm='maj' if self.domajorana else 'dirac'), 'w') as fout:
         fout.write(contents)
     print('===> Created evtGen particle property files\n')
 
@@ -84,7 +87,7 @@ class Job(object):
        'Alias myBc- B_c-',
        '',
        'ChargeConj myBc+ myBc-',
-       'ChargeConj hnl anti_hnl',
+       '{cconj}',
        '',
        'Decay myBc+',
        '{Bc_br0:.10f}               mu+    hnl    PHSP;',
@@ -93,9 +96,10 @@ class Job(object):
        'CDecay myBc-',
        '',
        'Decay hnl',
-       '1.0     mu-    pi+    PHSP;',
+       '0.5     mu-    pi+    PHSP;',
+       '{maj_decay}',
        'Enddecay',
-       'CDecay anti_hnl',
+       '{cdec}',
        '',
        'End',      
        '',      
@@ -105,48 +109,17 @@ class Job(object):
       dec = Decays(mass=p.mass, mixing_angle_square=1)
 
       decay_table = decay_table.format(
-                         Bc_br0=dec.Bc_to_uHNL.BR
+                         Bc_br0=dec.Bc_to_uHNL.BR,
+                         #pfx='anti_' if not self.domajorana else '',
+
+                         cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
+                         cdec = 'CDecay anti_hnl' if not self.domajorana else '',
+                         maj_decay = '0.5     mu+    pi-    PHSP;' if self.domajorana else '',
                          )
 
-      with open('../evtGenData/HNLdecay_mass{m}_Bc.DEC'.format(m=p.mass), 'w') as fout:
+      with open('../evtGenData/HNLdecay_mass{m}_{dm}_Bc.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
         fout.write(decay_table)
       print('===> Created evtGen decay files for Bc \n')
-
-
-#  def makeEvtGenDecayBleptonic(self):
-#    for p in self.points:
-#      decay_table = [
-#       'Alias myB+ B+',
-#       'Alias myB- B-',
-#       '',
-#       'ChargeConj myB+ myB-',
-#       'ChargeConj hnl anti_hnl',
-#       '',
-#       'Decay myB+',
-#       '{Bp_br0:.10f}               mu+    hnl    PHSP;',
-#       '',
-#       'Enddecay',
-#       'CDecay myB-',
-#       '',
-#       'Decay hnl',
-#       '1.0     mu-    pi+    PHSP;',
-#       'Enddecay',
-#       'CDecay anti_hnl',
-#       '',
-#       'End',      
-#       '',      
-#      ]
-#      
-#      decay_table = '\n'.join(decay_table)
-#      dec = Decays(mass=p.mass, mixing_angle_square=1)
-#
-#      decay_table = decay_table.format(
-#                         Bp_br0=dec.B_to_uHNL.BR,
-#                         )
-#
-#      with open('../evtGenData/HNLdecay_mass{m}.DEC'.format(m=p.mass), 'w') as fout:
-#        fout.write(decay_table)
-#      print('===> Created evtGen decay files for B+/- leptonic \n')
 
   def makeEvtGenDecay(self):
 
@@ -162,7 +135,7 @@ class Job(object):
        'ChargeConj myB+ myB-',
        'ChargeConj myB0 myB0bar',
        'ChargeConj myB0s myB0sbar', 
-       'ChargeConj hnl anti_hnl',
+       '{cconj}',
        '',
        'Decay myB+',
        '{Bp_br0:.10f}               mu+    hnl    PHSP;',
@@ -190,9 +163,10 @@ class Job(object):
        'CDecay myB0sbar',
        '',
        'Decay hnl',
-       '1.0     mu-    pi+    PHSP;',
+       '0.5     mu-    pi+    PHSP;',
+       '{maj_decay}',
        'Enddecay',
-       'CDecay anti_hnl',
+       '{cdec}',
        '',
        'End',      
        '',
@@ -217,9 +191,13 @@ class Job(object):
                          B0s_br2=dec.Bs_to_DsstaruHNL.BR,
                          B0s_br3=dec.Bs_to_KuHNL.BR,
                          B0s_br4=dec.Bs_to_KstaruHNL.BR,
+
+                         cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
+                         cdec = 'CDecay anti_hnl' if not self.domajorana else '',
+                         maj_decay = '0.5     mu+    pi-    PHSP;' if self.domajorana else '',
                          )
 
-      with open('../evtGenData/HNLdecay_mass{m}.DEC'.format(m=p.mass), 'w') as fout:
+      with open('../evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
         fout.write(decay_table)
       print('===> Created evtGen decay files\n')
 
@@ -435,6 +413,8 @@ def getOptions():
   parser.add_argument('--doskipmuonfilter', dest='doskipmuonfilter', help='skip the muon filter', action='store_true', default=False)
   parser.add_argument('--dodisplfilter', dest='dodisplfilter', help='add a filter on the HNL displacement, Lxyz<1.5m', action='store_true', default=False)
   parser.add_argument('--dobc', dest='dobc', help='do the Bc generation instead of other B species', action='store_true', default=False)
+  parser.add_argument('--domajorana', dest='domajorana', help='consider the HNL as a Majorana particle instead of Dirac', action='store_true', default=False)
+
 
   return parser.parse_args()
 
@@ -450,8 +430,6 @@ if __name__ == "__main__":
 
   if opt.dobc:
     job.makeEvtGenDecayBc()
-  #elif opt.doblep:
-  #  job.makeEvtGenDecayBleptonic()  # DOES NOT WORK
   else:
     job.makeEvtGenDecay()
 
