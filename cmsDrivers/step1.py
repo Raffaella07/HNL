@@ -211,18 +211,13 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             operates_on_particles = cms.vint32(521, -521, 511, -511, 531, -531), #B+, B-, B0, B0bar, B0s, B0sbar   # 541 is Bc+
 
             ### The file with properties of all particles
-            particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}_{dm}.pdl'.format(m=options.mass,ctau=options.ctau,dm='maj' if options.doMajorana else 'dirac'))), 
+            particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}_{dm}.pdl'.format(\
+                                                       m=options.mass,ctau=options.ctau,dm='maj' if options.doMajorana else 'dirac')), 
             #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath
-
-            ### Decay chain
-            # decay to HNL, majorana, no need to define charge conjugation
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nDecay myB-\n1.0     myD0    mu-    hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\n\nEnd\n")
-                  
-            # decay to HNL, dirac, and decay also HNL 
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nDecay anti_hnl\n1.0     mu+    pi-    PHSP;\nEnddecay\nCDecay hnl\n\nEnd\n")
-            
-            # new way, instead of a long string, write things in a file 
-            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(m=options.mass, dm='maj' if options.doMajorana else 'dirac')),
+ 
+            ### The decay file 
+            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(\
+                                             m=options.mass, dm='maj' if options.doMajorana else 'dirac')),
 
         ),
         parameterSets = cms.vstring('EvtGen130')
@@ -287,7 +282,7 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
     #filterEfficiency = cms.untracked.double(0.0013),  # this will not be used by Pythia, only saved in GenInfo
     maxEventsToPrint = cms.untracked.int32(0),        # max events to print the complete event list information
     pythiaHepMCVerbosity = cms.untracked.bool(False), # to display HepMC information: vertices and particles (not interesting)
-    pythiaPylistVerbosity = cms.untracked.int32(1)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
+    pythiaPylistVerbosity = cms.untracked.int32(0)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
 )
 
 
