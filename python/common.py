@@ -47,6 +47,25 @@ def gamma_total(mass,vv):
     gamma_total =   const_GF*const_GF / (96 * np.power(const_pi,3)) * np.power(mass,5) * vv * 10.95              # GeV
     return gamma_total
 
+def gamma_lep(mass,vv):
+    '''
+    Width due to charged and neutral current to charged leptons, same ref as above
+    '''
+    return gamma_total(mass,vv)/10.95  * 1.72 
+
+def gamma_neu(mass,vv):
+    '''
+    Width due to neutral current to neutrinos, same ref as above
+    '''
+    return gamma_total(mass,vv)/10.95  
+
+def gamma_had(mass,vv):
+    '''
+    Width due to charged and neutral current to quarks, same ref as above
+    '''
+    return gamma_total(mass,vv)/10.95 * 8.24
+
+
 def BR_HNLmupion(mass): # vv is irrelevant, as it cancels out in the ratio
     return gamma_partial(mass=mass,vv=1.)/gamma_total(mass=mass,vv=1.)
 
