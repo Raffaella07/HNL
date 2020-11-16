@@ -255,7 +255,6 @@ class Sample(object):
     self.effnum = ROOT.TH1F('effnum', 'effnum', 1, 0, 13000) #dict([(k, ROOT.TH1F('effnum_%s' % k, 'effnum_%s' % k, 1, 0, 1)) for k in self.settings])
     self.effden = ROOT.TH1F('effden', 'effden', 1, 0, 13000)
 
- FIXME : uncomment
     if doInclusive:
       cutsnum = '(l0_pt>{mp} && abs(l0_eta)<1.5'.format(mp=muTrigPt)
     else: 
@@ -775,10 +774,10 @@ if __name__ == "__main__":
   doSkipDispl = False #
   doDisplZ = False #
   doSkipHNLptEta = False
-  doCompareAnalysis = False #
+  doCompareAnalysis = True #
   doTestAnalysis = False
   doFixedMassAnalysis = False
-  doRwAnalysis = True
+  doRwAnalysis = False
   doFixedVVAnalysis = False
   muTrigPt = 9 # 0 1 2 5 7 9
   ####
@@ -819,7 +818,7 @@ if __name__ == "__main__":
       p.stamp()
     existing_points2=checkFiles(path=path2,points=points2)
     if not opt.pl3: 
-      doAnalysis(path=path,pl=opt.pl,points=existing_points,name='comp_norw',path2=path2,pl2=opt.pl2,points2=existing_points2,leglabel='NoFilter', leglabel2='DisplFilter')
+      doAnalysis(path=path,pl=opt.pl,points=existing_points,name='comp_norw',path2=path2,pl2=opt.pl2,points2=existing_points2,leglabel='Dirac', leglabel2='Majorana')
     else:
       for p in points3:
         p.stamp()
