@@ -102,6 +102,7 @@ class Sample(object):
     'b_pdgid'       : PlotOpt('abs(b_pdgid)', '(50,500,550)', 'B meson pdg Id', 'a.u.', False, False),   
     'b_eta'         : PlotOpt('b_eta', '(60,-6,6)', 'B meson #eta', 'a.u.', False, True),
     'b_ct'          : PlotOpt('b_ct_reco', '(50,0,100)', 'B meson ct [mm]', 'a.u.', False, True),
+    'b_charge'      : PlotOpt('b_q', '(3,-1.5,1.5)', 'B meson charge', 'a.u.', False, False),   
     #'b_ct_large'    : PlotOpt('b_ct_reco', '(100,0,1000)', 'B meson ct [mm]', 'a.u.', False, True),     
     # daughters of the B
     ## the HNL
@@ -120,6 +121,7 @@ class Sample(object):
     'hnl_Lxy_large' : PlotOpt('Lxy', '(100,0,10000)', 'L_{xy} [mm]', 'a.u.', False, True),    
     'hnl_Lxyz'       : PlotOpt('Lxyz', '(50,0,1000)', 'L_{xyz} [mm]', 'a.u.', False, True),
     'hnl_Lxyz_large' : PlotOpt('Lxyz', '(100,0,10000)', 'L_{xyz} [mm]', 'a.u.', False, True),    
+    'hnl_charge'    : PlotOpt('hnl_q', '(3,-1.5,1.5)', 'HNL charge', 'a.u.', False, False),   
 
     ### the D meson
 #    'd_pt'          : PlotOpt('d_pt', '(60,0,30)', 'D meson p_{T} [GeV]', 'a.u.', False, True),   
@@ -128,6 +130,7 @@ class Sample(object):
     ### the trigger lepton
     'mutrig_pt'     : PlotOpt('l0_pt', '(60,0,30)', '#mu^{trig} p_{T} [GeV]', 'a.u.', False, True),   
     'mutrig_eta'    : PlotOpt('l0_eta', '(60,-6,6)', '#mu^{trig} #eta', 'a.u.', False, True),      
+    'mutrig_charge' : PlotOpt('l0_q', '(3,-1.5,1.5)', '#mu^{trig} charge', 'a.u.', False, False),   
 
     #### daughters of the D meson
     ###### the pion
@@ -142,11 +145,17 @@ class Sample(object):
     ###### the lepton
     'mu_pt'         : PlotOpt('l1_pt', '(60,0,30)', '#mu (from HNL) p_{T} [GeV]', 'a.u.', False, True),  
     'mu_eta'        : PlotOpt('l1_eta', '(60,-6,6)', '#mu (from HNL) #eta', 'a.u.', False, True),      
+    'mu_charge'     : PlotOpt('l1_q', '(3,-1.5,1.5)', '#mu (from HNL) charge', 'a.u.', False, False),   
 
     ###### the pion
     'pi_pt'         : PlotOpt('pi1_pt', '(60,0,30)', '#pi (from HNL) p_{T} [GeV]', 'a.u.', False, True),   
     'pi_eta'        : PlotOpt('pi1_eta', '(60,-6,6)', '#pi (from HNL) #eta', 'a.u.', False, True),      
-   
+    'pi_charge'     : PlotOpt('pi1_q', '(3,-1.5,1.5)', '#pi (from HNL) charge', 'a.u.', False, False),   
+  
+    # charge of the two leptons
+    'mumutrig_charge': PlotOpt('l0_q*l1_q', '(3,-1.5,1.5)', '#mu^{trig} charge x #mu (from HNL) charge', 'a.u.', False, False),
+    'mupi_charge'    : PlotOpt('l1_q*pi1_q','(3,-1.5,1.5)', '#pi charge x #mu  charge', 'a.u.', False, False),
+
     # invariant masses
     'hnl_invmass'   : PlotOpt('lep_pi_invmass', '(50,0,5)', 'HNL invariant mass, m(#mu,#pi) [GeV]', 'a.u.', False, False),     
 #    'd_invmass'     : PlotOpt('k_pi_invmass', '(50,0,5)', 'D meson invariant mass, m(K,#pi) [GeV]', 'a.u.', False, False),      
