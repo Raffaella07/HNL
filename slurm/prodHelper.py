@@ -374,7 +374,7 @@ class Job(object):
     
   def writeCfg(self):
     with open('{}/cfg.txt'.format(self.prodLabel), 'w') as f:
-      f.write('Run genHelper.py with following options\n')
+      f.write('Run prodHelper.py with following options\n')
       for k,v in sorted(vars(self.opt).items()):
         f.write('{:15s}: {:10s}\n'.format(str(k),str(v)))
     os.system('cp ../cmsDrivers/{jop_in} ./{pl}/{jop}'.format(jop=self.jop1,jop_in=self.jop1_in,pl=self.prodLabel))
