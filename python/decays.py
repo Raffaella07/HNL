@@ -1,6 +1,6 @@
 '''
-This script collects the particle definition and creates the ProductionRates class, that lists
-the production rates of interest, with respect to the HNL mass and the mixing angle
+This script collects the particle definition and creates the Decays class, that contains
+the B->HNL branching ratios of interest, as a function of HNL mass and the mixing angle
 '''
 
 from objects import Particle, Decay
