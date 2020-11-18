@@ -120,3 +120,19 @@ fig.savefig('HNL_tau_bon_log.pdf')
 fig.savefig('HNL_tau_bon_log.png')
 
 
+#gammas_bondarenko_tot = [2*decays[im].decay_rate['tot']     for im,m in enumerate(masses)]
+gammas_bondarenko_tot_Over_mass = [gamma/m for gamma,m in zip(gammas_bondarenko_tot,masses)]
+fig, ax = plt.subplots(1, 1, figsize=(5.5*1, 5))
+ax.plot(masses, gammas_bondarenko_tot_Over_mass, 'r', label='bondarenko')
+ax.set_ylabel('$\\Gamma/m $')
+ax.set_xlabel('HNL mass (GeV)')
+ax.grid(which='both', axis='both')
+ax.set_yscale('log')
+fig.savefig('HNL_gamma_over_mass_log.pdf')
+fig.savefig('HNL_gamma_over_mass_log.png')
+
+
+
+
+
+
