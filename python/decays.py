@@ -3,9 +3,13 @@ This script collects the particle definition and creates the ProductionRates cla
 the production rates of interest, with respect to the HNL mass and the mixing angle
 '''
 
-from objects import Particle, Decay
+from objects import Particle, Decay, HNLDecay
 import math
 
+
+# use approximations of Shuve Peskin
+global PESKIN
+PESKIN = False
 
 ## CONSTANTS ##
 
@@ -31,10 +35,17 @@ m_pi0_pdg     = 0.1349768
 m_pi_pdg      = 0.13957039
 
 # leptons
-m_el_pdg  = 0.510999 * 1e-3 
-m_mu_pdg  = 0.105658 
-m_tau_pdg = 1.77686
+m_el_pdg  = 0.510999 * 1e-3 if not PESKIN else 0
+m_mu_pdg  = 0.105658        if not PESKIN else 0
+m_tau_pdg = 1.77686         if not PESKIN else 0
 
+# quarks
+m_uq_pdg = 2.16 * 1e-3 if not PESKIN else 0
+m_dq_pdg = 4.67 * 1e-3 if not PESKIN else 0
+m_sq_pdg = 93   * 1e-3 if not PESKIN else 0
+m_cq_pdg = 1.27        if not PESKIN else 0
+m_bq_pdg = 4.18
+m_tq_pdg = 172.76  # here for completeness
 
 # meson decay constant --> to be checked
 # in [GeV]
@@ -60,13 +71,15 @@ fraction_B_sub_s = 0.1
 fraction_B_sub_c = 0.001
 
 # CKM matrix elements
-Vud_pdg = 0.97417 
-Vus_pdg = 0.2248
-Vub_pdg = 0.00409
-Vcb_pdg = 40.5e-3
-Vcd_pdg = 0.220
-Vcs_pdg = 0.995
-
+Vud_pdg = 0.97417 if not PESKIN else 1.
+Vus_pdg = 0.2248  if not PESKIN else 0.
+Vub_pdg = 0.00409 if not PESKIN else 0.
+Vcb_pdg = 40.5e-3 if not PESKIN else 0.
+Vcd_pdg = 0.220   if not PESKIN else 0.
+Vcs_pdg = 0.995   if not PESKIN else 1.
+Vtd_pdg = 0.0080  if not PESKIN else 0. 
+Vts_pdg = 0.00388 if not PESKIN else 0.
+Vtb_pdg = 1.01    if not PESKIN else 1.
 
 ## PARTICLES ##
 
@@ -100,6 +113,19 @@ pi_meson          = Particle('pi_meson'         , 'meson', m_pi_pdg)
 el                = Particle('el'               , 'lepton', m_el_pdg) 
 mu                = Particle('mu'               , 'lepton', m_mu_pdg) 
 tau               = Particle('tau'              , 'lepton', m_tau_pdg) 
+
+# neutrinos
+nu_el             = Particle('nu_el'            , 'neutrino', 0.)
+nu_mu             = Particle('nu_mu'            , 'neutrino', 0.)
+nu_tau            = Particle('nu_tau'           , 'neutrino', 0.)
+
+# quarks
+uq                = Particle('uq'              , 'quark',  m_uq_pdg)
+dq                = Particle('dq'              , 'quark',  m_dq_pdg)
+cq                = Particle('cq'              , 'quark',  m_cq_pdg)
+sq                = Particle('sq'              , 'quark',  m_sq_pdg)
+bq                = Particle('bq'              , 'quark',  m_bq_pdg)
+tq                = Particle('tq'              , 'quark',  m_tq_pdg)
 
 
 ## DECAYS ##
@@ -191,4 +217,127 @@ class Decays(object):
     self.Bs_to_DsstartHNL = Decay(B_sub_s_meson, [D_sub_sstar_meson, tau], hnl, V_tau_square, Vcb_pdg, 'semileptonic_vector', formFactorLabel='Bs_to_Dsstar') 
     self.Bs_to_KstartHNL  = Decay(B_sub_s_meson, [Kstar_meson, tau]      , hnl, V_tau_square, Vub_pdg, 'semileptonic_vector', formFactorLabel='Bs_to_Kstar' )
 
+## HNL DECAYS ##
+class HNLDecays(object):
+  def __init__(self, mass, mixing_angle_square): 
+    self.mass = mass
+    self.mixing_angle_square = mixing_angle_square
 
+    # define the HNL
+    hnl = Particle('hnl', 'lepton', self.mass)
+    
+    # get the model
+    V_mu_square =  self.mixing_angle_square
+    V_tau_square = 0.#self.mixing_angle_square
+    V_el_square =  0.#self.mixing_angle_square
+    QCD_corr = 0.18 if not PESKIN else 0.
+    special_V_mu_square = V_mu_square if not PESKIN else 0.
+
+    # list of the decays of interest
+    decay_rates = {}
+    self.decay_rate = {}
+
+    decay_rates['cc_lep'] = [ 
+                              HNLDecay(hnl, [mu,el,nu_el],   V_mu_square, 1, 'cc_lep').decay_rate, 
+                              HNLDecay(hnl, [mu,tau,nu_tau], special_V_mu_square, 1, 'cc_lep').decay_rate, 
+                              # Vel
+                              HNLDecay(hnl, [el,mu,nu_mu],   V_el_square, 1, 'cc_lep').decay_rate, 
+                              HNLDecay(hnl, [el,tau,nu_tau], V_el_square, 1, 'cc_lep').decay_rate, 
+                              # Vtau
+                              HNLDecay(hnl, [tau,el,nu_el],  V_tau_square,1, 'cc_lep').decay_rate, 
+                              HNLDecay(hnl, [tau,mu,nu_mu],  V_tau_square,1, 'cc_lep').decay_rate, 
+
+                              # these contributions should already be included in nc_lep
+                              #HNLDecay(hnl, [mu,mu,nu_mu],   V_mu_square, 1, 'cc_lep').decay_rate,
+                              #HNLDecay(hnl, [el,el,nu_el],   V_el_square, 1, 'cc_lep').decay_rate,
+                              #HNLDecay(hnl, [tau,tau,nu_tau],V_tau_square, 1, 'cc_lep').decay_rate, 
+                              
+                            ]
+    self.decay_rate['cc_lep'] = sum(decay_rates['cc_lep'])
+
+    decay_rates['cc_had'] = [ 
+                              HNLDecay(hnl, [mu,uq,dq], V_mu_square, Vud_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [mu,uq,sq], V_mu_square, Vus_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [mu,uq,bq], V_mu_square, Vub_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [mu,cq,dq], V_mu_square, Vcd_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [mu,cq,sq], V_mu_square, Vcs_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [mu,cq,bq], V_mu_square, Vcb_pdg, 'cc_had').decay_rate,
+                              # decays to top not possible for hNL mass < 6 GeV
+                              # Vel
+                              HNLDecay(hnl, [el,uq,dq], V_el_square, Vud_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [el,uq,sq], V_el_square, Vus_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [el,uq,bq], V_el_square, Vub_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [el,cq,dq], V_el_square, Vcd_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [el,cq,sq], V_el_square, Vcs_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [el,cq,bq], V_el_square, Vcb_pdg, 'cc_had').decay_rate,
+                              # Vtau
+                              HNLDecay(hnl, [tau,uq,dq], V_tau_square, Vud_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [tau,uq,sq], V_tau_square, Vus_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [tau,uq,bq], V_tau_square, Vub_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [tau,cq,dq], V_tau_square, Vcd_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [tau,cq,sq], V_tau_square, Vcs_pdg, 'cc_had').decay_rate,
+                              HNLDecay(hnl, [tau,cq,bq], V_tau_square, Vcb_pdg, 'cc_had').decay_rate,
+                            ]  
+    self.decay_rate['cc_had'] = sum(decay_rates['cc_had']) * (1 + QCD_corr)  # (three-loop correction for quark->hadrons, with alphas_s(m_tau=1.8 GeV) )    
+
+    decay_rates['nc_lep'] = [ 
+                              HNLDecay(hnl, [nu_mu,el,el],   V_mu_square, 1, 'nc_lep').decay_rate,
+                              HNLDecay(hnl, [nu_mu,mu,mu],   V_mu_square, 1, 'nc_lep').decay_rate,
+                              HNLDecay(hnl, [nu_mu,tau,tau], special_V_mu_square, 1, 'nc_lep').decay_rate,
+                              # Vel
+                              HNLDecay(hnl, [nu_el,el,el],   V_el_square, 1, 'nc_lep').decay_rate,
+                              HNLDecay(hnl, [nu_el,mu,mu],   V_el_square, 1, 'nc_lep').decay_rate,
+                              HNLDecay(hnl, [nu_el,tau,tau], V_el_square, 1, 'nc_lep').decay_rate,
+                              # Vtau
+                              HNLDecay(hnl, [nu_tau,el,el],   V_tau_square, 1, 'nc_lep').decay_rate,
+                              HNLDecay(hnl, [nu_tau,mu,mu],   V_tau_square, 1, 'nc_lep').decay_rate,
+                              HNLDecay(hnl, [nu_tau,tau,tau], V_tau_square, 1, 'nc_lep').decay_rate,
+                            ]
+    self.decay_rate['nc_lep'] = sum(decay_rates['nc_lep'])
+
+    decay_rates['nc_had'] = [ 
+                              HNLDecay(hnl, [nu_mu,uq,uq],      V_mu_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_mu,dq,dq],      V_mu_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_mu,cq,cq],      V_mu_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_mu,sq,sq],      V_mu_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_mu,bq,bq],      V_mu_square, 1, 'nc_had').decay_rate, 
+                              # decays to bbbar and ttbar not possible for HNL mass < 6 GeV
+                              # Vel
+                              HNLDecay(hnl, [nu_el,uq,uq],      V_el_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_el,dq,dq],      V_el_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_el,cq,cq],      V_el_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_el,sq,sq],      V_el_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_el,bq,bq],      V_el_square, 1, 'nc_had').decay_rate, 
+                              # Vtau
+                              HNLDecay(hnl, [nu_tau,uq,uq],     V_tau_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_tau,dq,dq],     V_tau_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_tau,cq,cq],     V_tau_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_tau,sq,sq],     V_tau_square, 1, 'nc_had').decay_rate,
+                              HNLDecay(hnl, [nu_tau,bq,bq],     V_tau_square, 1, 'nc_had').decay_rate, 
+
+                            ]
+    self.decay_rate['nc_had'] = sum(decay_rates['nc_had']) * (1 + QCD_corr)  # (three-loop correction for quark->hadrons, with alphas_s(m_tau=1.8 GeV) )    
+
+    decay_rates['nc_neu'] = [
+                              HNLDecay(hnl, [nu_mu,nu_el,nu_el],   V_mu_square, 1, 'nc_neu').decay_rate,
+                              HNLDecay(hnl, [nu_mu,nu_mu,nu_mu],   V_mu_square, 1, 'nc_neu').decay_rate,
+                              HNLDecay(hnl, [nu_mu,nu_tau,nu_tau], V_mu_square, 1, 'nc_neu').decay_rate,
+                              # Vel
+                              HNLDecay(hnl, [nu_el,nu_el,nu_el],   V_el_square, 1, 'nc_neu').decay_rate,
+                              HNLDecay(hnl, [nu_el,nu_mu,nu_mu],   V_el_square, 1, 'nc_neu').decay_rate,
+                              HNLDecay(hnl, [nu_el,nu_tau,nu_tau], V_el_square, 1, 'nc_neu').decay_rate,
+                              # Vtau
+                              HNLDecay(hnl, [nu_tau,nu_el,nu_el],   V_tau_square, 1, 'nc_neu').decay_rate,
+                              HNLDecay(hnl, [nu_tau,nu_mu,nu_mu],   V_tau_square, 1, 'nc_neu').decay_rate,
+                              HNLDecay(hnl, [nu_tau,nu_tau,nu_tau], V_tau_square, 1, 'nc_neu').decay_rate,
+
+                            ]
+    self.decay_rate['nc_neu'] = sum(decay_rates['nc_neu'])
+
+    # partial sums
+    self.decay_rate['tot_lep'] = self.decay_rate['cc_lep'] + self.decay_rate['nc_lep']
+    self.decay_rate['tot_neu'] = self.decay_rate['nc_neu']
+    self.decay_rate['tot_had'] = self.decay_rate['cc_had'] + self.decay_rate['nc_had']
+
+    self.decay_rate['tot'] = self.decay_rate['tot_lep'] + self.decay_rate['tot_neu'] + self.decay_rate['tot_had']
+    #self.ctau = ctau_from_gamma(gamma=self.decay_rate) 

@@ -7,7 +7,7 @@ sys.path.append('/work/mratti/plotting/myplotting')
 from spares import *
 from glob import glob
 import array
-
+import ratioplot as RP
 # couplings to be tested, for which the reweight is run
 
 #from genTreeProducer import new_vvs
@@ -56,7 +56,7 @@ class Sample(object):
   '''
   Handles information of a single sample, i.e. mass,ctau , w/ or w/o reweighting
   '''
-  def __init__(self,mass=-99, ctau=-99, vv=-99, infileNames=None, isrw=False, orig_vv=None, label='V00'):
+  def __init__(self,mass=-99, ctau=-99, vv=-99, infileNames=None, isrw=False, orig_vv=None, label='V00', leglabel=''):
     self.mass = mass
     self.ctau = ctau
     self.vv = vv
@@ -75,11 +75,14 @@ class Sample(object):
       self.orig_vv = self.vv
       self.orig_ctau = self.ctau
     self.label=label
+    self.leglabel=leglabel
     self.ngenevts = int(label.split('_n')[1])
     self.njobs = int(label.split('_njt')[1])
     #self.isMajorana
     self.name='bhnl_mass{m}_ctau{ctau}'.format(m=self.mass, ctau=self.ctau)
-    self.legname='{:3}: m={:.1f}GeV |V|^{{2}}={:.1e} c#tau={:.1f}mm {}'.format('rw' if self.isrw else 'gen',self.mass,self.vv,self.ctau,'- orig |V|^{{2}}={:.1e}'.format(self.orig_vv) if self.isrw else '')
+    #self.legname='{:3}: m={:.1f}GeV |V|^{{2}}={:.1e} c#tau={:.1f}mm {} {}'.format('rw' if self.isrw else 'gen',self.mass,self.vv,self.ctau,'- orig |V|^{{2}}={:.1e}'.format(self.orig_vv) if self.isrw else '', self.leglabel)
+    #self.legname='{:3}: m={:.1f}GeV |V|^{{2}}={:.1e} c#tau={:.1f}mm'.format('rw' if self.isrw else 'gen',self.mass,self.vv,self.ctau)
+    self.legname='{:3}: m={:.1f}GeV |V|^{{2}}={:.1e} {}'.format('rw' if self.isrw else 'gen',self.mass,self.vv, self.leglabel)
     if self.isrw:
       self.evt_w = '(weight_{vv})'.format(vv=str(self.vv).replace('-', 'm')) # reweight the tree (created with orig vv) to the vv of this sample
     else:
@@ -95,55 +98,79 @@ class Sample(object):
     self.histoDefs = {
     # b mother
     'b_pt'          : PlotOpt('b_pt', '(60,0,60)', 'B meson p_{T} [GeV]', 'a.u.', False, True),
-    'b_signid'      : PlotOpt('b_pdgid/abs(b_pdgid)', '(2,-1.1,1.1)', 'B meson pdg id sign', 'a.u.', False, True),   
+    'b_signid'      : PlotOpt('b_pdgid/abs(b_pdgid)', '(2,-1.1,1.1)', 'B meson pdg Id sign', 'a.u.', False, False),   
+    'b_pdgid'       : PlotOpt('abs(b_pdgid)', '(50,500,550)', 'B meson pdg Id', 'a.u.', False, False),   
     'b_eta'         : PlotOpt('b_eta', '(60,-6,6)', 'B meson #eta', 'a.u.', False, True),
     'b_ct'          : PlotOpt('b_ct_reco', '(50,0,100)', 'B meson ct [mm]', 'a.u.', False, True),
+    'b_charge'      : PlotOpt('b_q', '(3,-1.5,1.5)', 'B meson charge', 'a.u.', False, False),   
     #'b_ct_large'    : PlotOpt('b_ct_reco', '(100,0,1000)', 'B meson ct [mm]', 'a.u.', False, True),     
     # daughters of the B
     ## the HNL
+    'hnl_pzOverP'   : PlotOpt('abs(TMath::TanH(hnl_eta))', '(50,0,1)', 'HNL |p_{z}|/|p| [GeV]', 'a.u.', False, False),   
+    'hnl_ptOverP'   : PlotOpt('1/abs(TMath::CosH(hnl_eta))', '(50,0,1)', 'HNL p_{T}/|p| [GeV]', 'a.u.', False, False),   
+    'hnl_pz'        : PlotOpt('abs(hnl_pt * TMath::SinH(hnl_eta))', '(60,0,30)', 'HNL |pz| [GeV]', 'a.u.', False, True),   
     'hnl_pt'        : PlotOpt('hnl_pt', '(60,0,30)', 'HNL p_{T} [GeV]', 'a.u.', False, True),   
-    'hnl_signid'    : PlotOpt('hnl_pdgid/abs(hnl_pdgid)', '(2,-1.1,1.1)', 'HNL pdg id sign', 'a.u.', False, True),   
+    'hnl_signid'    : PlotOpt('hnl_pdgid/abs(hnl_pdgid)', '(2,-1.1,1.1)', 'HNL pdg id sign', 'a.u.', False, False),   
     'hnl_eta'       : PlotOpt('hnl_eta', '(60,-6,6)', 'HNL #eta', 'a.u.', False, True),      
+    'hnl_betagamma' : PlotOpt('hnl_beta*hnl_gamma', '(80,0,20)', 'HNL #beta#gamma', 'a.u.', False, True),
     'hnl_ct'        : PlotOpt('hnl_ct_reco', '(50,0,1000)', 'HNL ct [mm]', 'a.u.', False, True),
     'hnl_ct_large'  : PlotOpt('hnl_ct_reco', '(100,0,10000)', 'HNL ct [mm]', 'a.u.', False, True),    
+    'hnl_Lz'        : PlotOpt('Lz', '(50,0,1000)', 'L_{z} [mm]', 'a.u.', False, True),
+    'hnl_Lz_large'  : PlotOpt('Lz', '(100,0,10000)', 'L_{z} [mm]', 'a.u.', False, True),
     'hnl_Lxy'       : PlotOpt('Lxy', '(50,0,1000)', 'L_{xy} [mm]', 'a.u.', False, True),
     'hnl_Lxy_large' : PlotOpt('Lxy', '(100,0,10000)', 'L_{xy} [mm]', 'a.u.', False, True),    
     'hnl_Lxyz'       : PlotOpt('Lxyz', '(50,0,1000)', 'L_{xyz} [mm]', 'a.u.', False, True),
     'hnl_Lxyz_large' : PlotOpt('Lxyz', '(100,0,10000)', 'L_{xyz} [mm]', 'a.u.', False, True),    
+    'hnl_charge'    : PlotOpt('hnl_q', '(3,-1.5,1.5)', 'HNL charge', 'a.u.', False, False),   
 
     ### the D meson
-    'd_pt'          : PlotOpt('d_pt', '(60,0,30)', 'D meson p_{T} [GeV]', 'a.u.', False, True),   
-    'd_eta'         : PlotOpt('d_eta', '(60,-6,6)', 'D meson #eta', 'a.u.', False, True),      
+#    'd_pt'          : PlotOpt('d_pt', '(60,0,30)', 'D meson p_{T} [GeV]', 'a.u.', False, True),   
+#    'd_eta'         : PlotOpt('d_eta', '(60,-6,6)', 'D meson #eta', 'a.u.', False, True),      
 
     ### the trigger lepton
     'mutrig_pt'     : PlotOpt('l0_pt', '(60,0,30)', '#mu^{trig} p_{T} [GeV]', 'a.u.', False, True),   
     'mutrig_eta'    : PlotOpt('l0_eta', '(60,-6,6)', '#mu^{trig} #eta', 'a.u.', False, True),      
+    'mutrig_charge' : PlotOpt('l0_q', '(3,-1.5,1.5)', '#mu^{trig} charge', 'a.u.', False, False),   
 
     #### daughters of the D meson
     ###### the pion
-    'piD_pt'        : PlotOpt('pi_pt', '(60,0,30)', '#pi (from D) p_{T} [GeV]', 'a.u.', False, True),  
-    'piD_eta'       : PlotOpt('pi_eta', '(60,-6,6)', '#pi (from D) #eta', 'a.u.', False, True),      
+#    'piD_pt'        : PlotOpt('pi_pt', '(60,0,30)', '#pi (from D) p_{T} [GeV]', 'a.u.', False, True),  
+#    'piD_eta'       : PlotOpt('pi_eta', '(60,-6,6)', '#pi (from D) #eta', 'a.u.', False, True),      
     
     ###### the kaon
-    'k_pt'          : PlotOpt('k_pt', '(60,0,30)', 'K (from D) p_{T} [GeV]', 'a.u.', False, True),  
-    'k_eta'         : PlotOpt('k_eta', '(60,-6,6)', 'K (from D) #eta', 'a.u.', False, True),      
+#    'k_pt'          : PlotOpt('k_pt', '(60,0,30)', 'K (from D) p_{T} [GeV]', 'a.u.', False, True),  
+#    'k_eta'         : PlotOpt('k_eta', '(60,-6,6)', 'K (from D) #eta', 'a.u.', False, True),      
     
     #### daughters of the HNL
     ###### the lepton
     'mu_pt'         : PlotOpt('l1_pt', '(60,0,30)', '#mu (from HNL) p_{T} [GeV]', 'a.u.', False, True),  
     'mu_eta'        : PlotOpt('l1_eta', '(60,-6,6)', '#mu (from HNL) #eta', 'a.u.', False, True),      
+    'mu_charge'     : PlotOpt('l1_q', '(3,-1.5,1.5)', '#mu (from HNL) charge', 'a.u.', False, False),   
 
     ###### the pion
     'pi_pt'         : PlotOpt('pi1_pt', '(60,0,30)', '#pi (from HNL) p_{T} [GeV]', 'a.u.', False, True),   
     'pi_eta'        : PlotOpt('pi1_eta', '(60,-6,6)', '#pi (from HNL) #eta', 'a.u.', False, True),      
-   
+    'pi_charge'     : PlotOpt('pi1_q', '(3,-1.5,1.5)', '#pi (from HNL) charge', 'a.u.', False, False),   
+  
+    # charge of the two leptons
+    'mumutrig_charge': PlotOpt('l0_q*l1_q', '(3,-1.5,1.5)', '#mu^{trig} charge x #mu (from HNL) charge', 'a.u.', False, False),
+    'mupi_charge'    : PlotOpt('l1_q*pi1_q','(3,-1.5,1.5)', '#pi charge x #mu  charge', 'a.u.', False, False),
+
     # invariant masses
     'hnl_invmass'   : PlotOpt('lep_pi_invmass', '(50,0,5)', 'HNL invariant mass, m(#mu,#pi) [GeV]', 'a.u.', False, False),     
-    'd_invmass'     : PlotOpt('k_pi_invmass', '(50,0,5)', 'D meson invariant mass, m(K,#pi) [GeV]', 'a.u.', False, False),      
-    'b_invmass'     : PlotOpt('hn_d_pl_invmass', '(50,2,7)', 'B meson invariant mass, m(HNL,D,#mu^{trig}) [GeV]', 'a.u.', False, False),     
+#    'd_invmass'     : PlotOpt('k_pi_invmass', '(50,0,5)', 'D meson invariant mass, m(K,#pi) [GeV]', 'a.u.', False, False),      
+    #'b_invmass'     : PlotOpt('b_invmass', '(50,2,7)', 'B invariant mass [GeV]', 'a.u.', False, False),     
+    'bpartial_invmass'     : PlotOpt('bpartial_invmass', '(50,2,7)', 'm(HNL,#mu^{trig}) [GeV]', 'a.u.', False, False),     
+    'bpartial_invmass_log'     : PlotOpt('bpartial_invmass', '(50,2,7)', 'm(HNL,#mu^{trig}) [GeV]', 'a.u.', False, True),     
     #'Lxy_cos', # cosine of the pointing angle in the transverse plane
     #'Lxyz_b', #3D displacement of the B wrt to primary vertex
     #'Lxyz_l0' #3D displacement of the prompt lepton wrt to B vertex
+
+    # deltaRs 
+    'dR_mupi'      : PlotOpt('sqrt(TVector2::Phi_mpi_pi(l1_phi-pi1_phi)*TVector2::Phi_mpi_pi(l1_phi-pi1_phi) + (l1_eta-pi1_eta)*(l1_eta-pi1_eta))', \
+                              '(50,0.,5.)', '#DeltaR(#mu,#pi)', 'a.u.', False, False),
+    'dR_mutrighnl' : PlotOpt('sqrt(TVector2::Phi_mpi_pi(hnl_phi-l0_phi)*TVector2::Phi_mpi_pi(hnl_phi-l0_phi) + (hnl_eta-l0_eta)*(hnl_eta-l0_eta))', \
+                              '(50,0.,5.)', '#DeltaR(#mu^{trig},HNL)', 'a.u.', False, False),
     }
     self.histos = {}
    
@@ -152,9 +179,13 @@ class Sample(object):
     This should print the basic information of the sample
     '''
     if debug: print('Info in Sample.stamp()')
-    print('mass={m}GeV, ctau={ctau}mm VV={vv}, isrw={isrw}, orig_VV={ovv}, acc={acc}, au={au}, ad={ad}, num={num}, den={den}, evt_w={ew} effFilter={ef}'.format( \
-            m=self.mass,ctau=self.ctau,vv=self.vv,isrw=self.isrw,ovv=self.orig_vv,acc=self.acc,au=self.acc_errup,ad=self.acc_errdn,num=self.num,den=self.den,ew=self.evt_w,ef=self.effFilter))
-  
+    print('mass={m}GeV, ctau={ctau}mm VV={vv}, isrw={isrw}, orig_VV={ovv}, orig_ctau={octau}mm, acc={acc}, au={au}, ad={ad}, num={num}, den={den}, evt_w={ew} effFilter={ef}'.format( \
+            m=self.mass,ctau=self.ctau,vv=self.vv,isrw=self.isrw,ovv=self.orig_vv,acc=self.acc,au=self.acc_errup,ad=self.acc_errdn,num=self.num,den=self.den,ew=self.evt_w,ef=self.effFilter,octau=self.orig_ctau))
+
+    print('TGraphErrors') 
+    print('mass={m}GeV, ctau={ctau}mm VV={vv}, isrw={isrw}, orig_VV={ovv}, orig_ctau={octau}mm, acc={acc}, au={au}, ad={ad}, num={num}, den={den}, evt_w={ew} effFilter={ef}'.format( \
+            m=self.mass,ctau=self.ctau,vv=self.vv,isrw=self.isrw,ovv=self.orig_vv,acc=self.acc_tg,au=self.acc_errup_tg,ad=self.acc_errdn_tg,num=self.num,den=self.den,ew=self.evt_w,ef=self.effFilter,octau=self.orig_ctau))
+ 
   def fillHistos(self,sel='(1)',sellabel='noSel'):
     '''
     This is to fill the histograms
@@ -205,7 +236,9 @@ class Sample(object):
       pad.SetLogx(self.histoDefs[what].logX)
       pad.SetLogy(self.histoDefs[what].logY)
       if norm and h.Integral() != 0:
-        hdrawn = h.DrawNormalized('LPE')
+        #hdrawn = h.DrawNormalized('LPE')
+        h.Scale(1/h.Integral(-1,h.GetNbinsX()+1))
+        hdrawn = h.Draw('PLE')
       else:
         hdrawn = h.Draw('PLE')
 
@@ -238,7 +271,11 @@ class Sample(object):
     if doSkipDispl:
       cutsnum += ''
     else:
-      cutsnum += '&& Lxy < 1000'
+      cutsnum += '&& Lxy < 500'
+    if not doDisplZ:
+      pass
+    else:
+      cutsnum += '&& Lz < 20'
     if doSkipHNLptEta:
       cutsnum += ''
     else:
@@ -246,18 +283,31 @@ class Sample(object):
     
     cutsnum += ')'
 
+    #cutsnum = '(l0_pt>{mp} && abs(l0_eta)<1.5 &&  Lxyz < 1500)'.format(mp=muTrigPt)
+
     cutsden = '(l0_pt>{mp} && abs(l0_eta)<1.5)'.format(mp=muTrigPt)
+    #cutsden = '(l0_pt>{mp} && abs(l0_eta)<1.5 && Lxy<1000)'.format(mp=muTrigPt)
     
+    #cutsnum = '(Lxy<500)'
+    #cutsden = '(1)'
 
     chain.Draw('hnl_pt>>effnum', cutsnum+'*'+self.evt_w, 'goff')
-    chain.Draw('hnl_pt>>effden', cutsden+'*'+self.evt_w, 'goff')
+    #chain.Draw('hnl_pt>>effden', cutsden+'*'+self.evt_w, 'goff') # for denominator of acceptance, switch off the 
+    chain.Draw('hnl_pt>>effden', cutsden, 'goff')
  
     if TEfficiency.CheckConsistency(self.effnum,self.effden): 
       peff = TEfficiency(self.effnum,self.effden)
-      
+     
+      # check usage of TGraphAsymmetricErrors
       self.acc = peff.GetEfficiency(1)
       self.acc_errup = peff.GetEfficiencyErrorUp(1)
       self.acc_errdn = peff.GetEfficiencyErrorLow(1)
+
+    tgra = TGraphAsymmErrors()
+    tgra.BayesDivide(self.effnum, self.effden)
+    self.acc_tg = tgra.GetY()[0]
+    self.acc_errup_tg = tgra.GetErrorYhigh(0)
+    self.acc_errdn_tg = tgra.GetErrorYlow(0)
 
     # for debugging purposes
     self.num = self.effnum.GetEntries()
@@ -285,7 +335,7 @@ class Sample(object):
     To retrieve and save the filter efficiency - from the minigentree
     TODO: retrieve the cross-section => for that you would need to run without separate jobs
     '''
-    if debug: print('Info in Sample.fillFilterEff()')
+    ##if debug: print('Info in Sample.fillFilterEff()')
 
     efffnum = ROOT.TH1F('efffnum', 'efffnum', 1, 0, 13000)
     efffden = ROOT.TH1F('efffden', 'efffden', 1, 0, 13000)
@@ -300,9 +350,9 @@ class Sample(object):
     # denominator = number of events that were run in the first place # access storage element... 
     #self.ngenevts_succ_afterfilter=0
     self.njobs_succ=0
-    path = '/pnfs/psi.ch/cms/trivcat/store/user/{u}/BHNLsGen/{pl}/mass{m}_ctau{ctau}/step1*root'.format(u=os.environ['USER'],pl=self.label,m=self.mass,ctau=self.ctau)
+    path = '/pnfs/psi.ch/cms/trivcat/store/user/{u}/BHNLsGen/{pl}/mass{m}_ctau{ctau}/step1*root'.format(u=os.environ['USER'],pl=self.label,m=self.mass,ctau=self.orig_ctau)
     for fname in glob(path):
-        if debug: print 'fname=',fname
+        #if debug: print 'fname=',fname
         f = TFile.Open(fname)
         if f.GetListOfKeys().Contains('Events'):
           self.njobs_succ += 1
@@ -334,6 +384,9 @@ class SampleList(object):
     self.colors = [ ROOT.kBlack,  ROOT.kOrange+1, ROOT.kRed, ROOT.kMagenta+2, ROOT.kViolet+8, ROOT.kAzure-8, ROOT.kAzure+6 ,
                       ROOT.kGreen+1, ROOT.kSpring+4, ROOT.kYellow -5, ROOT.kYellow -3, ROOT.kYellow, ROOT.kOrange
                   ]
+    #self.colors = [ ROOT.kOrange+1, ROOT.kRed, ROOT.kMagenta+2, ROOT.kViolet+8, ROOT.kAzure-8, ROOT.kAzure+6 ,
+    #                  ROOT.kGreen+1, ROOT.kSpring+4, ROOT.kYellow -5, ROOT.kYellow -3, ROOT.kYellow, ROOT.kOrange
+    #              ]
     self.styles = [  1,1,1,1,1,1,1,1,1,1,1,1,1,1, ]
     self.graphs={}
 
@@ -401,6 +454,12 @@ class SampleList(object):
         h = sample.histos[what]
         graph_saver.append(h)
 
+        # kolmogorov test
+        #if i == 0:
+        #  h2 = self.samples[1].histos[what]
+        #  h.KolmogorovTest(h2, 'OD')
+        #
+
         if sameCanvas: pad = c.cd(j + 1)
         else:
           cname = '%s_%s' % (self.name, what)
@@ -411,25 +470,32 @@ class SampleList(object):
         if i == 0:
           pad.SetLogx(sample.histoDefs[what].logX)
           pad.SetLogy(sample.histoDefs[what].logY)
-        if norm and h.Integral():
-          hdrawn = h.DrawNormalized(opt)
-          hMax[what].append(hdrawn)
-          hdrawn.SetLineColor(self.colors[i])
-          hdrawn.SetMarkerColor(self.colors[i])
-          hdrawn.SetMarkerStyle(self.styles[i])
-          hdrawn.SetMarkerSize(3)
-          hdrawn.SetLineWidth(2)
-          legends[j].AddEntry(hdrawn,sample.legname, 'LP')
+        if norm and h.Integral()!=0:
+          # new way with "Scale"
+          h.Scale(1/h.Integral(-1,h.GetNbinsX()+1)) 
+#          # usual way
+#          hdrawn = h.DrawNormalized(opt)
+#          hMax[what].append(hdrawn)
+#          hdrawn.SetLineColor(self.colors[i])
+#          hdrawn.SetMarkerColor(self.colors[i])
+#          hdrawn.SetMarkerStyle(self.styles[i])
+#          hdrawn.SetMarkerSize(3)
+#          hdrawn.SetLineWidth(2)
+#          legends[j].AddEntry(hdrawn,sample.legname, 'LP')
+#          #legends[j].AddEntry(hdrawn,sample.legname + ' Mean={:.2f}'.format(hdrawn.GetMean()), 'LP')
+#          #legends[j].AddEntry(hdrawn,sample.legname + ' Acc={:.2f}'.format(sample.acc), 'LP')
 
-        else:
-          h.Draw(opt)
-          hMax[what].append(h)
-          h.SetLineColor(self.colors[i])
-          h.SetMarkerColor(self.colors[i])
-          h.SetMarkerStyle(self.styles[i])
-          h.SetMarkerSize(4)
-          h.SetLineWidth(2)
-          legends[j].AddEntry(hdrawn,sample.legname, 'LP')
+#        else:
+        h.Draw(opt)
+        hMax[what].append(h)
+        h.SetLineColor(self.colors[i])
+        h.SetMarkerColor(self.colors[i])
+        h.SetMarkerStyle(self.styles[i])
+        h.SetMarkerSize(4)
+        h.SetLineWidth(2)
+        #legends[j].AddEntry(h,sample.legname, 'LP')
+        legends[j].AddEntry(h,sample.legname + ' Mean={:.2f}'.format(h.GetMean()), 'LP')
+        #legends[j].AddEntry(h,sample.legname + ' Acc={:.2f}'.format(sample.acc), 'LP')
 
         if i == len(self.samples) - 1:
           legends[j].Draw('same')
@@ -455,6 +521,35 @@ class SampleList(object):
       canv.SaveAs('./plots/' + self.label + suffix + '/' + cname + norm_suffix + '.png')
       canv.SaveAs('./plots/' + self.label + suffix + '/' + cname + norm_suffix + '.pdf')
       canv.SaveAs('./plots/' + self.label + suffix + '/' + cname + norm_suffix + '.C')
+  
+  def plotRatios(self):
+    ''' 
+    On the same canva, plot ratio for the first two distributions
+    ''' 
+    snum = self.samples[0]
+    sden = self.samples[1]
+    for j, what in enumerate(snum.histos.keys()):     
+      hNum = snum.histos[what]
+      hDen = sden.histos[what]      
+      graph_saver.append(hNum)
+      graph_saver.append(hDen)
+
+      if norm and hNum.Integral()!=0 and hDen.Integral()!=0:
+        hNum.Scale(1/hNum.Integral(-1,hNum.GetNbinsX()+1)) 
+        hDen.Scale(1/hDen.Integral(-1,hDen.GetNbinsX()+1)) 
+      
+      norm_suffix='_norm' if norm else ''
+      outDir = './plots/' + self.label + suffix
+      cname = '%s_%s' % (self.name, what)
+      plotName =  cname + norm_suffix + '_ratio'
+
+      nameNum = snum.legname + ' Mean={:.2f}'.format(hNum.GetMean())
+      nameDen = sden.legname + ' Mean={:.2f}'.format(hDen.GetMean())
+
+      RP.makeRatioPlot(hNum, hDen, hDen2="", nameNum=nameNum, nameDen=nameDen, nameDen2="", \
+                    xtitle=snum.histoDefs[what].xtitle,ytitle=snum.histoDefs[what].ytitle, \
+                    ratiotitle="Ratio", norm=False, log=snum.histoDefs[what].logY,plotName=plotName,outDir=outDir) 
+      # handle normalisation before RP.makeRatioPlot()
 
   def plotGraph(self, x='vv', y='acc'): 
     '''
@@ -511,7 +606,7 @@ class SampleList(object):
     # add the graph container for memory?
     graph_saver.append(graph)
 
-def doAnalysis(path,pl,points,name,path2=None,pl2=None,points2=None,path3=None,pl3=None,points3=None):
+def doAnalysis(path,pl,points,name,leglabel='',path2=None,pl2=None,points2=None,leglabel2='',path3=None,pl3=None,points3=None,leglabel3=''):
   '''
   Perform plotting of samples lists
   Optionally allows to create sample list out of 2 different productions
@@ -522,9 +617,13 @@ def doAnalysis(path,pl,points,name,path2=None,pl2=None,points2=None,path3=None,p
   samples = []
   for p in points:
     fns = glob(path.format(m=p.mass,ctau=p.orig_ctau))
-    s = Sample(mass=p.mass, ctau=p.ctau, vv=p.vv, infileNames=fns, isrw=p.isrw, orig_vv=p.orig_vv, label=pl)
-    s.fillHistos() # no selection
-    #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
+    s = Sample(mass=p.mass, ctau=p.ctau, vv=p.vv, infileNames=fns, isrw=p.isrw, orig_vv=p.orig_vv, label=pl, leglabel=leglabel)
+    if doRwAnalysis:
+      s.fillHistos(sel='(Lxy<1000)', sellabel='')
+      #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
+    else:
+      #s.fillHistos(sel='(Lxyz<1500)', sellabel='') # no selection
+      s.fillHistos()
     s.fillAcceptance()
     s.fillExpNevts()
     s.fillFilterEff()
@@ -536,8 +635,9 @@ def doAnalysis(path,pl,points,name,path2=None,pl2=None,points2=None,path3=None,p
     print('  => Going to do plotting for production={}, name={}'.format(pl2,name))
     for p in points2:
       fns = glob(path2.format(m=p.mass,ctau=p.orig_ctau))
-      s = Sample(mass=p.mass, ctau=p.ctau, vv=p.vv, infileNames=fns, isrw=p.isrw, orig_vv=p.orig_vv, label=pl2)
+      s = Sample(mass=p.mass, ctau=p.ctau, vv=p.vv, infileNames=fns, isrw=p.isrw, orig_vv=p.orig_vv, label=pl2, leglabel=leglabel2) 
       s.fillHistos()
+      #s.fillHistos(sel='(Lxyz<1500)', sellabel='')
       #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
       s.fillAcceptance()
       s.fillExpNevts()
@@ -550,7 +650,7 @@ def doAnalysis(path,pl,points,name,path2=None,pl2=None,points2=None,path3=None,p
     print('  => Going to do plotting for production={}, name={}'.format(pl3,name))
     for p in points3:
       fns = glob(path3.format(m=p.mass,ctau=p.orig_ctau))
-      s = Sample(mass=p.mass, ctau=p.ctau, vv=p.vv, infileNames=fns, isrw=p.isrw, orig_vv=p.orig_vv, label=pl3)
+      s = Sample(mass=p.mass, ctau=p.ctau, vv=p.vv, infileNames=fns, isrw=p.isrw, orig_vv=p.orig_vv, label=pl3, leglabel=leglabel3) 
       s.fillHistos()
       #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
       s.fillAcceptance()
@@ -563,8 +663,12 @@ def doAnalysis(path,pl,points,name,path2=None,pl2=None,points2=None,path3=None,p
   label = pl if not pl2 else ('{}_VS_{}'.format(pl,pl2) if not pl3 else '{}_VS_{}_VS_{}'.format(pl,pl2,pl3))
 
   slist = SampleList(name=name, samples=samples, label=label)
-  slist.plotHistos(norm=True, sameCanvas=False)
-  if 'fixedM' in name or 'closure' in name: 
+  if doCompareAnalysis or doRwAnalysis:
+    slist.plotRatios()
+  else:
+    slist.plotHistos(norm=norm, sameCanvas=False)
+  #if 'fixedM' in name or 'closure' in name: 
+  if 'fixedM' in name:
     slist.plotGraph(x='vv',y='acc')
     slist.plotGraph(x='vv',y='expNevts')
   elif 'fixedVV' in name:
@@ -654,26 +758,33 @@ def getOptions():
 
 if __name__ == "__main__":
 
+  #### ROOT Options
   gROOT.SetBatch(True)
   ROOT.TH1.SetDefaultSumw2()
+  ROOT.TH1.StatOverflows(ROOT.kTRUE) # consider overflows for mean and rms calculation
   gROOT.ProcessLine('.L /work/mratti/CMS_style/tdrstyle.C')
   gROOT.ProcessLine('setTDRStyle()')
   gStyle.SetTitleXOffset(1.1);
   gStyle.SetTitleYOffset(1.45);
 
+  ## globals 
   global debug
   global doInclusive
   global doSkipDispl
+  global doSkipDisplZ
   global suffix
   global muTrigPt
+  global norm
 
   #### options
   debug = False
+  norm = True
   doInclusive = True # 
   doSkipDispl = False #
+  doDisplZ = False #
   doSkipHNLptEta = False
   doCompareAnalysis = True #
-  doTestAnalysis = True
+  doTestAnalysis = False
   doFixedMassAnalysis = False
   doRwAnalysis = False
   doFixedVVAnalysis = False
@@ -682,6 +793,7 @@ if __name__ == "__main__":
 
   suffix='_incl' if doInclusive else '_excl'
   if doSkipDispl: suffix += '_skipDispl'
+  if doDisplZ: suffix += '_wLz'
   if doSkipHNLptEta: suffix += '_skipHNLptEta'
   suffix += '_muTrigPt{mp}'.format(mp=muTrigPt)
   opt = getOptions()
@@ -700,9 +812,13 @@ if __name__ == "__main__":
   
 
   if doCompareAnalysis:
-    points = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]
-    points2 = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]
-    points3 = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]  
+    #points = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]
+    #points2 = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]
+    #points3 = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]  
+    #points = [Point(mass=2.0,ctau=None,vv=1.5e-05,isrw=False)]
+    #points2 = [Point(mass=2.0,ctau=None,vv=1.5e-05,isrw=False)]
+    points = [Point(mass=2.0,ctau=None,vv=5.0e-05,isrw=False)]
+    points2 = [Point(mass=2.0,ctau=None,vv=5.0e-05,isrw=False)]
 
     for p in points:
       p.stamp()
@@ -711,7 +827,7 @@ if __name__ == "__main__":
       p.stamp()
     existing_points2=checkFiles(path=path2,points=points2)
     if not opt.pl3: 
-      doAnalysis(path=path,pl=opt.pl,points=existing_points,name='comp_norw',path2=path2,pl2=opt.pl2,points2=existing_points2)
+      doAnalysis(path=path,pl=opt.pl,points=existing_points,name='comp_norw',path2=path2,pl2=opt.pl2,points2=existing_points2,leglabel='Dirac', leglabel2='Majorana')
     else:
       for p in points3:
         p.stamp()
@@ -719,9 +835,15 @@ if __name__ == "__main__":
       doAnalysis(path=path,pl=opt.pl,points=existing_points,name='comp_norw',path2=path2,pl2=opt.pl2,points2=existing_points2,path3=path3,pl3=opt.pl3,points3=existing_points3)
 
   if doTestAnalysis:
+
+    gStyle.SetOptStat("mreuo")
     #points = [Point(mass=1.0,ctau=None,vv=5e-04,isrw=False)]
-    points = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]
+    #points = [Point(mass=1.5,ctau=None,vv=1e-03,isrw=False)]
     #points = [Point(mass=3.0,ctau=None,vv=5e-05,isrw=False)]
+    #points = [Point(mass=2.0,ctau=None,vv=1.5e-05,isrw=False)]
+    #points = [Point(mass=2.0,ctau=None,vv=5.0e-05,isrw=False)]
+    points = [ Point(mass=3.0,ctau=None,vv=1.0e-05)] # same settings as V11_3_points.py
+
     for p in points:
       p.stamp()
     existing_points=checkFiles(path=path,points=points)
@@ -836,49 +958,56 @@ if __name__ == "__main__":
 
     doLimitGraph(slists_fixedMass,'expNevtsVSvv', label=opt.pl)
 
-    if doRwAnalysis:
-      ################
-      points = [
-        Point(mass=1.0,ctau=None,vv=5e-03,isrw=False),
-        Point(mass=1.0,ctau=None,vv=1e-03,isrw=True,orig_vv=5e-03),
-        Point(mass=1.0,ctau=None,vv=5e-04,isrw=True,orig_vv=5e-03),
-        Point(mass=1.0,ctau=None,vv=1e-04,isrw=True,orig_vv=5e-03),
-        Point(mass=1.0,ctau=None,vv=5e-05,isrw=True,orig_vv=5e-03),
-        Point(mass=1.0,ctau=None,vv=1e-05,isrw=True,orig_vv=5e-03),
-        Point(mass=1.0,ctau=None,vv=5e-06,isrw=True,orig_vv=5e-03),
-      ]
-      for p in points:
-       p.stamp()
-      existing_points=checkFiles(path=path,points=points)
-      slist_rw = doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedMass1.0_rwFrom5em03')
-    
-      ## compare the graphs w/ and w/o reweighting
-      #doGraphComparison(slist_norw,slist_rw,what='accVSvv')
-      #doGraphComparison(slist_norw,slist_rw,what='expNevtsVSvv')
+  ################
+  if doRwAnalysis:
+
+    points = [
+      #Point(mass=2.0,ctau=None,vv=1.5e-05,isrw=False),
+      Point(mass=3.0,ctau=None,vv=1e-06,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=3e-06,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=2e-05,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=7e-05,isrw=True,orig_vv=2.0e-06),
+      Point(mass=3.0,ctau=None,vv=3e-04,isrw=True,orig_vv=2.0e-06),
+      #Point(mass=2.0,ctau=None,vv=0.0002,isrw=True,orig_vv=1.5e-05),
+    ]
+    for p in points:
+      p.stamp()
+    existing_points=checkFiles(path=path,points=points)
+    slist_rw = doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedMass1.0')
   
-      ###############
-      points = [
-        Point(mass=1.0,ctau=None,vv=1e-03, isrw=False),
-        Point(mass=1.0,ctau=None,vv=1e-03, isrw=True, orig_vv=5e-03),
-        Point(mass=1.0,ctau=None,vv=5e-03, isrw=False),
-      ]
-      existing_points = checkFiles(path,points)
-      doAnalysis(path=path,pl=opt.pl,points=existing_points,name='closureRw_Mass1.0')
+    ## compare the graphs w/ and w/o reweighting
+    #doGraphComparison(slist_norw,slist_rw,what='accVSvv')
+    #doGraphComparison(slist_norw,slist_rw,what='expNevtsVSvv')
+
+    ###############
+    points = [
+      #Point(mass=2.0,ctau=None,vv=3e-06,isrw=True,orig_vv=1e-04),
+      #Point(mass=2.0,ctau=None,vv=3e-06,isrw=False),
+      Point(mass=2.0,ctau=None,vv=3.0e-06,isrw=True,orig_vv=5.0e-05),
+      Point(mass=2.0,ctau=None,vv=3.0e-06,isrw=False),
+    ]
+    existing_points = checkFiles(path,points)
+    #doAnalysis(path=path,pl=opt.pl,points=existing_points,name='closureRw_Mass2.0_VV3em06')
 
 
   if doFixedVVAnalysis:
 
     ################
     points = [
-      Point(mass=0.5,ctau=None,vv=1e-04,isrw=False),
+#      Point(mass=0.5,ctau=None,vv=1e-04,isrw=False),
       Point(mass=1.0,ctau=None,vv=1e-04,isrw=False),
-      Point(mass=1.5,ctau=None,vv=1e-04,isrw=False),
+#      Point(mass=1.5,ctau=None,vv=1e-04,isrw=False),
       Point(mass=2.0,ctau=None,vv=1e-04,isrw=False),
-      Point(mass=2.5,ctau=None,vv=1e-04,isrw=False),
+#      Point(mass=2.5,ctau=None,vv=1e-04,isrw=False),
       Point(mass=3.0,ctau=None,vv=1e-04,isrw=False),
+      #Point(mass=1.0,ctau=None,vv=1e-05,isrw=False),
+      #Point(mass=2.0,ctau=None,vv=1e-05,isrw=False),
+      #Point(mass=3.0,ctau=None,vv=1e-05,isrw=False),
+      #Point(mass=3.0,ctau=None,vv=1e-05,orig_vv=5e-05,isrw=True),
     ]
     for p in points:
      p.stamp()
     existing_points=checkFiles(path=path,points=points)
     doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1em04')
+    #doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1em05')
   

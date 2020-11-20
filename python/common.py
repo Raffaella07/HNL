@@ -1,6 +1,7 @@
 
 import numpy as np
 import math
+from scipy.stats import expon  
 
 # constants 
 const_GF =  1.1663787e-05 # 1/(GeV*GeV)       # GF/(hbar c)^3 from http://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf
@@ -20,7 +21,7 @@ def Lambda(a=None,b=None,c=None):
 def mass_correction_factor(mass):
     x_mu = const_mumass/mass
     x_pi = const_pimass/mass
-    mcf = ( (1-x_mu*x_mu)*(1-x_mu*x_mu) - x_pi*x_pi*(1+x_mu*x_mu) ) * np.sqrt( Lambda(1,x_mu*x_mu,x_pi*x_pi))   # eq 3.5 of
+    mcf = ( (1-x_mu*x_mu)*(1-x_mu*x_mu) - x_pi*x_pi*(1+x_mu*x_mu) ) * np.sqrt( Lambda(1,x_mu*x_mu,x_pi*x_pi))   # eq 3.5 of Bondarenko 
     return mcf
 
 def ctau_from_gamma(gamma):
@@ -45,6 +46,25 @@ def gamma_total(mass,vv):
     '''
     gamma_total =   const_GF*const_GF / (96 * np.power(const_pi,3)) * np.power(mass,5) * vv * 10.95              # GeV
     return gamma_total
+
+def gamma_lep(mass,vv):
+    '''
+    Width due to charged and neutral current to charged leptons, same ref as above
+    '''
+    return gamma_total(mass,vv)/10.95  * 1.72 
+
+def gamma_neu(mass,vv):
+    '''
+    Width due to neutral current to neutrinos, same ref as above
+    '''
+    return gamma_total(mass,vv)/10.95  
+
+def gamma_had(mass,vv):
+    '''
+    Width due to charged and neutral current to quarks, same ref as above
+    '''
+    return gamma_total(mass,vv)/10.95 * 8.24
+
 
 def BR_HNLmupion(mass): # vv is irrelevant, as it cancels out in the ratio
     return gamma_partial(mass=mass,vv=1.)/gamma_total(mass=mass,vv=1.)
@@ -211,6 +231,11 @@ class Point(object):
       self.orig_vv = self.vv 
       self.orig_ctau = self.ctau
 
+  #def getExpMedian():
+    rv = expon(scale=self.ctau) 
+    self.median = rv.median()
+    #return rv.mean(),rv.median()
+
   def stamp(self):
     attrs=[]
     for k,v in self.__dict__.items():
@@ -218,7 +243,14 @@ class Point(object):
     attrs=' '.join(attrs)
     print(attrs)
 
-
+  def stamp_simpli(self):
+    attrs=[]
+    #attrs.append('{}'.format(self.mass))
+    attrs.append('{}'.format(self.vv))
+    attrs.append('{}'.format(self.ctau))
+    attrs.append('{}'.format(self.median))
+    attrs=' '.join(attrs)
+    return attrs
 
 if __name__ == "__main__":
   import matplotlib.pyplot as plt
@@ -312,6 +344,50 @@ if __name__ == "__main__":
   
   
 
+  # table for benchmark points
+  masses = [1,2,3]
+  benchmark_vvs = [3E-06, 3E-06, 1E-05]
 
+  for i,mass in enumerate(masses):
+    print('\nMass={}GeV').format(mass)
+    p = Point(mass=mass,vv=benchmark_vvs[i])
+    print('{} '.format(1.0) + p.stamp_simpli())
+    for mult in np.logspace(-1,3,50):
+      p = Point(mass=mass,vv=benchmark_vvs[i]*mult)
+      #print(mult)
+      print('{} '.format(mult) + p.stamp_simpli())
 
-
+#  points[1] = [
+#    Point(mass=1,vv=3E-06),
+#    Point(mass=1,vv=3E-06*2),
+#    Point(mass=1,vv=3E-06*5),
+#    Point(mass=1,vv=3E-06*10),
+#    Point(mass=1,vv=3E-06*50),
+#    Point(mass=1,vv=3E-06*100),
+#  ]
+#  points[2] = [
+#    Point(mass=2,vv=3E-06),
+#    Point(mass=2,vv=3E-06*2),
+#    Point(mass=2,vv=3E-06*5),
+#    Point(mass=2,vv=3E-06*10),
+#    Point(mass=2,vv=3E-06*50),
+#    Point(mass=2,vv=3E-06*100),
+#  ]
+#  points[3] = [
+#    Point(mass=3,vv=1E-05),
+#    Point(mass=3,vv=1E-05*2),
+#    Point(mass=3,vv=1E-05*5),
+#    Point(mass=3,vv=1E-05*10),
+#    Point(mass=3,vv=1E-05*50),
+#    Point(mass=3,vv=1E-05*100),
+#  ]
+#
+#  for mass in [1,2,3]:
+#    print('\nMass={}GeV'.format(mass))
+#    for p in points[mass]:
+#      p.stamp_nofield()
+#
+#
+#
+#  from scipy.stats import expon
+#
