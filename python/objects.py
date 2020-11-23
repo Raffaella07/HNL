@@ -10,6 +10,9 @@ import math
 const_GF =  1.1663787e-05
 const_pi = math.pi
 const_sinThW_square =  0.23121 # from https://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf 
+
+global debug
+debug = False
   
 class Particle(object):
   def __init__(self, name, particle_type, mass=None, decay_constant=None, lifetime=None, fraction=None):
@@ -387,6 +390,10 @@ class HNLDecay(object):
     self.ckm_coupling = ckm_coupling
     self.decay_type = decay_type
 
+    if debug: 
+      print('\n******************************************')
+      print('Decaytype={}, daughters={}'.format(self.decay_type,[x.name for x in self.daughters]))
+
     allowed_decay_types = ['cc_lep','cc_had', 'nc_lep', 'nc_had', 'nc_neu']
     if self.decay_type not in allowed_decay_types: raise RuntimeError('Decay type %s not allowed, please check' % self.decay_type)
 
@@ -426,6 +433,7 @@ class HNLDecay(object):
         lower_bound = (xD+xl)**2
         integrand = lambda x : 12. * (x-xl**2-xD**2) / x * (1 + xU**2 - x) * math.sqrt( Lambda(x,xl**2,xD**2) * Lambda(1,x,xU**2) )
         (integral,error) = integrate(integrand, lower_bound, upper_bound)
+        print('integral=', integral)
         if error/integral > 0.1: print('Warning: error on integral higher than 10\% ') 
 
         self.decay_rate =  NW * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (192 * const_pi**3) * integral
@@ -442,7 +450,8 @@ class HNLDecay(object):
         if self.decay_type == 'nc_lep':
           if f.particle_type == 'neutrino' : raise RuntimeError('should not be a neutrino')
           NZ = 1.
-          if nu_alpha.name == f.name:
+          if debug: print('f.name in nu_alpha.name = {}'.format((f.name in nu_alpha.name)))
+          if f.name in nu_alpha.name:
            C1f = 0.25 * ( 1 + 4 * const_sinThW_square + 8 * const_sinThW_square**2 )
            C2f = 0.5 * const_sinThW_square * ( 2 * const_sinThW_square + 1 )
           else:
@@ -461,6 +470,7 @@ class HNLDecay(object):
         par1 = (1. - 14. * x**2 - 2 * x**4 - 12. * x**6) * math.sqrt(1. - 4. * x**2) + 12. * x**4 * (x**4 - 1.) * L(x)
         par2 = x**2 * (2. + 10. * x**2 - 12 * x**4) * math.sqrt(1 - 4. * x**2) + 6 * x**4 * (1 - 2. * x**2 + 2 * x**4) * L(x) 
         bigpar = C1f * par1 + 4. * C2f * par2
+        if debug: print('C1f={}, par1={}, C2f={}, par2={}'.format(C1f,par1,C2f,par2))
 
         self.decay_rate = NZ * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (192 * const_pi**3) * bigpar
 
@@ -476,3 +486,4 @@ class HNLDecay(object):
         delta_alpha_beta = 1. if nu_alpha.name == nu_beta.name else 0.
         self.decay_rate = (1. + delta_alpha_beta) * const_GF**2 * hnl.mass**5 * self.mixing_angle_square / (768 * const_pi**3) 
 
+    if debug: print('decay_rate={}'.format(self.decay_rate))
