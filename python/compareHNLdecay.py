@@ -1,5 +1,5 @@
 from decays import *
-from common import *
+from old_common import *
 
 import matplotlib.pyplot as plt
 
