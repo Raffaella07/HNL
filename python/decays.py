@@ -32,7 +32,7 @@ m_K0star_pdg  = 0.89555 #0.824 #1.425
 m_rho0_pdg    = 0.77526 #0.769 # 0.770 # 0.77526 # make sure this is the correct meson to consider # in GeV
 m_rho_pdg     = 0.77511
 m_pi0_pdg     = 0.1349768
-m_pi_pdg      = 0.13957039
+m_pi_pdg      = 0.13957039 if not PESKIN else 0
 
 # leptons
 m_el_pdg  = 0.510999 * 1e-3 if not PESKIN else 0

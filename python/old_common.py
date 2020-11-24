@@ -5,7 +5,7 @@ from scipy.stats import expon
 
 # constants 
 const_GF =  1.1663787e-05 # 1/(GeV*GeV)       # GF/(hbar c)^3 from http://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf
-const_Vud = 0.97370                           # from (12.7)  of http://pdg.lbl.gov/2020/reviews/rpp2020-rev-ckm-matrix.pdf 
+const_Vud = 1. #0.97417                           # 0.97370 from (12.7)  of http://pdg.lbl.gov/2020/reviews/rpp2020-rev-ckm-matrix.pdf 
 const_fpi = 130.2 * 0.001 # GeV               # from (71.14) of http://pdg.lbl.gov/2020/reviews/rpp2020-rev-pseudoscalar-meson-decay-cons.pdf
 const_pi = math.pi
 const_hbar = 6.582119569e-22 * 1e-03 # GeV s  # from http://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf
