@@ -64,6 +64,7 @@ class Point(object):
     self.mass = mass
     self.isrw = isrw
     self.ismaj = ismaj
+    self.cfg = None
 
     if not vv: 
       self.ctau=ctau 
@@ -99,6 +100,30 @@ class Point(object):
     attrs.append('{}'.format(self.median))
     attrs=' '.join(attrs)
     return attrs
+
+  def setConfig(self,cfg):
+    if not self.cfg: 
+      self.cfg = cfg
+
+class Config(object):
+  def __init__(self,nevts_eff=10,filter_eff=1.0,time_evt=80,time_job=23,contingency=1.5):
+    self.nevts_eff = nevts_eff     # number of effective events to generate
+    self.filter_eff = filter_eff   # efficiency of the generator filter
+    self.time_evt = time_evt       # time needed for each event (all steps),   in seconds    # take the one of the worst case scenario
+    self.time_job = time_job       # time for each job, including contingency, in hours
+    self.contingency = contingency # factor 
+
+    self.nevts_tot = int(float(self.nevts_eff) / self.filter_eff)
+    self.nevts_job = (self.time_job*3600/self.contingency) / self.time_evt
+    self.njobs =     int(self.nevts_eff / self.nevts_job) + 1
+
+  def stamp(self):
+    attrs=[]
+    for k,v in self.__dict__.items():
+      attrs.append(' {}={} '.format(k,v))
+    attrs=' '.join(attrs)
+    print(attrs)
+
 
 if __name__ == "__main__":
   import matplotlib.pyplot as plt
