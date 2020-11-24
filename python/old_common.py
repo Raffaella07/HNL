@@ -5,7 +5,7 @@ from scipy.stats import expon
 
 # constants 
 const_GF =  1.1663787e-05 # 1/(GeV*GeV)       # GF/(hbar c)^3 from http://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf
-const_Vud = 1. #0.97417                           # 0.97370 from (12.7)  of http://pdg.lbl.gov/2020/reviews/rpp2020-rev-ckm-matrix.pdf 
+const_Vud = 0.97370 #1. #0.97417                           # 0.97370 from (12.7)  of http://pdg.lbl.gov/2020/reviews/rpp2020-rev-ckm-matrix.pdf 
 const_fpi = 130.2 * 0.001 # GeV               # from (71.14) of http://pdg.lbl.gov/2020/reviews/rpp2020-rev-pseudoscalar-meson-decay-cons.pdf
 const_pi = math.pi
 const_hbar = 6.582119569e-22 * 1e-03 # GeV s  # from http://pdg.lbl.gov/2020/reviews/rpp2020-rev-phys-constants.pdf
@@ -44,26 +44,26 @@ def gamma_total(mass,vv):
     '''
     Total width for N, from https://arxiv.org/abs/1607.04258, various approximations 
     '''
-    gamma_total =   const_GF*const_GF / (96 * np.power(const_pi,3)) * np.power(mass,5) * vv * 10.684              # GeV
+    gamma_total =   const_GF*const_GF / (96 * np.power(const_pi,3)) * np.power(mass,5) * vv * 10.95              # GeV
     return gamma_total
 
 def gamma_lep(mass,vv):
     '''
     Width due to charged and neutral current to charged leptons, same ref as above
     '''
-    return gamma_total(mass,vv)/10.684  * 1.714 
+    return gamma_total(mass,vv)/10.95  * 1.72 
 
 def gamma_neu(mass,vv):
     '''
     Width due to neutral current to neutrinos, same ref as above
     '''
-    return gamma_total(mass,vv)/10.684  
+    return gamma_total(mass,vv)/10.95  
 
 def gamma_had(mass,vv):
     '''
     Width due to charged and neutral current to quarks, same ref as above
     '''
-    return gamma_total(mass,vv)/10.684 * 7.97
+    return gamma_total(mass,vv)/10.95 * 8.24
 
 
 def BR_HNLmupion(mass): # vv is irrelevant, as it cancels out in the ratio
