@@ -223,19 +223,24 @@ class HNLDecays(object):
     self.mass = mass
     self.mixing_angle_square = mixing_angle_square
 
+    print('Calculating decay widths for Dirac particle')
+
     # define the HNL
     hnl = Particle('hnl', 'lepton', self.mass)
     
     # get the model
     V_mu_square =  self.mixing_angle_square
-    V_tau_square = 0.#self.mixing_angle_square
-    V_el_square =  0.#self.mixing_angle_square
+    V_tau_square = 0. #self.mixing_angle_square # uncomment for figure 13 right
+    V_el_square =  0. #self.mixing_angle_square # uncomment for figure 13 right 
     QCD_corr = 0.18 if not PESKIN else 0.
     special_V_mu_square = V_mu_square if not PESKIN else 0.
 
     # list of the decays of interest
     decay_rates = {}
     self.decay_rate = {}
+
+    decay_rate['mupi'] = HNLDecay(hnl, [mu,pi_meson], V_mu_square, Vud_pdg, 'mupi').decay_rate
+                            
 
     decay_rates['cc_lep'] = [ 
                               HNLDecay(hnl, [mu,el,nu_el],   V_mu_square, 1, 'cc_lep').decay_rate, 
