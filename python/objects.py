@@ -406,8 +406,8 @@ class HNLDecay(object):
       if not mass_check:
         self.decay_rate = 0.
       else:
-        xl = self.daughters[0] / self.hnl.mass
-        xh = self.daughters[1] / self.hnl.mass
+        xl = self.daughters[0].mass / self.hnl.mass
+        xh = self.daughters[1].mass / self.hnl.mass
         fh = 130.2 * 1e-03 # in GeV, table 8 
         self.decay_rate = const_GF**2 * fh**2 * self.ckm_coupling**2 * self.mixing_angle_square * self.hnl.mass**3 / (16. * const_pi) \
                           * ( (1-xl**2)**2 - xh**2*(1+xl**2) ) * math.sqrt(Lambda(1,xh**2,xl**2))

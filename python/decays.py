@@ -223,8 +223,6 @@ class HNLDecays(object):
     self.mass = mass
     self.mixing_angle_square = mixing_angle_square
 
-    print('Calculating decay widths for Dirac particle')
-
     # define the HNL
     hnl = Particle('hnl', 'lepton', self.mass)
     
@@ -239,9 +237,8 @@ class HNLDecays(object):
     decay_rates = {}
     self.decay_rate = {}
 
-    decay_rate['mupi'] = HNLDecay(hnl, [mu,pi_meson], V_mu_square, Vud_pdg, 'mupi').decay_rate
+    self.decay_rate['mupi'] = HNLDecay(hnl, [mu,pi_meson], V_mu_square, Vud_pdg, 'mupi').decay_rate
                             
-
     decay_rates['cc_lep'] = [ 
                               HNLDecay(hnl, [mu,el,nu_el],   V_mu_square, 1, 'cc_lep').decay_rate, 
                               HNLDecay(hnl, [mu,tau,nu_tau], special_V_mu_square, 1, 'cc_lep').decay_rate, 

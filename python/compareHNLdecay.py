@@ -133,6 +133,37 @@ fig.savefig('HNL_gamma_over_mass_log.png')
 
 
 
+# compare BRs (N->mupi)
+gammas_bondarenko_Nmupi = [2*decays[im].decay_rate['mupi'] for im,m in enumerate(masses)]
+brs_bondarenko_Nmupi = [gp / gtot for gp,gtot in zip(gammas_bondarenko_Nmupi, gammas_bondarenko_tot)]
+brs_peskin_Nmupi = [BR_HNLmupion(mass=m) for im,m in enumerate(masses)]
+brs_peskin_Nmupi_corrected = [2*BR_HNLmupion(mass=m) for im,m in enumerate(masses)]
+ratios = [p/b for p,b in zip(brs_peskin_Nmupi,brs_bondarenko_Nmupi)]
+ratios_corrected = [p/b for p,b in zip(brs_peskin_Nmupi_corrected,brs_bondarenko_Nmupi)]
 
+fig, ax = plt.subplots(2, 1, figsize=(5.5*1, 5*2))
+ax[0].plot(masses, brs_peskin_Nmupi_corrected, 'b', label='peskin')
+ax[0].plot(masses, brs_peskin_Nmupi, 'black', label='peskin (old)')
+ax[0].plot(masses, brs_bondarenko_Nmupi, 'r', label='bondarenko')
+ax[0].set_ylabel('BR$(N\\rightarrow\\mu\\pi)$')
+ax[0].set_xlabel('HNL mass (GeV)')
+ax[0].grid(which='both', axis='both')
+ax[0].set_yscale('log')
+ax[0].legend(loc='upper right', frameon=False) 
+
+ax[1].plot(masses, ratios_corrected, 'b', label='P/B')
+ax[1].plot(masses, ratios          , 'black', label='P(old)/B')
+ax[1].set_ylabel('Ratio')
+ax[1].set_xlabel('HNL mass (GeV)')
+ax[1].grid(which='both', axis='both')
+#ax[1].set_yscale('log')
+ax[1].legend(loc='upper right', frameon=False) 
+ax[1].set_ylim(0.2,1.4)
+
+fig.savefig('HNL_BR.pdf')
+fig.savefig('HNL_BR.png')
+
+
+#gammas_bondarenko_tot =
 
 

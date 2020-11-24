@@ -28,6 +28,7 @@ def gamma_partial(mass,vv):
     Partial width for N->mupi (Dirac)
     '''
     gamma_partial = HNLDecays(mass=mass,mixing_angle_square=vv).decay_rate['mupi'] # GeV
+    return gamma_partial
 
 def BR_HNLmupion(mass): # vv is irrelevant, as it cancels out in the ratio
     return gamma_partial(mass=mass,vv=1.)/gamma_total(mass=mass,vv=1.)
