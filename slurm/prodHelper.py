@@ -117,7 +117,7 @@ class Job(object):
       dec = Decays(mass=p.mass, mixing_angle_square=1)
 
       decay_table = decay_table.format(
-                         Bc_br0=dec.Bc_to_uHNL.BR,
+                         Bc_br0=dec.Bc_to_uHNL.BR*1000,
                          #pfx='anti_' if not self.domajorana else '',
 
                          cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
@@ -184,21 +184,21 @@ class Job(object):
       dec = Decays(mass=p.mass, mixing_angle_square=1)
 
       decay_table = decay_table.format(
-                         Bp_br0=dec.B_to_uHNL.BR,
-                         Bp_br1=dec.B_to_D0uHNL.BR,
-                         Bp_br2=dec.B_to_D0staruHNL.BR,
-                         Bp_br3=dec.B_to_pi0uHNL.BR,
-                         Bp_br4=dec.B_to_rho0uHNL.BR,
+                         Bp_br0=dec.B_to_uHNL.BR*1000,
+                         Bp_br1=dec.B_to_D0uHNL.BR*1000,
+                         Bp_br2=dec.B_to_D0staruHNL.BR*1000,
+                         Bp_br3=dec.B_to_pi0uHNL.BR*1000,
+                         Bp_br4=dec.B_to_rho0uHNL.BR*1000,
 
-                         B0_br1=dec.B0_to_DuHNL.BR,
-                         B0_br2=dec.B0_to_DstaruHNL.BR,
-                         B0_br3=dec.B0_to_piuHNL.BR,
-                         B0_br4=dec.B0_to_rhouHNL.BR,
+                         B0_br1=dec.B0_to_DuHNL.BR*1000,
+                         B0_br2=dec.B0_to_DstaruHNL.BR*1000,
+                         B0_br3=dec.B0_to_piuHNL.BR*1000,
+                         B0_br4=dec.B0_to_rhouHNL.BR*1000,
 
-                         B0s_br1=dec.Bs_to_DsuHNL.BR,
-                         B0s_br2=dec.Bs_to_DsstaruHNL.BR,
-                         B0s_br3=dec.Bs_to_KuHNL.BR,
-                         B0s_br4=dec.Bs_to_KstaruHNL.BR,
+                         B0s_br1=dec.Bs_to_DsuHNL.BR*1000,
+                         B0s_br2=dec.Bs_to_DsstaruHNL.BR*1000,
+                         B0s_br3=dec.Bs_to_KuHNL.BR*1000,
+                         B0s_br4=dec.Bs_to_KstaruHNL.BR*1000,
 
                          cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
                          cdec = 'CDecay anti_hnl' if not self.domajorana else '',
