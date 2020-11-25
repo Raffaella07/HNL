@@ -93,6 +93,7 @@ for m,vv in m_vv_s:
   p   = Point(mass=m,ctau=None,vv=vv,ismaj=True)
   eff = displEff[m][vv] * muonEff[m]
   cfg = Config(nevtseff=100,filtereff=eff,timeevt=100,timejob=23,contingency=1.5)
+  #cfg = Config(nevtseff=100,filtereff=eff,timeevt=100,timejob=01,contingency=1.5)
   p.setConfig(cfg)
   points.append(p)
 
