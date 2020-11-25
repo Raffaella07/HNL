@@ -94,11 +94,12 @@ class Point(object):
 
   def stamp_simpli(self):
     attrs=[]
-    #attrs.append('{}'.format(self.mass))
+    attrs.append('{}'.format(self.mass))
     attrs.append('{}'.format(self.vv))
     attrs.append('{}'.format(self.ctau))
-    attrs.append('{}'.format(self.median))
+    #attrs.append('{}'.format(self.median))
     attrs=' '.join(attrs)
+    print(attrs)
     return attrs
 
   def setConfig(self,cfg):
@@ -106,16 +107,17 @@ class Point(object):
       self.cfg = cfg
 
 class Config(object):
-  def __init__(self,nevts_eff=10,filter_eff=1.0,time_evt=80,time_job=23,contingency=1.5):
-    self.nevts_eff = nevts_eff     # number of effective events to generate
-    self.filter_eff = filter_eff   # efficiency of the generator filter
-    self.time_evt = time_evt       # time needed for each event (all steps),   in seconds    # take the one of the worst case scenario
-    self.time_job = time_job       # time for each job, including contingency, in hours
-    self.contingency = contingency # factor 
+  def __init__(self,nevtseff=10,filtereff=1.0,timeevt=80,timejob=23,contingency=1.5):
+    self.nevtseff = int(nevtseff)     # number of wanted effective events 
+    self.filtereff = float(filtereff) # efficiency of the generator filter
+    self.timeevt = float(timeevt)     # time needed for each event (all steps),   in seconds    # take the one of the worst case scenario
+    self.timejob = int(timejob)       # time for each job, including contingency, in hours
+    self.contingency = float(contingency)   # factor 
 
-    self.nevts_tot = int(float(self.nevts_eff) / self.filter_eff)
-    self.nevts_job = (self.time_job*3600/self.contingency) / self.time_evt
-    self.njobs =     int(self.nevts_eff / self.nevts_job) + 1
+    self.nevts       = int(float(self.nevtseff) / self.filtereff)                  # not needed for prodHelper.py  
+    self.nevtseffjob = int( (self.timejob*3600./self.contingency) / self.timeevt )
+    self.njobs       = int(float(self.nevtseff) / float(self.nevtseffjob)) + 1    
+    self.nevtsjob    = int(float(self.nevts) / float(self.njobs) )                      # this will regulate maxEvents in cmsRun 
 
   def stamp(self):
     attrs=[]

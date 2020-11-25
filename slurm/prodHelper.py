@@ -22,7 +22,7 @@ class Job(object):
     self.nevtsjob = self.nevts if not self.domultijob else self.nevts/self.njobs
     self.prodLabel = '{v}_n{n}_njt{nj}'.format(v=self.ver,n=self.nevts,nj=self.njobs)
     self.nthr = 8 if self.domultithread else 1
-    self.npremixfiles = 20 # the number of events per file being 1200
+    self.npremixfiles = 20 # the number of events per file being 1200 # can be lowered
     self.user = os.environ["USER"]
     self.jop1_in = 'step1.py' if not self.dobc else 'step1_Bc.py'
     self.jop1 = 'step1.py'
@@ -38,6 +38,13 @@ class Job(object):
     if self.dobc and self.nevtsjob > 1000000: raise RuntimeError('Not enough events in the Bc LHE->ROOT files, please reduce number of events per job')
     if self.dobc and self.njobs > 107: raise RuntimeError('Currently we access only 107 M Bc events, either find more Bc events or reduce the total number of jobs')
     # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
+   
+    self.override = (False not in [p.cfg is not None for p in self.points]) # override only if
+    if self.override:
+      print('===> Will override several job configurations for all points:')
+      print('       njobs, nevtsjob, time, prodLabel')
+      self.prodLabel = '{v}'.format(v=self.ver)
+
 
   def makeProdDir(self):
     if not os.path.isdir(self.prodLabel):
@@ -49,7 +56,8 @@ class Job(object):
 
     print('===> Points to be run')
     for p in self.points:
-      p.stamp()
+      p.stamp_simpli()
+      p.cfg.stamp()
     print('')
 
 
@@ -199,7 +207,7 @@ class Job(object):
 
       with open('../evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
         fout.write(decay_table)
-      print('===> Created evtGen decay files\n')
+    print('===> Created evtGen decay files\n')
 
 
   def appendTemplate(self, jopa, jopb, nthr, nevtsjob, npremixfiles=0):
@@ -269,6 +277,7 @@ class Job(object):
 
   def makeTemplates(self):
     for p in self.points:
+      nevtsjob_toset = self.nevtsjob if not self.override else p.cfg.nevtsjob 
       template = [
         '#!/bin/bash',
         '',
@@ -346,24 +355,24 @@ class Job(object):
       template = template.format(
           m=p.mass,
           ctau=p.ctau,
-          hh=self.time,
+          hh=self.time if not self.override else p.cfg.timejob,
           mem=self.mem,
           lbldir=self.prodLabel,
-          arr='1-{}'.format(self.njobs),
+          arr='1-{}'.format(self.njobs if not self.override else p.cfg.njobs),
           pl=self.prodLabel,
           user=self.user,
           jop1=self.jop1,
           dsmf=self.doskipmuonfilter,
           ddf=self.dodisplfilter,
           dmj=self.domajorana,
-          nevtsjob=self.nevtsjob,
+          nevtsjob=nevtsjob_toset,
           nthr=self.nthr,
           jop2=self.jop2,
           jop3=self.jop3,
           jop4=self.jop4,
-          addstep2=self.appendTemplate(self.jop2,self.jop1,self.nthr,self.nevtsjob,self.npremixfiles),
-          addstep3=self.appendTemplate(self.jop3,self.jop2,self.nthr,self.nevtsjob),
-          addstep4=self.appendTemplate(self.jop4,self.jop3,self.nthr,self.nevtsjob),
+          addstep2=self.appendTemplate(self.jop2,self.jop1,self.nthr,nevtsjob_toset,self.npremixfiles),
+          addstep3=self.appendTemplate(self.jop3,self.jop2,self.nthr,nevtsjob_toset),
+          addstep4=self.appendTemplate(self.jop4,self.jop3,self.nthr,nevtsjob_toset),
           timestamp=self.makeTimeStamp()
           )
       launcherFile = '{pl}/slurm_mass{m}_ctau{ctau}_prod.sh'.format(pl=self.prodLabel,m=p.mass,ctau=p.ctau)
