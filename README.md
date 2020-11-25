@@ -2,8 +2,8 @@
 
 First Installation
 ```
-cmsrel CMSSW_10_2_3
-cd CMSSW_10_2_3/src
+cmsrel CMSSW_10_2_15
+cd CMSSW_10_2_15/src
 cmsenv
 git cms-init
 
@@ -28,7 +28,7 @@ export PYTHONPATH=$PYTHONPATH:$PWD
 
 After first installation:
 ```
-cd CMSSW_10_2_3/src/HNLsGen
+cd CMSSW_10_2_15/src/HNLsGen
 cmsenv
 export PYTHONPATH=$PYTHONPATH:$PWD 
 ```
@@ -82,7 +82,7 @@ For showering, instead of using the ```GeneratorFilter```, we use the ```Hadroni
 To visualize the decay chain in a tree (printout to screen), using ```vector<reco::genParticles>```
 ```
 cd genLevelAnalysis
-cmsRun test_ParticleTreeDrawer.py maxEvents=1 inputFiles=file:/work/mratti/GEN_HNL/CMSSW_10_2_3/src/HNLsGen/genSimFiles/BPH-test_HardQCDon.root
+cmsRun test_ParticleTreeDrawer.py maxEvents=1 inputFiles=file:/work/mratti/GEN_HNL/CMSSW_10_2_15/src/HNLsGen/genSimFiles/BPH-test_HardQCDon.root
 ```
 
 To get the gen-level ntuples
