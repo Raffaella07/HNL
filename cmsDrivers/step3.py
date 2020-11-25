@@ -2,11 +2,10 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step2 --filein file:step2.root --fileout file:step3.root --mc --eventcontent AODSIM --runUnscheduled --datatier AODSIM --conditions 102X_upgrade2018_realistic_v15 --step RAW2DIGI,L1Reco,RECO,RECOSIM,EI --procModifiers premix_stage2 --nThreads 8 --era Run2_2018 --python_filename step3.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n -1
+# with command line options: step1 --filein file:step2.root --fileout file:step3.root --mc --eventcontent AODSIM --datatier AODSIM --conditions 102X_upgrade2018_realistic_v15 --step RAW2DIGI,L1Reco,RECO,RECOSIM,EI --nThreads 8 --era Run2_2018,bParking --python_filename step3.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n -1
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
-from Configuration.ProcessModifiers.premix_stage2_cff import premix_stage2
 
 from FWCore.ParameterSet.VarParsing import VarParsing
 
@@ -29,7 +28,7 @@ options.register('inputFile',
 options.outputFile = 'BPH-step3.root'
 options.parseArguments()
 
-process = cms.Process('RECO',eras.Run2_2018,premix_stage2)
+process = cms.Process('RECO',eras.Run2_2018,eras.bParking)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -63,7 +62,7 @@ process.options = cms.untracked.PSet(
 
 # Production Info
 process.configurationMetadata = cms.untracked.PSet(
-    annotation = cms.untracked.string('step2 nevts:-1'),
+    annotation = cms.untracked.string('step1 nevts:-1'),
     name = cms.untracked.string('Applications'),
     version = cms.untracked.string('$Revision: 1.19 $')
 )
@@ -115,10 +114,6 @@ from Configuration.DataProcessing.Utils import addMonitoring
 process = addMonitoring(process)
 
 # End of customisation functions
-#do not add changes to your config after this point (unless you know what you are doing)
-from FWCore.ParameterSet.Utilities import convertToUnscheduled
-process=convertToUnscheduled(process)
-
 
 # Customisation from command line
 process.MessageLogger.cerr.FwkReport.reportEvery=1000
