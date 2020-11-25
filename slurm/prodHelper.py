@@ -231,6 +231,7 @@ class Job(object):
         'DATE_START_{lbla}=`date +%s`',
         '{command}',
         'DATE_END_{lbla}=`date +%s`',
+        'if [ $? -eq 0 ]; then echo "Successfully run step"; else exit $?; fi',
         'echo "Finished running {lbla}"',
         'echo "Content of current directory"',
         'ls -al',
@@ -244,6 +245,7 @@ class Job(object):
         '',
         'echo "Going to copy output to result directory"',
         'xrdcp -f $WORKDIR/BPH-{lbla}.root $OUTSEPREFIX/$SERESULTDIR/{lbla}_nj$SLURM_ARRAY_TASK_ID".root"',
+        'if [ $? -eq 0 ]; then echo "Successfully copied step4 file"; else exit $?; fi',
         '',
         ]
 
@@ -334,6 +336,7 @@ class Job(object):
         'DATE_START_step1=`date +%s`',
         'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf} doDisplFilter={ddf} doMajorana={dmj}',
         'DATE_END_step1=`date +%s`',
+        'if [ $? -eq 0 ]; then echo "Successfully run step 1"; else exit $?; fi',
         'echo "Finished running step1"',
         'echo "Content of current directory"',
         'ls -al',
@@ -341,6 +344,7 @@ class Job(object):
         '',
         'echo "Going to copy output to result directory"',
         'xrdcp -f $WORKDIR/BPH-step1_numEvent{nevtsjob}.root $OUTSEPREFIX/$SERESULTDIR/step1_nj$SLURM_ARRAY_TASK_ID".root"',
+        'if [ $? -eq 0 ]; then echo "Successfully copied step1 file"; else exit $?; fi',
         '',
         '{addstep2}',
         '{addstep3}',
@@ -394,10 +398,14 @@ class Job(object):
       
 
   def submit(self):
-    os.chdir(self.prodLabel)
-    for p in self.points:
-      os.system('sbatch slurm_mass{m}_ctau{ctau}_prod.sh'.format(m=p.mass,ctau=p.ctau))
-    os.chdir('../')
+    with open('{}/jobs.txt'.format(self.prodLabel), 'w') as f:
+      os.chdir(self.prodLabel)
+      for p in self.points:
+        command = 'sbatch slurm_mass{m}_ctau{ctau}_prod.sh'.format(m=p.mass,ctau=p.ctau)
+        out = subprocess.check_output(command, shell=True)
+        jobn = out.split('\n')[0].split(' ')[-1]      
+        f.write('mass{m}_ctau{ctau} {j}\n'.format(m=p.mass,ctau=p.ctau,j=jobn))
+      os.chdir('../')
     print('')
     print('===> Submitted {n} job arrays for {pl}\n'.format(n=len(self.points),pl=self.prodLabel))
   
