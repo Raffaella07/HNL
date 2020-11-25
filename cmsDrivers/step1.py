@@ -34,7 +34,21 @@ options.register('ctau',
                  VarParsing.multiplicity.singleton,
                  VarParsing.varType.float,
                  'ctau of the HNL [mm]')
-
+options.register('doSkipMuonFilter',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'Skip the muon filter' )
+options.register('doDisplFilter',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'In muon filter, add a cut on the HNL displacement' )
+options.register('doMajorana',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'HNL is majorana particle, otherwise dirac' )
 #options.register ("doDirac",
 #                  1, # default value
 #                  VarParsing.multiplicity.singleton, # singleton or list
@@ -131,8 +145,18 @@ process.MuFilter = cms.EDFilter("MCParticlePairFilter",
 ###  - there is at least one particle with specified pdgID in the entire HepMC::GenEvent
 ###  - any status (but can be specified)
 process.BpFilter = cms.EDFilter("PythiaFilter",
-    #ParticleID = cms.untracked.int32(14) # nu_mu anti_numu filter
+###process.BpFilter = cms.EDFilter("PythiaFilterMultiMother",
     ParticleID = cms.untracked.int32(521) # B+ B- filter 
+    ### ParticleID = cms.untracked.vint32(521, 511, 531) # B+ B- B0 B0s
+)
+
+process.BFilter = cms.EDFilter("MCMultiParticleFilter",
+   NumRequired = cms.int32(1),
+   AcceptMore = cms.bool(True),
+   ParticleID = cms.vint32(521,511,531), # abs not needed
+   PtMin = cms.vdouble(0.,0.,0.),
+   EtaMax = cms.vdouble(10.,10.,10.),
+   Status = cms.vint32(0,0,0), 
 )
 
 #process.SingleMuFilter = cms.EDFilter("PythiaFilter", # using PythiaFilter instead of MCParticleFilter because the particleID is taken in abs value
@@ -143,17 +167,24 @@ process.BpFilter = cms.EDFilter("PythiaFilter",
 #    #Status = cms.untracked.int32(1),
 #    MotherID = cms.untracked.int32(521), # require muon to come from B+/B- decay
 #)
+
+if options.doDisplFilter:
+  maxDispl = cms.untracked.double(1500) 
+else:
+  maxDispl = cms.untracked.double(-1)
+
 process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister", 
-    #MaxEta = cms.untracked.double(3),
-    #MinEta = cms.untracked.double(-3),
-    #MinPt = cms.untracked.double(0.5), # <=== keep it a bit lower than the pt cut at reco level... 
-    MaxEta = cms.untracked.double(1.6),
-    MinEta = cms.untracked.double(-1.6),
-    MinPt = cms.untracked.double(5), # <=== keep it a bit lower than the pt cut at reco level... 
+    #MaxEta = cms.untracked.double(6),
+    #MinEta = cms.untracked.double(-6),
+    #MinPt = cms.untracked.double(0.0), # <=== keep it a bit lower than the pt cut at reco level... 
+    MaxEta = cms.untracked.double(1.55),
+    MinEta = cms.untracked.double(-1.55),
+    MinPt = cms.untracked.double(6.8), # <=== keep it a bit lower than the pt cut at reco level... #### FIXME should be raised to 6.5 - 7
     ParticleID = cms.untracked.int32(13), # abs value is taken
     #Status = cms.untracked.int32(1),
-    MotherID = cms.untracked.int32(521), # require muon to come from B+/B- decay
+    MotherIDs = cms.untracked.vint32(521, 511, 531), # require muon to come from B+/B- decay
     SisterID = cms.untracked.int32(9900015), # require HNL sister
+    MaxSisterDisplacement = maxDispl, # max Lxyz displacement to generate in mm, -1 for no max
 )
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
@@ -167,36 +198,26 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             ### the list of particles that are aliased and forced to be decayed by EvtGen
             list_forced_decays = cms.vstring(       
                 'myB+', 
-                'myB-'
+                'myB-',
+                'myB0',
+                'myB0bar',
+                'myB0s',
+                'myB0sbar',
             ),
             
             ### the list of particles that remain undecayed by Pythia for EvtGen to operate on. 
             ### If the vector has a size 0 or size of 1 with a value of 0, the default list is used. 
             ### These are are hard-coded in: GeneratorInterface/EvtGenInterface/plugins/EvtGen/EvtGenInterface.cc., in the function SetDefault_m_PDGs().            
-            operates_on_particles = cms.vint32(521, -521), 
+            operates_on_particles = cms.vint32(521, -521, 511, -511, 531, -531), #B+, B-, B0, B0bar, B0s, B0sbar   # 541 is Bc+
 
             ### The file with properties of all particles
-            particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}.pdl'.format(m=options.mass,ctau=options.ctau)), 
-            #particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mod.pdl'),
-            #particle_property_file = cms.FileInPath('GeneratorInterface/EvtGenInterface/data/evt_2014_mod.pdl'),  
+            particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}_{dm}.pdl'.format(\
+                                                       m=options.mass,ctau=options.ctau,dm='maj' if options.doMajorana else 'dirac')), 
             #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath
-
-
-            ### Decay chain
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias mytau+ tau+\nAlias mytau- tau-\nChargeConj myB+ myB-\nChargeConj mytau+ mytau-\n\nDecay myB-\n0.259     anti-D0       mytau-     nu_tau    ISGW2;\n0.592     anti-D*0      mytau-     nu_tau    ISGW2;\n0.074     anti-D_2*0    mytau-     nu_tau    ISGW2;\n0.074     anti-D\'_10    mytau-     nu_tau    ISGW2;\nEnddecay\nCDecay myB+\n\nDecay mytau-\n1.0 mu-    mu+    mu-             PHOTOS PHSP;\nEnddecay\nCDecay mytau+\n\nEnd\n")
-            
-            # decay to neutrino
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nDecay myB-\n1.0     myD0    mu-    anti-nu_mu    ISGW2;\nEnddecay\nCDecay myB+\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nEnd\n")
-            
-
-            # decay to HNL, majorana, no need to define charge conjugation
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nDecay myB-\n1.0     myD0    mu-    hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\n\nEnd\n")
-            
-      
-            # decay to HNL, dirac: charge conjugate of hnl -> anti_hnl
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\n\nEnd\n")
-            # decay to HNL, dirac, and decay also HNL 
-            user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nDecay anti_hnl\n1.0     mu+    pi-    PHSP;\nEnddecay\nCDecay hnl\n\nEnd\n")
+ 
+            ### The decay file 
+            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(\
+                                             m=options.mass, dm='maj' if options.doMajorana else 'dirac')),
 
         ),
         parameterSets = cms.vstring('EvtGen130')
@@ -214,15 +235,16 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             ##     http://home.thep.lu.se/~torbjorn/pythia81html/QCDProcesses.html
             ##     eventually use SoftQCD if you#'re interested in the full bottom production at high energies
 
-            ### original settings for tau->3mu   
-            #'SoftQCD:nonDiffractive = on',            # default is off     
-            #'SoftQCD:singleDiffractive = on',         # default is off
-            #'SoftQCD:doubleDiffractive = on',         # default is off
-            #'PTFilter:filter = on',                   # default is off  # could not find **ANYWHERE** in the Pythia code PTFilter 
+            ### softqcd, includes gluon splitting and flavor excitation (b g ->  b g)
+            #'SoftQCD:nonDiffractive = on',             # default is off     
+            #'SoftQCD:singleDiffractive = off',         # default is off
+            #'SoftQCD:doubleDiffractive = off',         # default is off
+            #'PTFilter:filter = on',                    # default is off  # could not find **ANYWHERE** in the Pythia code PTFilter 
             #'PTFilter:quarkToFilter = 5',                               # it's something that exists in CMSSW only, see Py8InterfaceBase.cc
             #'PTFilter:scaleToFilter = 1.0'            # default is 0.4 
            
-            ### settings to generate bbar only as per tip https://twiki.cern.ch/twiki/bin/view/CMS/EvtGenInterface#Tips_for_Pythia8   
+            ### settings to generate back-to-back b-jet production
+            ### tip https://twiki.cern.ch/twiki/bin/view/CMS/EvtGenInterface#Tips_for_Pythia8   
             'SoftQCD:nonDiffractive = off',            # 
             'SoftQCD:singleDiffractive = off',         #
             'SoftQCD:doubleDiffractive = off',         #
@@ -257,15 +279,18 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
         # do we want pythia8PSweightsSettings ?
     ),
     comEnergy = cms.double(13000.0),
-    filterEfficiency = cms.untracked.double(0.0013),  # this will not be used by Pythia, only saved in GenInfo
+    #filterEfficiency = cms.untracked.double(0.0013),  # this will not be used by Pythia, only saved in GenInfo
     maxEventsToPrint = cms.untracked.int32(0),        # max events to print the complete event list information
     pythiaHepMCVerbosity = cms.untracked.bool(False), # to display HepMC information: vertices and particles (not interesting)
-    pythiaPylistVerbosity = cms.untracked.int32(1)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
+    pythiaPylistVerbosity = cms.untracked.int32(0)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
 )
 
 
-process.ProductionFilterSequence = cms.Sequence(process.generator+process.BpFilter+process.SingleMuFilter)
-#process.ProductionFilterSequence = cms.Sequence(process.generator+process.BpFilter) 
+if options.doSkipMuonFilter:
+  process.ProductionFilterSequence = cms.Sequence(process.generator+process.BFilter) 
+else:
+  process.ProductionFilterSequence = cms.Sequence(process.generator+process.BFilter+process.SingleMuFilter)
+
 
 # Path and EndPath definitions
 process.generation_step = cms.Path(process.pgen)

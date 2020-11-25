@@ -6,9 +6,8 @@ import sys
 import os
 import subprocess
 
-sys.path.append('../python/') 
-from common import Point
-
+from python.common import Point
+from python.decays import Decays
 
 class Job(object):
   def __init__(self,opt):
@@ -17,23 +16,28 @@ class Job(object):
     for k,v in sorted(vars(opt).items()):
       setattr(self,k,v)
 
-    if not os.path.isfile(self.pointFile): raise RuntimeError('Provided file for points to scan does not exist, {}'.format(self.pointFile))
     ps = __import__(self.pointFile.split('.py')[0])
     self.points = ps.points
-    if self.domultijob and self.njobs <= 1: raise RuntimeError('when running multiple jobs, the number of parallel jobs should be larger than 1')
-    if self.domultijob and self.nevts % self.njobs != 0: raise RuntimeError('cannot split events in njobs evenly, please change njobs / nevts')
-    if self.domultijob and self.domultithread: raise RuntimeError('either multijob or multithread, choose, otherwise seed for generation will repeat')
     self.njobs = self.njobs if self.domultijob else 1
     self.nevtsjob = self.nevts if not self.domultijob else self.nevts/self.njobs
     self.prodLabel = '{v}_n{n}_njt{nj}'.format(v=self.ver,n=self.nevts,nj=self.njobs)
     self.nthr = 8 if self.domultithread else 1
     self.npremixfiles = 20 # the number of events per file being 1200
     self.user = os.environ["USER"]
+    self.jop1_in = 'step1.py' if not self.dobc else 'step1_Bc.py'
     self.jop1 = 'step1.py'
     self.jop2 = 'step2.py'
     self.jop3 = 'step3.py'
     self.jop4 = 'step4.py'
    
+    # run checks
+    if not os.path.isfile(self.pointFile): raise RuntimeError('Provided file for points to scan does not exist, {}'.format(self.pointFile))
+    if self.domultijob and self.njobs <= 1: raise RuntimeError('when running multiple jobs, the number of parallel jobs should be larger than 1')
+    if self.domultijob and self.nevts % self.njobs != 0: raise RuntimeError('cannot split events in njobs evenly, please change njobs / nevts')
+    if self.domultijob and self.domultithread: raise RuntimeError('either multijob or multithread, choose, otherwise seed for generation will repeat')
+    if self.dobc and self.nevtsjob > 1000000: raise RuntimeError('Not enough events in the Bc LHE->ROOT files, please reduce number of events per job')
+    if self.dobc and self.njobs > 107: raise RuntimeError('Currently we access only 107 M Bc events, either find more Bc events or reduce the total number of jobs')
+    # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
 
   def makeProdDir(self):
     if not os.path.isdir(self.prodLabel):
@@ -49,6 +53,7 @@ class Job(object):
     print('')
 
 
+  '''
   def getStartDir(self):
     if self.user == 'mratti':
       startdir = '/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/'
@@ -57,19 +62,144 @@ class Job(object):
     else:
       startdir = '`pwd`'
     return startdir
-  
+  '''
 
   def makeEvtGenData(self):
     for p in self.points:      
-      hnl_lines = 'add  p Particle  hnl                          9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}    9900015\nadd  p Particle  anti_hnl                    -9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}   -9900015\n'.format(p.mass,p.ctau,p.mass,p.ctau)
+      if self.domajorana:
+        hnl_lines = 'add  p Particle  hnl                          9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}    9900015\n'.format(p.mass,p.ctau,p.mass,p.ctau)
+      else:
+        hnl_lines = 'add  p Particle  hnl                          9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}    9900015\nadd  p Particle  anti_hnl                    -9900015  {:.7e}  0.0000000e+00  0.0000000e+00     0     1  {:.7e}   -9900015\n'.format(p.mass,p.ctau,p.mass,p.ctau)
 
       with open('../evtGenData/evt_2014.pdl', 'r') as fin:
         contents = fin.readlines()
         contents.insert(4, hnl_lines)
         contents = ''.join(contents)
-      with open('../evtGenData/evt_2014_mass{m}_ctau{ctau}.pdl'.format(m=p.mass, ctau=p.ctau), 'w') as fout:
+      with open('../evtGenData/evt_2014_mass{m}_ctau{ctau}_{dm}.pdl'.format(m=p.mass, ctau=p.ctau, dm='maj' if self.domajorana else 'dirac'), 'w') as fout:
         fout.write(contents)
     print('===> Created evtGen particle property files\n')
+
+
+  def makeEvtGenDecayBc(self):
+    for p in self.points:
+      decay_table = [
+       'Alias myBc+ B_c+',
+       'Alias myBc- B_c-',
+       '',
+       'ChargeConj myBc+ myBc-',
+       '{cconj}',
+       '',
+       'Decay myBc+',
+       '{Bc_br0:.10f}               mu+    hnl    PHSP;',
+       '',
+       'Enddecay',
+       'CDecay myBc-',
+       '',
+       'Decay hnl',
+       '0.5     mu-    pi+    PHSP;',
+       '{maj_decay}',
+       'Enddecay',
+       '{cdec}',
+       '',
+       'End',      
+       '',      
+      ]
+      
+      decay_table = '\n'.join(decay_table)
+      dec = Decays(mass=p.mass, mixing_angle_square=1)
+
+      decay_table = decay_table.format(
+                         Bc_br0=dec.Bc_to_uHNL.BR,
+                         #pfx='anti_' if not self.domajorana else '',
+
+                         cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
+                         cdec = 'CDecay anti_hnl' if not self.domajorana else '',
+                         maj_decay = '0.5     mu+    pi-    PHSP;' if self.domajorana else '',
+                         )
+
+      with open('../evtGenData/HNLdecay_mass{m}_{dm}_Bc.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
+        fout.write(decay_table)
+      print('===> Created evtGen decay files for Bc \n')
+
+  def makeEvtGenDecay(self):
+
+    for p in self.points:
+      decay_table = [
+       'Alias myB+ B+',
+       'Alias myB- B-',
+       'Alias myB0 B0',
+       'Alias myB0bar anti-B0',
+       'Alias myB0s B_s0',
+       'Alias myB0sbar anti-B_s0',
+       '',
+       'ChargeConj myB+ myB-',
+       'ChargeConj myB0 myB0bar',
+       'ChargeConj myB0s myB0sbar', 
+       '{cconj}',
+       '',
+       'Decay myB+',
+       '{Bp_br0:.10f}               mu+    hnl    PHSP;',
+       '{Bp_br1:.10f}    anti-D0    mu+    hnl    PHSP;',
+       '{Bp_br2:.10f}    anti-D*0   mu+    hnl    PHSP;',
+       '{Bp_br3:.10f}    pi0        mu+    hnl    PHSP;',
+       '{Bp_br4:.10f}    rho0       mu+    hnl    PHSP;',
+       'Enddecay',
+       'CDecay myB-',
+       '',
+       'Decay myB0',
+       '{B0_br1:.10f}    D-    mu+    hnl    PHSP;',
+       '{B0_br2:.10f}    D*-   mu+    hnl    PHSP;',
+       '{B0_br3:.10f}    pi-   mu+    hnl    PHSP;',
+       '{B0_br4:.10f}   rho-   mu+    hnl    PHSP;',
+       'Enddecay',
+       'CDecay myB0bar',
+       '',
+       'Decay myB0s',
+       '{B0s_br1:.10f}    D_s-    mu+    hnl    PHSP;',
+       '{B0s_br2:.10f}    D_s*-   mu+    hnl    PHSP;',
+       '{B0s_br3:.10f}    K-      mu+    hnl    PHSP;',
+       '{B0s_br4:.10f}    K*-     mu+    hnl    PHSP;',
+       'Enddecay',
+       'CDecay myB0sbar',
+       '',
+       'Decay hnl',
+       '0.5     mu-    pi+    PHSP;',
+       '{maj_decay}',
+       'Enddecay',
+       '{cdec}',
+       '',
+       'End',      
+       '',
+      ]
+
+      decay_table = '\n'.join(decay_table)
+      dec = Decays(mass=p.mass, mixing_angle_square=1)
+
+      decay_table = decay_table.format(
+                         Bp_br0=dec.B_to_uHNL.BR,
+                         Bp_br1=dec.B_to_D0uHNL.BR,
+                         Bp_br2=dec.B_to_D0staruHNL.BR,
+                         Bp_br3=dec.B_to_pi0uHNL.BR,
+                         Bp_br4=dec.B_to_rho0uHNL.BR,
+
+                         B0_br1=dec.B0_to_DuHNL.BR,
+                         B0_br2=dec.B0_to_DstaruHNL.BR,
+                         B0_br3=dec.B0_to_piuHNL.BR,
+                         B0_br4=dec.B0_to_rhouHNL.BR,
+
+                         B0s_br1=dec.Bs_to_DsuHNL.BR,
+                         B0s_br2=dec.Bs_to_DsstaruHNL.BR,
+                         B0s_br3=dec.Bs_to_KuHNL.BR,
+                         B0s_br4=dec.Bs_to_KstaruHNL.BR,
+
+                         cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
+                         cdec = 'CDecay anti_hnl' if not self.domajorana else '',
+                         maj_decay = '0.5     mu+    pi-    PHSP;' if self.domajorana else '',
+                         )
+
+      with open('../evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
+        fout.write(decay_table)
+      print('===> Created evtGen decay files\n')
 
 
   def appendTemplate(self, jopa, jopb, nthr, nevtsjob, npremixfiles=0):
@@ -98,7 +228,7 @@ class Job(object):
         'ls -al',
         'echo ""',
         'RUNTIME_{lbla}=$((DATE_END_{lbla}-DATE_START_{lbla}))',
-        'echo "Intermediate allclock running time {lbla}: $RUNTIME_{lbla} s"',
+        'echo "Intermediate wallclock running time {lbla}: $RUNTIME_{lbla} s"',
         '',
       ]
       if jopa == 'step4.py':
@@ -119,7 +249,7 @@ class Job(object):
     if self.dogenonly:
       timestamp=[
         'RUNTIME_step1=$((DATE_END_step1-DATE_START_step1))',
-        'echo "Wallclock running time: $RUNTIME s"'
+        'echo "Wallclock running time: $RUNTIME_step1 s"'
       ]
     else:
       timestamp=[
@@ -153,7 +283,7 @@ class Job(object):
         '#SBATCH --account=t3',
         '',
         'DIRNAME="{pl}"/mass{m}_ctau{ctau}/',
-        'STARTDIR="{stdr}"',
+        'STARTDIR=$CMSSW_BASE/src/HNLsGen/', # Will take the cmssw version used at submissio time
         'TOPWORKDIR="/scratch/{user}/"',
         'JOBDIR="gen_${{SLURM_JOB_ID}}_${{SLURM_ARRAY_TASK_ID}}"', # MIND THE PARENTHESIS
         'WORKDIR=$TOPWORKDIR/$JOBDIR',
@@ -193,7 +323,7 @@ class Job(object):
         'pwd',
         'echo "Going to run step1"',
         'DATE_START_step1=`date +%s`',
-        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID',
+        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf} doDisplFilter={ddf} doMajorana={dmj}',
         'DATE_END_step1=`date +%s`',
         'echo "Finished running step1"',
         'echo "Content of current directory"',
@@ -223,9 +353,11 @@ class Job(object):
           pl=self.prodLabel,
           user=self.user,
           jop1=self.jop1,
+          dsmf=self.doskipmuonfilter,
+          ddf=self.dodisplfilter,
+          dmj=self.domajorana,
           nevtsjob=self.nevtsjob,
           nthr=self.nthr,
-          stdr=self.getStartDir(),
           jop2=self.jop2,
           jop3=self.jop3,
           jop4=self.jop4,
@@ -242,10 +374,10 @@ class Job(object):
     
   def writeCfg(self):
     with open('{}/cfg.txt'.format(self.prodLabel), 'w') as f:
-      f.write('Run genHelper.py with following options\n')
+      f.write('Run prodHelper.py with following options\n')
       for k,v in sorted(vars(self.opt).items()):
         f.write('{:15s}: {:10s}\n'.format(str(k),str(v)))
-    os.system('cp ../cmsDrivers/{jop} ./{pl}/.'.format(jop=self.jop1,pl=self.prodLabel))
+    os.system('cp ../cmsDrivers/{jop_in} ./{pl}/{jop}'.format(jop=self.jop1,jop_in=self.jop1_in,pl=self.prodLabel))
     if not self.dogenonly:
       os.system('cp ../cmsDrivers/{jop} ./{pl}/.'.format(jop=self.jop2,pl=self.prodLabel))
       os.system('cp ../cmsDrivers/{jop} ./{pl}/.'.format(jop=self.jop3,pl=self.prodLabel))
@@ -279,6 +411,11 @@ def getOptions():
   parser.add_argument('--domultijob', dest='domultijob', help='run several separate jobs', action='store_true', default=False)
   parser.add_argument('--dosubmit', dest='dosubmit', help='submit to slurm', action='store_true', default=False)
   parser.add_argument('--dogenonly', dest='dogenonly', help='produce sample until gen', action='store_true', default=False)
+  parser.add_argument('--doskipmuonfilter', dest='doskipmuonfilter', help='skip the muon filter', action='store_true', default=False)
+  parser.add_argument('--dodisplfilter', dest='dodisplfilter', help='add a filter on the HNL displacement, Lxyz<1.5m', action='store_true', default=False)
+  parser.add_argument('--dobc', dest='dobc', help='do the Bc generation instead of other B species', action='store_true', default=False)
+  parser.add_argument('--domajorana', dest='domajorana', help='consider the HNL as a Majorana particle instead of Dirac', action='store_true', default=False)
+
 
   return parser.parse_args()
 
@@ -291,6 +428,11 @@ if __name__ == "__main__":
   job.makeProdDir()
 
   job.makeEvtGenData()
+
+  if opt.dobc:
+    job.makeEvtGenDecayBc()
+  else:
+    job.makeEvtGenDecay()
 
   job.makeTemplates()
 
