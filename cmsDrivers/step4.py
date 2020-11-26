@@ -2,7 +2,7 @@
 # using: 
 # Revision: 1.19 
 # Source: /local/reps/CMSSW/CMSSW/Configuration/Applications/python/ConfigBuilder.py,v 
-# with command line options: step1 --filein file:step3.root --fileout file:step4.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 102X_upgrade2018_realistic_v15 --step PAT --nThreads 8 --geometry DB:Extended --era Run2_2018 --python_filename step4.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n -1
+# with command line options: step1 --filein file:step3.root --fileout file:step4.root --mc --eventcontent MINIAODSIM --runUnscheduled --datatier MINIAODSIM --conditions 102X_upgrade2018_realistic_v15 --step PAT --nThreads 8 --geometry DB:Extended --era Run2_2018,bParking --python_filename step4.py --no_exec --customise Configuration/DataProcessing/Utils.addMonitoring -n -1
 import FWCore.ParameterSet.Config as cms
 
 from Configuration.StandardSequences.Eras import eras
@@ -28,7 +28,7 @@ options.register('inputFile',
 options.outputFile = 'BPH-step4.root'
 options.parseArguments()
 
-process = cms.Process('PAT',eras.Run2_2018)
+process = cms.Process('PAT',eras.Run2_2018,eras.bParking)
 
 # import of standard configurations
 process.load('Configuration.StandardSequences.Services_cff')
@@ -76,7 +76,6 @@ process.MINIAODSIMoutput = cms.OutputModule("PoolOutputModule",
     dropMetaData = cms.untracked.string('ALL'),
     eventAutoFlushCompressedSize = cms.untracked.int32(-900),
     fastCloning = cms.untracked.bool(False),
-    #fileName = cms.untracked.string('file:{}'.format(options.outputFile)),
     fileName = cms.untracked.string(options.outputFile),
     outputCommands = process.MINIAODSIMEventContent.outputCommands,
     overrideBranchesSplitLevel = cms.untracked.VPSet(

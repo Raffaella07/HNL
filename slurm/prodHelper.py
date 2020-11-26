@@ -22,7 +22,6 @@ class Job(object):
     self.nevtsjob = self.nevts if not self.domultijob else self.nevts/self.njobs
     self.prodLabel = '{v}_n{n}_njt{nj}'.format(v=self.ver,n=self.nevts,nj=self.njobs)
     self.nthr = 8 if self.domultithread else 1
-    self.npremixfiles = 20 # the number of events per file being 1200
     self.user = os.environ["USER"]
     self.jop1_in = 'step1.py' if not self.dobc else 'step1_Bc.py'
     self.jop1 = 'step1.py'
@@ -202,14 +201,14 @@ class Job(object):
       print('===> Created evtGen decay files\n')
 
 
-  def appendTemplate(self, jopa, jopb, nthr, nevtsjob, npremixfiles=0):
+  def appendTemplate(self, jopa, jopb, nthr, nevtsjob):
     if self.dogenonly:
       addlines = ''
     else:
       labela = jopa[0:len(jopa)-3]
       labelb = jopb[0:len(jopb)-3]
       if jopa == 'step2.py':
-        command = 'cmsRun {jopa} randomizePremix=1 nPremixFiles={nprx} nThr={nthr} inputFile=BPH-{lblb}_numEvent{nevtsjob}.root outputFile=BPH-{lbla}.root seedOffset=$SLURM_ARRAY_TASK_ID'.format(jopa=jopa, nprx=npremixfiles, nthr=nthr, lblb=labelb, nevtsjob=nevtsjob, lbla=labela)
+        command = 'cmsRun {jopa} randomizePremix=1 nPremixFiles={nprx} nThr={nthr} inputFile=BPH-{lblb}_numEvent{nevtsjob}.root outputFile=BPH-{lbla}.root seedOffset=$SLURM_ARRAY_TASK_ID'.format(jopa=jopa, nprx=self.npremixfiles, nthr=nthr, lblb=labelb, nevtsjob=nevtsjob, lbla=labela)
       else:
         command = 'cmsRun {jopa} nThr={nthr} inputFile=BPH-{lblb}.root outputFile=BPH-{lbla}.root seedOffset=$SLURM_ARRAY_TASK_ID'.format(jopa=jopa, nthr=1, lblb=labelb, lbla=labela)
 
@@ -361,7 +360,7 @@ class Job(object):
           jop2=self.jop2,
           jop3=self.jop3,
           jop4=self.jop4,
-          addstep2=self.appendTemplate(self.jop2,self.jop1,self.nthr,self.nevtsjob,self.npremixfiles),
+          addstep2=self.appendTemplate(self.jop2,self.jop1,self.nthr,self.nevtsjob),
           addstep3=self.appendTemplate(self.jop3,self.jop2,self.nthr,self.nevtsjob),
           addstep4=self.appendTemplate(self.jop4,self.jop3,self.nthr,self.nevtsjob),
           timestamp=self.makeTimeStamp()
@@ -404,9 +403,10 @@ def getOptions():
   parser.add_argument('-v','--ver', type=str, dest='ver', help='version of production, e.g. V00_v00', default='V00_v00')
   parser.add_argument('-n','--nevts', type=int, dest='nevts', help='total number of events to be generated', default=10)
   parser.add_argument('--time', type=str, dest='time', help='allowed time for each job', default='08')
-  parser.add_argument('--mem', type=str, dest='mem', help='allowed memory for each job in [MB]', default='2500')
+  parser.add_argument('--mem', type=str, dest='mem', help='allowed memory for each job in [MB]', default='3500')
   parser.add_argument('--njobs', type=int, dest='njobs', help='number of parallel jobs to submit', default=10)
   parser.add_argument('--points', type=str, dest='pointFile', help='name of file contaning information on scan to be run', default='points.py')
+  parser.add_argument('--npremixfiles', type=str, dest='npremixfiles', help='number of premixing files to be randomly chosen', default=3)
   parser.add_argument('--domultithread', dest='domultithread', help='run multithreaded', action='store_true', default=False)
   parser.add_argument('--domultijob', dest='domultijob', help='run several separate jobs', action='store_true', default=False)
   parser.add_argument('--dosubmit', dest='dosubmit', help='submit to slurm', action='store_true', default=False)
