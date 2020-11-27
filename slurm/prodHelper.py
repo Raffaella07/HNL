@@ -39,7 +39,7 @@ class Job(object):
     if self.dobc and self.njobs > 107: raise RuntimeError('Currently we access only 107 M Bc events, either find more Bc events or reduce the total number of jobs')
     # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
    
-    self.override = (False not in [p.cfg is not None for p in self.points]) # override only if
+    self.override = (False not in [p.cfg is not None for p in self.points]) # override only if every point has the cfg set
     if self.override:
       print('===> Will override several job configurations for all points:')
       print('       njobs, nevtsjob, time, prodLabel')
