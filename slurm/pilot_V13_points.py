@@ -48,13 +48,13 @@ m_vv_s = [
 ]
 
 muonEff = {}
-muonEff[0.5] = 0.02    # these are guess-estimates... 
-muonEff[1.0] = 0.015
-muonEff[1.5] = 0.008
-muonEff[2.0] = 0.004  
-muonEff[3.0] = 0.024
-muonEff[4.5] = 0.03
-muonEff[6.0] = 0.05
+muonEff[0.5] = 1e-03 
+muonEff[1.0] = 1e-03
+muonEff[1.5] = 1e-03 # 0.008
+muonEff[2.0] = 5e-04 # 0.004  
+muonEff[3.0] = 7e-03 # 0.024
+muonEff[4.5] = 1e-04 # guess
+muonEff[6.0] = 1e-04 # guess 
 
 displEff = {}
 displEff[0.5]={}
@@ -65,14 +65,14 @@ displEff[3.0]={}
 displEff[4.5]={}
 displEff[6.0]={}
 
-displEff[1.0][1.0e-06] = 0.00075182481402
-displEff[1.0][4.5e-06] = 0.00225267581546
-displEff[1.0][1.8e-05] = 0.0148611200403
+displEff[1.0][1.0e-06] = 0.00075182481402 / 20.
+displEff[1.0][4.5e-06] = 0.00225267581546 / 10.
+displEff[1.0][1.8e-05] = 0.0148611200403  / 5.
 displEff[1.0][7.0e-05] = 0.0504638517648
 displEff[1.0][3.0e-04] = 0.190128020373
 
-displEff[2.0][1.0e-06] = 0.0251267971351
-displEff[2.0][4.5e-06] = 0.0718707550494
+displEff[2.0][1.0e-06] = 0.0251267971351 / 10.
+displEff[2.0][4.5e-06] = 0.0718707550494 / 5.
 displEff[2.0][1.8e-05] = 0.34741875426
 displEff[2.0][7.0e-05] = 0.691271749982
 displEff[2.0][3.0e-04] = 0.935873464042
@@ -85,14 +85,16 @@ displEff[3.0][3.0e-04] = 0.966696317468
 
 displEff[4.5] = displEff[3.0]
 displEff[6.0] = displEff[3.0]
-displEff[0.5] = displEff[1.0]
+
 displEff[1.5] = displEff[1.0]
+for k,v in displEff[1.0].items():
+  displEff[0.5][k]=v/30. 
 
 points = []
 for m,vv in m_vv_s:
   p   = Point(mass=m,ctau=None,vv=vv,ismaj=True)
   eff = displEff[m][vv] * muonEff[m]
-  cfg = Config(nevtseff=100,filtereff=eff,timeevt=100,timejob=23,contingency=1.5)
+  cfg = Config(nevtseff=10,filtereff=eff,timeevt=1000,timejob=60,contingency=3.)
   #cfg = Config(nevtseff=100,filtereff=eff,timeevt=100,timejob=01,contingency=1.5)
   p.setConfig(cfg)
   points.append(p)
