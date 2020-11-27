@@ -94,9 +94,9 @@ class Point(object):
 
   def stamp_simpli(self):
     attrs=[]
-    attrs.append('{}'.format(self.mass))
-    attrs.append('{}'.format(self.vv))
-    attrs.append('{}'.format(self.ctau))
+    attrs.append('m={}'.format(self.mass))
+    attrs.append('vv={:.1e}'.format(self.vv))
+    attrs.append('ctau={:.1e}'.format(self.ctau))
     #attrs.append('{}'.format(self.median))
     attrs=' '.join(attrs)
     print(attrs)
