@@ -4,6 +4,7 @@ the production rates of interest, with respect to the HNL mass and the mixing an
 '''
 
 from objects import Particle, Decay, HNLDecay
+from QCD_corr_table import QCD_corr_table
 import math
 
 
@@ -127,7 +128,6 @@ sq                = Particle('sq'              , 'quark',  m_sq_pdg)
 bq                = Particle('bq'              , 'quark',  m_bq_pdg)
 tq                = Particle('tq'              , 'quark',  m_tq_pdg)
 
-
 ## DECAYS ##
 
 class Decays(object):
@@ -228,9 +228,10 @@ class HNLDecays(object):
     
     # get the model
     V_mu_square =  self.mixing_angle_square
-    V_tau_square = 0. #self.mixing_angle_square # uncomment for figure 13 right
-    V_el_square =  0. #self.mixing_angle_square # uncomment for figure 13 right 
-    QCD_corr = 0.18 if not PESKIN else 0.
+    V_tau_square = 0.#self.mixing_angle_square # uncomment for figure 13 right
+    V_el_square =  0.#self.mixing_angle_square # uncomment for figure 13 right 
+    QCD_corr = QCD_corr_table[mass] if not PESKIN else 0.
+    #QCD_corr = 0.18 if not PESKIN else 0.
     special_V_mu_square = V_mu_square if not PESKIN else 0.
 
     # list of the decays of interest
