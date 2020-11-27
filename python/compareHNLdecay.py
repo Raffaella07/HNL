@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 
 
 
-masses = [0.5+i*0.1 for i in range(0,60) ] # GeV
+#masses = [0.5+i*0.1 for i in range(0,60) ] # GeV
+masses = [float('{:.2f}'.format(1.+i*0.1)) for i in range(0,40) ] # GeV
 
 ctaus_peskin_lep = [ctau_from_gamma(gamma_lep(mass=m,vv=1)) for m in masses] 
 ctaus_peskin_had = [ctau_from_gamma(gamma_had(mass=m,vv=1)) for m in masses]   
