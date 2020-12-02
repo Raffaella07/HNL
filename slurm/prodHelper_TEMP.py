@@ -2,6 +2,9 @@
 Production helper for generating private samples for B-initiated HNLs
 '''
 
+# FIXME: preliminary implementation of D->HNL decays
+# FIXME: make it compatible with new config 
+
 import sys
 import os
 import subprocess
@@ -146,6 +149,7 @@ class Job(object):
        '{Bp_br2:.10f}    anti-D*0   mu+    hnl    PHSP;',
        '{Bp_br3:.10f}    pi0        mu+    hnl    PHSP;',
        '{Bp_br4:.10f}    rho0       mu+    hnl    PHSP;',
+       '{Bp_br1_std:.10f} myD0bar   mu+    nu_mu  PHSP;',
        'Enddecay',
        'CDecay myB-',
        '',
@@ -191,6 +195,7 @@ class Job(object):
                          Bp_br2=dec.B_to_D0staruHNL.BR,
                          Bp_br3=dec.B_to_pi0uHNL.BR,
                          Bp_br4=dec.B_to_rho0uHNL.BR,
+                         Bp_br1_std=0.8, # provisional to force it to this decay
 
                          B0_br1=dec.B0_to_DuHNL.BR,
                          B0_br2=dec.B0_to_DstaruHNL.BR,
@@ -202,9 +207,12 @@ class Job(object):
                          B0s_br3=dec.Bs_to_KuHNL.BR,
                          B0s_br4=dec.Bs_to_KstaruHNL.BR,
 
-                         D0_br1=dec.D0_to_KstaruHNL.BR, 
-                         D0_br2=dec.D0_to_KuHNL.BR,
-                         D0_br3=dec.D0_to_piuHNL.BR,
+                         #D0_br1=dec.D0_to_KstaruHNL.BR, 
+                         #D0_br2=dec.D0_to_KuHNL.BR,
+                         #D0_br3=dec.D0_to_piuHNL.BR,
+                         D0_br1=0.003, 
+                         D0_br2=0.003,
+                         D0_br3=0.003,
 
                          cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
                          cdec = 'CDecay anti_hnl' if not self.domajorana else '',
@@ -337,7 +345,7 @@ class Job(object):
         'pwd',
         'echo "Going to run step1"',
         'DATE_START_step1=`date +%s`',
-        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf} doDisplFilter={ddf}',
+        'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf} doDisplFilter={ddf} doMajorana={dmj}',
         'DATE_END_step1=`date +%s`',
         'echo "Finished running step1"',
         'echo "Content of current directory"',
@@ -369,6 +377,7 @@ class Job(object):
           jop1=self.jop1,
           dsmf=self.doskipmuonfilter,
           ddf=self.dodisplfilter,
+          dmj=self.domajorana,
           nevtsjob=self.nevtsjob,
           nthr=self.nthr,
           jop2=self.jop2,
@@ -387,7 +396,7 @@ class Job(object):
     
   def writeCfg(self):
     with open('{}/cfg.txt'.format(self.prodLabel), 'w') as f:
-      f.write('Run genHelper.py with following options\n')
+      f.write('Run prodHelper.py with following options\n')
       for k,v in sorted(vars(self.opt).items()):
         f.write('{:15s}: {:10s}\n'.format(str(k),str(v)))
     os.system('cp ../cmsDrivers/{jop_in} ./{pl}/{jop}'.format(jop=self.jop1,jop_in=self.jop1_in,pl=self.prodLabel))

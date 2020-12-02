@@ -4,6 +4,7 @@ the B->HNL branching ratios of interest, as a function of HNL mass and the mixin
 '''
 
 from objects import Particle, Decay, HNLDecay
+from QCD_corr_table import QCD_corr_table
 import math
 
 
@@ -32,7 +33,7 @@ m_K0star_pdg  = 0.89555 #0.824 #1.425
 m_rho0_pdg    = 0.77526 #0.769 # 0.770 # 0.77526 # make sure this is the correct meson to consider # in GeV
 m_rho_pdg     = 0.77511
 m_pi0_pdg     = 0.1349768
-m_pi_pdg      = 0.13957039
+m_pi_pdg      = 0.13957039 if not PESKIN else 0
 
 # leptons
 m_el_pdg  = 0.510999 * 1e-3 if not PESKIN else 0
@@ -126,7 +127,6 @@ cq                = Particle('cq'              , 'quark',  m_cq_pdg)
 sq                = Particle('sq'              , 'quark',  m_sq_pdg)
 bq                = Particle('bq'              , 'quark',  m_bq_pdg)
 tq                = Particle('tq'              , 'quark',  m_tq_pdg)
-
 
 ## DECAYS ##
 
@@ -228,15 +228,18 @@ class HNLDecays(object):
     
     # get the model
     V_mu_square =  self.mixing_angle_square
-    V_tau_square = 0.#self.mixing_angle_square
-    V_el_square =  0.#self.mixing_angle_square
-    QCD_corr = 0.18 if not PESKIN else 0.
+    V_tau_square = 0.#self.mixing_angle_square # uncomment for figure 13 right
+    V_el_square =  0.#self.mixing_angle_square # uncomment for figure 13 right 
+    QCD_corr = QCD_corr_table[mass] if not PESKIN else 0.
+    #QCD_corr = 0.18 if not PESKIN else 0.
     special_V_mu_square = V_mu_square if not PESKIN else 0.
 
     # list of the decays of interest
     decay_rates = {}
     self.decay_rate = {}
 
+    self.decay_rate['mupi'] = HNLDecay(hnl, [mu,pi_meson], V_mu_square, Vud_pdg, 'mupi').decay_rate
+                            
     decay_rates['cc_lep'] = [ 
                               HNLDecay(hnl, [mu,el,nu_el],   V_mu_square, 1, 'cc_lep').decay_rate, 
                               HNLDecay(hnl, [mu,tau,nu_tau], special_V_mu_square, 1, 'cc_lep').decay_rate, 

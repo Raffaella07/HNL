@@ -76,8 +76,8 @@ class Sample(object):
       self.orig_ctau = self.ctau
     self.label=label
     self.leglabel=leglabel
-    self.ngenevts = int(label.split('_n')[1])
-    self.njobs = int(label.split('_njt')[1])
+    self.ngenevts = -999  #int(label.split('_n')[1])
+    self.njobs =    -999  #int(label.split('_njt')[1])
     #self.isMajorana
     self.name='bhnl_mass{m}_ctau{ctau}'.format(m=self.mass, ctau=self.ctau)
     #self.legname='{:3}: m={:.1f}GeV |V|^{{2}}={:.1e} c#tau={:.1f}mm {} {}'.format('rw' if self.isrw else 'gen',self.mass,self.vv,self.ctau,'- orig |V|^{{2}}={:.1e}'.format(self.orig_vv) if self.isrw else '', self.leglabel)
@@ -290,6 +290,9 @@ class Sample(object):
     
     #cutsnum = '(Lxy<500)'
     #cutsden = '(1)'
+    #cutsnum = '(l0_pt>6.8 && abs(l0_eta)<1.55)'
+    #cutsden = '(1)'
+
 
     chain.Draw('hnl_pt>>effnum', cutsnum+'*'+self.evt_w, 'goff')
     #chain.Draw('hnl_pt>>effden', cutsden+'*'+self.evt_w, 'goff') # for denominator of acceptance, switch off the 
@@ -622,11 +625,12 @@ def doAnalysis(path,pl,points,name,leglabel='',path2=None,pl2=None,points2=None,
       s.fillHistos(sel='(Lxy<1000)', sellabel='')
       #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
     else:
-      #s.fillHistos(sel='(Lxyz<1500)', sellabel='') # no selection
-      s.fillHistos()
+      #s.fillHistos(sel='(Lxyz<1500)', sellabel='') 
+      #s.fillHistos(sel='(l0_pt>6.8 && abs(l0_eta)<1.55)')
+      s.fillHistos() # no selection
     s.fillAcceptance()
-    s.fillExpNevts()
-    s.fillFilterEff()
+    #s.fillExpNevts()
+    #s.fillFilterEff()
     s.stamp()
     samples.append(s)
 
@@ -640,8 +644,8 @@ def doAnalysis(path,pl,points,name,leglabel='',path2=None,pl2=None,points2=None,
       #s.fillHistos(sel='(Lxyz<1500)', sellabel='')
       #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
       s.fillAcceptance()
-      s.fillExpNevts()
-      s.fillFilterEff()
+      #s.fillExpNevts()
+      #s.fillFilterEff()
       s.stamp()
       samples.append(s)
 
@@ -654,8 +658,8 @@ def doAnalysis(path,pl,points,name,leglabel='',path2=None,pl2=None,points2=None,
       s.fillHistos()
       #s.fillHistos(sel='(l0_pt>5 && abs(l0_eta)<1.6)', sellabel='pt5_eta1p6') # filter selection
       s.fillAcceptance()
-      s.fillExpNevts()
-      s.fillFilterEff()
+      #s.fillExpNevts()
+      #s.fillFilterEff()
       s.stamp()
       samples.append(s)
 
@@ -783,11 +787,11 @@ if __name__ == "__main__":
   doSkipDispl = False #
   doDisplZ = False #
   doSkipHNLptEta = False
-  doCompareAnalysis = True #
+  doCompareAnalysis = False #
   doTestAnalysis = False
   doFixedMassAnalysis = False
   doRwAnalysis = False
-  doFixedVVAnalysis = False
+  doFixedVVAnalysis = True
   muTrigPt = 9 # 0 1 2 5 7 9
   ####
 
@@ -994,12 +998,12 @@ if __name__ == "__main__":
 
     ################
     points = [
-#      Point(mass=0.5,ctau=None,vv=1e-04,isrw=False),
-      Point(mass=1.0,ctau=None,vv=1e-04,isrw=False),
-#      Point(mass=1.5,ctau=None,vv=1e-04,isrw=False),
-      Point(mass=2.0,ctau=None,vv=1e-04,isrw=False),
-#      Point(mass=2.5,ctau=None,vv=1e-04,isrw=False),
-      Point(mass=3.0,ctau=None,vv=1e-04,isrw=False),
+      Point(mass=0.5,ctau=None,vv=1.,isrw=False),
+      Point(mass=1.0,ctau=None,vv=1.,isrw=False),
+      Point(mass=1.5,ctau=None,vv=1.,isrw=False),
+      Point(mass=2.0,ctau=None,vv=1.,isrw=False),
+      Point(mass=3.0,ctau=None,vv=1.,isrw=False),
+      Point(mass=4.5,ctau=None,vv=1.,isrw=False),
       #Point(mass=1.0,ctau=None,vv=1e-05,isrw=False),
       #Point(mass=2.0,ctau=None,vv=1e-05,isrw=False),
       #Point(mass=3.0,ctau=None,vv=1e-05,isrw=False),
@@ -1008,6 +1012,6 @@ if __name__ == "__main__":
     for p in points:
      p.stamp()
     existing_points=checkFiles(path=path,points=points)
-    doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1em04')
+    doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1')
     #doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1em05')
   

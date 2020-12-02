@@ -22,6 +22,7 @@ class Job(object):
     self.nevtsjob = self.nevts if not self.domultijob else self.nevts/self.njobs
     self.prodLabel = '{v}_n{n}_njt{nj}'.format(v=self.ver,n=self.nevts,nj=self.njobs)
     self.nthr = 8 if self.domultithread else 1
+
     self.user = os.environ["USER"]
     self.jop1_in = 'step1.py' if not self.dobc else 'step1_Bc.py'
     self.jop1 = 'step1.py'
@@ -37,6 +38,13 @@ class Job(object):
     if self.dobc and self.nevtsjob > 1000000: raise RuntimeError('Not enough events in the Bc LHE->ROOT files, please reduce number of events per job')
     if self.dobc and self.njobs > 107: raise RuntimeError('Currently we access only 107 M Bc events, either find more Bc events or reduce the total number of jobs')
     # TODO: raise a warning if nevtsjob * filter_eff > npremixfiles * 1200
+   
+    self.override = (False not in [p.cfg is not None for p in self.points]) # override only if every point has the cfg set
+    if self.override:
+      print('===> Will override several job configurations for all points:')
+      print('       njobs, nevtsjob, time, prodLabel')
+      self.prodLabel = '{v}'.format(v=self.ver)
+
 
   def makeProdDir(self):
     if not os.path.isdir(self.prodLabel):
@@ -48,7 +56,8 @@ class Job(object):
 
     print('===> Points to be run')
     for p in self.points:
-      p.stamp()
+      p.stamp_simpli()
+      if p.cfg is not None: p.cfg.stamp()
     print('')
 
 
@@ -108,7 +117,7 @@ class Job(object):
       dec = Decays(mass=p.mass, mixing_angle_square=1)
 
       decay_table = decay_table.format(
-                         Bc_br0=dec.Bc_to_uHNL.BR,
+                         Bc_br0=dec.Bc_to_uHNL.BR*1000,
                          #pfx='anti_' if not self.domajorana else '',
 
                          cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
@@ -175,21 +184,21 @@ class Job(object):
       dec = Decays(mass=p.mass, mixing_angle_square=1)
 
       decay_table = decay_table.format(
-                         Bp_br0=dec.B_to_uHNL.BR,
-                         Bp_br1=dec.B_to_D0uHNL.BR,
-                         Bp_br2=dec.B_to_D0staruHNL.BR,
-                         Bp_br3=dec.B_to_pi0uHNL.BR,
-                         Bp_br4=dec.B_to_rho0uHNL.BR,
+                         Bp_br0=dec.B_to_uHNL.BR*1000,
+                         Bp_br1=dec.B_to_D0uHNL.BR*1000,
+                         Bp_br2=dec.B_to_D0staruHNL.BR*1000,
+                         Bp_br3=dec.B_to_pi0uHNL.BR*1000,
+                         Bp_br4=dec.B_to_rho0uHNL.BR*1000,
 
-                         B0_br1=dec.B0_to_DuHNL.BR,
-                         B0_br2=dec.B0_to_DstaruHNL.BR,
-                         B0_br3=dec.B0_to_piuHNL.BR,
-                         B0_br4=dec.B0_to_rhouHNL.BR,
+                         B0_br1=dec.B0_to_DuHNL.BR*1000,
+                         B0_br2=dec.B0_to_DstaruHNL.BR*1000,
+                         B0_br3=dec.B0_to_piuHNL.BR*1000,
+                         B0_br4=dec.B0_to_rhouHNL.BR*1000,
 
-                         B0s_br1=dec.Bs_to_DsuHNL.BR,
-                         B0s_br2=dec.Bs_to_DsstaruHNL.BR,
-                         B0s_br3=dec.Bs_to_KuHNL.BR,
-                         B0s_br4=dec.Bs_to_KstaruHNL.BR,
+                         B0s_br1=dec.Bs_to_DsuHNL.BR*1000,
+                         B0s_br2=dec.Bs_to_DsstaruHNL.BR*1000,
+                         B0s_br3=dec.Bs_to_KuHNL.BR*1000,
+                         B0s_br4=dec.Bs_to_KstaruHNL.BR*1000,
 
                          cconj = 'ChargeConj hnl anti_hnl' if not self.domajorana else '',
                          cdec = 'CDecay anti_hnl' if not self.domajorana else '',
@@ -198,7 +207,7 @@ class Job(object):
 
       with open('../evtGenData/HNLdecay_mass{m}_{dm}.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
         fout.write(decay_table)
-      print('===> Created evtGen decay files\n')
+    print('===> Created evtGen decay files\n')
 
 
   def appendTemplate(self, jopa, jopb, nthr, nevtsjob):
@@ -222,6 +231,7 @@ class Job(object):
         'DATE_START_{lbla}=`date +%s`',
         '{command}',
         'DATE_END_{lbla}=`date +%s`',
+        'if [ $? -eq 0 ]; then echo "Successfully run step"; else exit $?; fi',
         'echo "Finished running {lbla}"',
         'echo "Content of current directory"',
         'ls -al',
@@ -235,6 +245,7 @@ class Job(object):
         '',
         'echo "Going to copy output to result directory"',
         'xrdcp -f $WORKDIR/BPH-{lbla}.root $OUTSEPREFIX/$SERESULTDIR/{lbla}_nj$SLURM_ARRAY_TASK_ID".root"',
+        'if [ $? -eq 0 ]; then echo "Successfully copied step4 file"; else exit $?; fi',
         '',
         ]
 
@@ -268,6 +279,7 @@ class Job(object):
 
   def makeTemplates(self):
     for p in self.points:
+      nevtsjob_toset = self.nevtsjob if not self.override else p.cfg.nevtsjob 
       template = [
         '#!/bin/bash',
         '',
@@ -324,6 +336,7 @@ class Job(object):
         'DATE_START_step1=`date +%s`',
         'cmsRun {jop1} maxEvents={nevtsjob} nThr={nthr} mass={m} ctau={ctau} outputFile=BPH-step1.root seedOffset=$SLURM_ARRAY_TASK_ID doSkipMuonFilter={dsmf} doDisplFilter={ddf} doMajorana={dmj}',
         'DATE_END_step1=`date +%s`',
+        'if [ $? -eq 0 ]; then echo "Successfully run step 1"; else exit $?; fi',
         'echo "Finished running step1"',
         'echo "Content of current directory"',
         'ls -al',
@@ -331,6 +344,7 @@ class Job(object):
         '',
         'echo "Going to copy output to result directory"',
         'xrdcp -f $WORKDIR/BPH-step1_numEvent{nevtsjob}.root $OUTSEPREFIX/$SERESULTDIR/step1_nj$SLURM_ARRAY_TASK_ID".root"',
+        'if [ $? -eq 0 ]; then echo "Successfully copied step1 file"; else exit $?; fi',
         '',
         '{addstep2}',
         '{addstep3}',
@@ -345,24 +359,25 @@ class Job(object):
       template = template.format(
           m=p.mass,
           ctau=p.ctau,
-          hh=self.time,
+          hh=self.time if not self.override else p.cfg.timejob,
           mem=self.mem,
           lbldir=self.prodLabel,
-          arr='1-{}'.format(self.njobs),
+          arr='1-{}'.format(self.njobs if not self.override else p.cfg.njobs),
           pl=self.prodLabel,
           user=self.user,
           jop1=self.jop1,
           dsmf=self.doskipmuonfilter,
           ddf=self.dodisplfilter,
           dmj=self.domajorana,
-          nevtsjob=self.nevtsjob,
+          nevtsjob=nevtsjob_toset,
           nthr=self.nthr,
           jop2=self.jop2,
           jop3=self.jop3,
           jop4=self.jop4,
-          addstep2=self.appendTemplate(self.jop2,self.jop1,self.nthr,self.nevtsjob),
-          addstep3=self.appendTemplate(self.jop3,self.jop2,self.nthr,self.nevtsjob),
-          addstep4=self.appendTemplate(self.jop4,self.jop3,self.nthr,self.nevtsjob),
+          addstep2=self.appendTemplate(self.jop2,self.jop1,self.nthr,nevtsjob_toset),
+          addstep3=self.appendTemplate(self.jop3,self.jop2,self.nthr,nevtsjob_toset),
+          addstep4=self.appendTemplate(self.jop4,self.jop3,self.nthr,nevtsjob_toset),
+
           timestamp=self.makeTimeStamp()
           )
       launcherFile = '{pl}/slurm_mass{m}_ctau{ctau}_prod.sh'.format(pl=self.prodLabel,m=p.mass,ctau=p.ctau)
@@ -384,10 +399,14 @@ class Job(object):
       
 
   def submit(self):
-    os.chdir(self.prodLabel)
-    for p in self.points:
-      os.system('sbatch slurm_mass{m}_ctau{ctau}_prod.sh'.format(m=p.mass,ctau=p.ctau))
-    os.chdir('../')
+    with open('{}/jobs.txt'.format(self.prodLabel), 'w') as f:
+      os.chdir(self.prodLabel)
+      for p in self.points:
+        command = 'sbatch slurm_mass{m}_ctau{ctau}_prod.sh'.format(m=p.mass,ctau=p.ctau)
+        out = subprocess.check_output(command, shell=True)
+        jobn = out.split('\n')[0].split(' ')[-1]      
+        f.write('mass{m}_ctau{ctau} {j}\n'.format(m=p.mass,ctau=p.ctau,j=jobn))
+      os.chdir('../')
     print('')
     print('===> Submitted {n} job arrays for {pl}\n'.format(n=len(self.points),pl=self.prodLabel))
   
