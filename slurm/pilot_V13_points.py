@@ -1,4 +1,4 @@
-from python.common  import Point,Config
+from python.common  import Point,Config,getCtauEff
 
 # List of points to be generated
 #   - N.B.: mass must be a float
@@ -93,15 +93,20 @@ for k,v in displEff[1.0].items():
 points = []
 for m,vv in m_vv_s:
   p   = Point(mass=m,ctau=None,vv=vv,ismaj=True)
-  eff = displEff[m][vv] * muonEff[m]
-  cfg = Config(nevtseff=10,filtereff=eff,timeevt=1000,timejob=60,contingency=3.)
+  #eff = displEff[m][vv] * muonEff[m]
+  cfg = Config(nevtseff=10,muoneff=muonEff[m],displeff=displEff[m][vv],timeevt=1000,timejob=60,contingency=3.)
   #cfg = Config(nevtseff=100,filtereff=eff,timeevt=100,timejob=01,contingency=1.5)
   p.setConfig(cfg)
   points.append(p)
 
-  #p.stamp_simpli()
+  # 
+
+  print('mass={:.1f} vv={:.1e} before={:.1e}, after={:.1e}'.format(p.mass,p.vv,displEff[m][vv],getCtauEff(p.ctau*4.,1000.))) # 4 is the assumed beta*gamma factor...
   #cfg.stamp()
   
+
+
+
 
 
 

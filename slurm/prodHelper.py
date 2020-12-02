@@ -57,7 +57,7 @@ class Job(object):
     print('===> Points to be run')
     for p in self.points:
       p.stamp_simpli()
-      p.cfg.stamp()
+      if p.cfg is not None: p.cfg.stamp()
     print('')
 
 

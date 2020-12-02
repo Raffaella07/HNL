@@ -54,7 +54,12 @@ def getVV(mass=-99.,ctau=-99.,ismaj=True):
     return k/(np.power(mass, 5) * ctau)
    
 
-
+def getCtauEff(ctau,cut=1000.):
+  '''
+  Returns an approximate estimate of the displacement filter efficiency (assuming beta*gamma=1) !!!
+  '''
+  rv = expon(scale=ctau)
+  return rv.cdf(cut) # evaluate the cdf at ct=1000mm=1m
 
 class Point(object):
   '''
@@ -107,9 +112,11 @@ class Point(object):
       self.cfg = cfg
 
 class Config(object):
-  def __init__(self,nevtseff=10,filtereff=1.0,timeevt=80,timejob=23,contingency=1.5):
+  def __init__(self,nevtseff=10,muoneff=1.0,displeff=1.0,timeevt=80,timejob=23,contingency=1.5):
     self.nevtseff = int(nevtseff)     # number of wanted effective events 
-    self.filtereff = float(filtereff) # efficiency of the generator filter
+    self.muoneff = float(muoneff)     #
+    self.displeff = float(displeff)   #
+    self.filtereff = float(muoneff*displeff) # efficiency of the generator filter
     self.timeevt = float(timeevt)     # time needed for each event (all steps),   in seconds    # take the one of the worst case scenario
     self.timejob = int(timejob)       # time for each job, including contingency, in hours
     self.contingency = float(contingency)   # factor 
@@ -118,6 +125,7 @@ class Config(object):
     self.nevtseffjob = int( (self.timejob*3600./self.contingency) / self.timeevt )
     self.njobs       = int(float(self.nevtseff) / float(self.nevtseffjob)) + 1    
     self.nevtsjob    = int(float(self.nevts) / float(self.njobs) )                      # this will regulate maxEvents in cmsRun 
+
 
   def stamp(self):
     attrs=[]
