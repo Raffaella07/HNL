@@ -39,6 +39,16 @@ options.register('doSkipMuonFilter',
                   VarParsing.multiplicity.singleton, 
                   VarParsing.varType.bool, 
                   'Skip the muon filter' )
+options.register('doDisplFilter',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'In muon filter, add a cut on the HNL displacement' )
+options.register('doMajorana',    
+                  False, 
+                  VarParsing.multiplicity.singleton, 
+                  VarParsing.varType.bool, 
+                  'HNL is majorana particle, otherwise dirac' )
 #options.register ("doDirac",
 #                  1, # default value
 #                  VarParsing.multiplicity.singleton, # singleton or list
@@ -72,7 +82,6 @@ process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(options.maxEvents)
 )
-
 
 # Input source
 ### LHE->root files, each file has 1 M events, _0.root does not work, start from 1
@@ -158,21 +167,26 @@ process.BFilter = cms.EDFilter("MCMultiParticleFilter",
    Status = cms.vint32(0), 
 )
 
+
+if options.doDisplFilter:
+  maxDispl = cms.untracked.double(1500) 
+else:
+  maxDispl = cms.untracked.double(-1)
+
 process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherSister", 
-    #MaxEta = cms.untracked.double(3),
-    #MinEta = cms.untracked.double(-3),
-    #MinPt = cms.untracked.double(0.5), # <=== keep it a bit lower than the pt cut at reco level... 
-    MaxEta = cms.untracked.double(1.6),
-    MinEta = cms.untracked.double(-1.6),
-    MinPt = cms.untracked.double(5.), # <=== keep it a bit lower than the pt cut at reco level... #### FIXME should be raised to 6.5 - 7
+    #MaxEta = cms.untracked.double(6),
+    #MinEta = cms.untracked.double(-6),
+    #MinPt = cms.untracked.double(0.0), # <=== keep it a bit lower than the pt cut at reco level... 
+    MaxEta = cms.untracked.double(1.55),
+    MinEta = cms.untracked.double(-1.55),
+    MinPt = cms.untracked.double(6.8), # <=== keep it a bit lower than the pt cut at reco level... #### FIXME should be raised to 6.5 - 7
     ParticleID = cms.untracked.int32(13), # abs value is taken
     #Status = cms.untracked.int32(1),
-    MotherIDs = cms.untracked.vint32(541), # require muon to come from Bc+/Bc- decay
+    MotherIDs = cms.untracked.vint32(521, 511, 531), # require muon to come from B+/B- decay
     SisterID = cms.untracked.int32(9900015), # require HNL sister
-    MaxSisterDisplacement = cms.untracked.double(-1), # max Lxy displacement to generate, -1 for no max
+    MaxSisterDisplacement = maxDispl, # max Lxyz displacement to generate in mm, -1 for no max
 )
 
-#process.generator = cms.EDFilter("Pythia8GeneratorFilter",
 process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     ExternalDecays = cms.PSet(
         EvtGen130 = cms.untracked.PSet(
@@ -193,18 +207,12 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             operates_on_particles = cms.vint32(541, -541),  # 541 is Bc+
 
             ### The file with properties of all particles
-            particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}.pdl'.format(m=options.mass,ctau=options.ctau)), 
-            #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath
+            particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014_mass{m}_ctau{ctau}_{dm}.pdl'.format(\
+                                                       m=options.mass,ctau=options.ctau,dm='maj' if options.doMajorana else 'dirac')), 
+            #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath 
 
-            ### Decay chain
-            # decay to HNL, majorana, no need to define charge conjugation
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nDecay myB-\n1.0     myD0    mu-    hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\n\nEnd\n")
-                  
-            # decay to HNL, dirac, and decay also HNL 
-            #user_decay_embedded = cms.vstring("\nAlias myB+ B+\nAlias myB- B-\nAlias myD0 D0\nAlias myAntiD0 anti-D0\nChargeConj myB+ myB-\nChargeConj myD0 myAntiD0\nChargeConj hnl anti_hnl\nDecay myB-\n1.0     myD0    mu-    anti_hnl    PHSP;\nEnddecay\nCDecay myB+\n\nDecay myD0\n1.0    K-    pi+    PHSP;\nEnddecay\nCDecay myAntiD0\nDecay anti_hnl\n1.0     mu+    pi-    PHSP;\nEnddecay\nCDecay hnl\n\nEnd\n")
-            
-            # new way, instead of a long string, write things in a file 
-            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_Bc.DEC'.format(m=options.mass)),
+            ### The decay file 
+            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_{dm}_Bc.DEC'.format(m=options.mass, dm='maj' if options.majorana else 'dirac')),
 
         ),
         parameterSets = cms.vstring('EvtGen130')
@@ -244,7 +252,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
     #filterEfficiency = cms.untracked.double(0.0013),  # this will not be used by Pythia, only saved in GenInfo
     maxEventsToPrint = cms.untracked.int32(0),        # max events to print the complete event list information
     pythiaHepMCVerbosity = cms.untracked.bool(False), # to display HepMC information: vertices and particles (not interesting)
-    pythiaPylistVerbosity = cms.untracked.int32(1)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
+    pythiaPylistVerbosity = cms.untracked.int32(0)    # 1 for "normal" verbosity, 11 to display all Pythia Settings
 )
 
 
