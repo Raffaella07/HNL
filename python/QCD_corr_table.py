@@ -1,5 +1,10 @@
 QCD_corr_table = {}            # extracted from figure 14 of Bondarenko
 QCD_corr_table[0.50] = 0.3044  # FIRST NUMBER IS DUMMY!
+QCD_corr_table[0.60] = 0.3044  # FIRST NUMBER IS DUMMY!
+QCD_corr_table[0.70] = 0.3044  # FIRST NUMBER IS DUMMY!
+QCD_corr_table[0.80] = 0.3044  # FIRST NUMBER IS DUMMY!
+QCD_corr_table[0.90] = 0.3044  # FIRST NUMBER IS DUMMY!
+QCD_corr_table[1.00] = 0.3044 
 QCD_corr_table[1.00] = 0.3044 
 QCD_corr_table[1.01] = 0.2981
 QCD_corr_table[1.02] = 0.2953
@@ -401,5 +406,14 @@ QCD_corr_table[4.97] = 0.09832
 QCD_corr_table[4.98] = 0.09843
 QCD_corr_table[4.99] = 0.09820
 QCD_corr_table[5.00] = 0.09967
+QCD_corr_table[5.10] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.20] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.30] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.40] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.50] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.60] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.70] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.80] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.90] = 0.09967 # LAST NUMBER IS also DUMMY!  
 QCD_corr_table[6.00] = 0.09967 # LAST NUMBER IS also DUMMY!  
 
