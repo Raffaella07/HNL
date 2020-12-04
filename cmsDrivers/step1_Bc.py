@@ -212,7 +212,7 @@ process.generator = cms.EDFilter("Pythia8HadronizerFilter",
             #https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideEdmFileInPath 
 
             ### The decay file 
-            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_{dm}_Bc.DEC'.format(m=options.mass, dm='maj' if options.majorana else 'dirac')),
+            user_decay_file = cms.vstring('HNLsGen/evtGenData/HNLdecay_mass{m}_{dm}_Bc.DEC'.format(m=options.mass, dm='maj' if options.doMajorana else 'dirac')),
 
         ),
         parameterSets = cms.vstring('EvtGen130')
