@@ -74,9 +74,12 @@ class Point(object):
     if not vv: 
       self.ctau=ctau 
       self.vv=getVV(mass=self.mass, ctau=self.ctau, ismaj=self.ismaj)
-    if not ctau:
+    elif not ctau:
       self.vv = vv
       self.ctau=getCtau(mass=self.mass, vv=self.vv, ismaj=self.ismaj)
+    else:
+      self.vv = vv
+      self.ctau = ctau
 
     if self.isrw:
       self.orig_vv = orig_vv

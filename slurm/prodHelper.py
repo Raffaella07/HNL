@@ -24,7 +24,12 @@ class Job(object):
     self.nthr = 8 if self.domultithread else 1
 
     self.user = os.environ["USER"]
-    self.jop1_in = 'step1.py' if not self.dobc else 'step1_Bc.py'
+    if self.dobc:
+      self.jop1_in = 'step1_Bc.py'
+    elif self.docontrol:
+      self.jop1_in = 'step1_control.py'
+    else:
+      self.jop1_in = 'step1.py' 
     self.jop1 = 'step1.py'
     self.jop2 = 'step2.py'
     self.jop3 = 'step3.py'
@@ -87,6 +92,41 @@ class Job(object):
         fout.write(contents)
     print('===> Created evtGen particle property files\n')
 
+  def makeEvtGenDecayControl(self):
+    for p in self.points: # it should be only one...
+      decay_table = [
+       'Alias myB+ B+',
+       'Alias myB- B-',
+       'Alias myB0 B0',
+       'Alias myB0bar anti-B0',
+       'Alias myJpsi J/psi',
+       '',
+       'ChargeConj myB+ myB-',
+       'ChargeConj myB0 myB0bar',
+       '',
+       'Decay myB+',
+       '1.0     myJpsi  K+  PHSP;', # FIXME: better model?
+       'Enddecay',
+       'CDecay myB-',
+       '',
+       'Decay myB0',
+       '1.0     myJpsi K*0  PHSP;', # FIXME: better model?
+       'Enddecay',
+       'CDecay myB0bar',
+       '',
+       'Decay myJpsi',
+       '1.0    mu-    mu+   PHSP;',# FIXME: better model?
+       'Enddecay',
+       '',
+       'End',      
+       '',
+      ]
+      
+      decay_table = '\n'.join(decay_table)
+
+      with open('../evtGenData/ControlChannel.DEC', 'w') as fout:
+        fout.write(decay_table)
+    print('===> Created evtGen decay files for Control Channel \n')
 
   def makeEvtGenDecayBc(self):
     for p in self.points:
@@ -127,7 +167,7 @@ class Job(object):
 
       with open('../evtGenData/HNLdecay_mass{m}_{dm}_Bc.DEC'.format(m=p.mass, dm='maj' if self.domajorana else 'dirac' ), 'w') as fout:
         fout.write(decay_table)
-      print('===> Created evtGen decay files for Bc \n')
+    print('===> Created evtGen decay files for Bc \n')
 
   def makeEvtGenDecay(self):
 
@@ -433,6 +473,7 @@ def getOptions():
   parser.add_argument('--doskipmuonfilter', dest='doskipmuonfilter', help='skip the muon filter', action='store_true', default=False)
   parser.add_argument('--dodisplfilter', dest='dodisplfilter', help='add a filter on the HNL displacement, Lxyz<1.5m', action='store_true', default=False)
   parser.add_argument('--dobc', dest='dobc', help='do the Bc generation instead of other B species', action='store_true', default=False)
+  parser.add_argument('--docontrol', dest='docontrol', help='do the generation for the control channel B->JpsiK', action='store_true', default=False)
   parser.add_argument('--domajorana', dest='domajorana', help='consider the HNL as a Majorana particle instead of Dirac', action='store_true', default=False)
 
 
@@ -446,10 +487,13 @@ if __name__ == "__main__":
 
   job.makeProdDir()
 
-  job.makeEvtGenData()
+  if not opt.docontrol:
+    job.makeEvtGenData()
 
   if opt.dobc:
     job.makeEvtGenDecayBc()
+  elif opt.docontrol:
+    job.makeEvtGenDecayControl()
   else:
     job.makeEvtGenDecay()
 
