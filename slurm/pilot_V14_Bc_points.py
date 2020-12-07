@@ -4,12 +4,6 @@ from python.common  import Point,Config,getCtauEff
 #   - N.B.: mass must be a float
 
 m_vv_s = [
-#(0.5,1.0e-01),
-
-#(1.0,3.0e-03),
-
-#(1.5,3.0e-04),
-
 (2.0,8.0e-05),
 
 (3.0,1.0e-05),
@@ -23,18 +17,12 @@ m_vv_s = [
 ]
 
 muonEff = {}
-#muonEff[0.5]=0.01
-#muonEff[1.0]=0.005
-#muonEff[1.5]=0.003
 muonEff[2.0]=0.001
 muonEff[3.0]=0.004
 muonEff[4.5]=0.0005
 muonEff[5.5]=0.0003
 
 displEff = {}
-displEff[0.5]=0.5
-displEff[1.0]=0.5
-displEff[1.5]=0.5
 displEff[2.0]=0.5
 displEff[3.0]=0.5
 displEff[4.5]=1.0
