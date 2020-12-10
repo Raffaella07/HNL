@@ -105,17 +105,17 @@ class Job(object):
        'ChargeConj myB0 myB0bar',
        '',
        'Decay myB+',
-       '1.0     myJpsi  K+  PHSP;', # FIXME: better model?
+       '1.0     myJpsi  K+  SVS;', 
        'Enddecay',
        'CDecay myB-',
        '',
-       'Decay myB0',
-       '1.0     myJpsi K*0  PHSP;', # FIXME: better model?
+       'Decay myB0bar',
+       '1.0     myJpsi  anti-K*0  SVV_HELAMP PKHminus PKphHminus PKHzero PKphHzero PKHplus PKphHplus;', 
        'Enddecay',
        'CDecay myB0bar',
        '',
        'Decay myJpsi',
-       '1.0    mu-    mu+   PHSP;',# FIXME: better model?
+       '1.0    mu-    mu+   PHOTOS  VLL;',
        'Enddecay',
        '',
        'End',      
