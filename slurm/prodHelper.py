@@ -61,17 +61,6 @@ class Job(object):
     print('')
 
 
-  '''
-  def getStartDir(self):
-    if self.user == 'mratti':
-      startdir = '/work/mratti/GEN_HNL_newPythia/CMSSW_10_2_3/src/HNLsGen/'
-    elif self.user == 'anlyon':
-      startdir = '/t3home/anlyon/BHNL/CMSSW_10_2_3/src/HNLsGen'
-    else:
-      startdir = '`pwd`'
-    return startdir
-  '''
-
   def makeEvtGenData(self):
     for p in self.points:      
       if self.domajorana:
@@ -225,8 +214,9 @@ class Job(object):
         '',
         '### {lbla} ###',
         'echo "Going to copy cmsdriver to work dir"',
-        'cp $STARTDIR/cmsDrivers/{jopa} $WORKDIR/. ',
         'cp $STARTDIR/slurm/{lbldir}/{jopa} $WORKDIR/. ',
+        'echo "Copying pileup profile file to work dir"',
+        'cp $STARTDIR/data/pileup_2018.root $WORKDIR/.',
         'echo "Going to run {lbla}"',
         'DATE_START_{lbla}=`date +%s`',
         '{command}',
