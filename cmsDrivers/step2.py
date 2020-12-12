@@ -111,7 +111,11 @@ process.FEVTDEBUGHLToutput = cms.OutputModule("PoolOutputModule",
 # Additional output definition
 
 # Other statements
-process.mix.input.nbPileupEvents.averageNumber = cms.double(20.000000)
+process.mix.input.type = cms.string('histo')
+process.mix.input.nbPileupEvents = cms.PSet(
+    fileName=cms.untracked.string('pileup_2018.root'),
+    histoName=cms.untracked.string('pileup_2018total')
+)
 process.mix.bunchspace = cms.int32(25)
 process.mix.minBunch = cms.int32(-12)
 process.mix.maxBunch = cms.int32(3)
