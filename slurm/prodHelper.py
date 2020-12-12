@@ -225,7 +225,6 @@ class Job(object):
         '',
         '### {lbla} ###',
         'echo "Going to copy cmsdriver to work dir"',
-        'cp $STARTDIR/cmsDrivers/{jopa} $WORKDIR/. ',
         'cp $STARTDIR/slurm/{lbldir}/{jopa} $WORKDIR/. ',
         'echo "Copying pileup profile file to work dir"',
         'cp $STARTDIR/data/pileup_2018.root $WORKDIR/.',
