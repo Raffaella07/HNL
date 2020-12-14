@@ -455,7 +455,7 @@ def getOptions():
   parser.add_argument('--mem', type=str, dest='mem', help='allowed memory for each job in [MB]', default='3500')
   parser.add_argument('--njobs', type=int, dest='njobs', help='number of parallel jobs to submit', default=10)
   parser.add_argument('--points', type=str, dest='pointFile', help='name of file contaning information on scan to be run', default='points.py')
-  parser.add_argument('--npremixfiles', type=str, dest='npremixfiles', help='number of premixing files to be randomly chosen', default=3)
+  parser.add_argument('--npremixfiles', type=str, dest='npremixfiles', help='number of premixing files to be randomly chosen', default=20)
   parser.add_argument('--domultithread', dest='domultithread', help='run multithreaded', action='store_true', default=False)
   parser.add_argument('--domultijob', dest='domultijob', help='run several separate jobs', action='store_true', default=False)
   parser.add_argument('--dosubmit', dest='dosubmit', help='submit to slurm', action='store_true', default=False)
