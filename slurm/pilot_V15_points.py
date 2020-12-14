@@ -16,9 +16,9 @@ m_vv_eff_time_s = [
 ]
 
 points = []
-for m,vv,eff,time in m_vv_s:
+for m,vv,eff,time in m_vv_eff_time_s:
   p   = Point(mass=m,ctau=None,vv=vv,ismaj=True)
-  cfg = Config(nevtseff=5000,muoneff=eff,displeff=1.0,timeevt=time,timejob=23,contingency=2.)
+  cfg = Config(nevtseff=5000,muoneff=eff,displeff=1.0,timeevt=time,timejob=35,contingency=3.)
   p.setConfig(cfg)
   points.append(p)
 
