@@ -998,12 +998,21 @@ if __name__ == "__main__":
 
     ################
     points = [
-      Point(mass=0.5,ctau=None,vv=1.,isrw=False),
-      Point(mass=1.0,ctau=None,vv=1.,isrw=False),
-      Point(mass=1.5,ctau=None,vv=1.,isrw=False),
-      Point(mass=2.0,ctau=None,vv=1.,isrw=False),
-      Point(mass=3.0,ctau=None,vv=1.,isrw=False),
-      Point(mass=4.5,ctau=None,vv=1.,isrw=False),
+      #Point(mass=0.5,ctau=None,vv=8.6e-02,isrw=False),
+      #Point(mass=1.0,ctau=None,vv=2.7e-03,isrw=False),
+      #Point(mass=1.5,ctau=None,vv=3.5e-04,isrw=False),
+      #Point(mass=2.0,ctau=None,vv=8.4e-05,isrw=False),
+      #Point(mass=3.0,ctau=None,vv=1.1e-05,isrw=False),
+      #Point(mass=4.5,ctau=None,vv=2.0e-04,isrw=False),
+
+      Point(mass=2.0,ctau=None,vv=8.4e-05,isrw=False),
+      Point(mass=3.0,ctau=None,vv=1.1e-05,isrw=False),
+      Point(mass=3.0,ctau=None,vv=4.0e-04,isrw=False),
+      Point(mass=4.5,ctau=None,vv=2.0e-04,isrw=False),
+      #Point(mass=4.5,ctau=None,vv=6.0e-03,isrw=False),
+      Point(mass=5.5,ctau=None,vv=1.0e-03,isrw=False),
+      #Point(mass=5.5,ctau=None,vv=3.0e-02,isrw=False),
+
       #Point(mass=1.0,ctau=None,vv=1e-05,isrw=False),
       #Point(mass=2.0,ctau=None,vv=1e-05,isrw=False),
       #Point(mass=3.0,ctau=None,vv=1e-05,isrw=False),
@@ -1012,6 +1021,6 @@ if __name__ == "__main__":
     for p in points:
      p.stamp()
     existing_points=checkFiles(path=path,points=points)
-    doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1')
+    doAnalysis(path=path,pl=opt.pl,points=existing_points,name='grid')
     #doAnalysis(path=path,pl=opt.pl,points=existing_points,name='fixedVV1em05')
   

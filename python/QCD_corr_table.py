@@ -1,6 +1,11 @@
 QCD_corr_table = {}            # extracted from figure 14 of Bondarenko
-QCD_corr_table[0.50] = 0.3044  # FIRST NUMBER IS DUMMY!
-QCD_corr_table[1.00] = 0.3044 
+
+QCD_corr_table[0.5] = 0.4445  # extrapolated
+QCD_corr_table[0.6] = 0.4132  # extrapolated
+QCD_corr_table[0.7] = 0.3823  # extrapolated
+QCD_corr_table[0.8] = 0.3532  # extrapolated
+QCD_corr_table[0.9] = 0.3269  # extrapolated
+QCD_corr_table[1.0] = 0.3044 
 QCD_corr_table[1.01] = 0.2981
 QCD_corr_table[1.02] = 0.2953
 QCD_corr_table[1.03] = 0.2929
@@ -401,5 +406,14 @@ QCD_corr_table[4.97] = 0.09832
 QCD_corr_table[4.98] = 0.09843
 QCD_corr_table[4.99] = 0.09820
 QCD_corr_table[5.00] = 0.09967
-QCD_corr_table[6.00] = 0.09967 # LAST NUMBER IS also DUMMY!  
+QCD_corr_table[5.1] = 0.09880    # extrapolated
+QCD_corr_table[5.2] = 0.09815    # extrapolated
+QCD_corr_table[5.3] = 0.09751    # extrapolated
+QCD_corr_table[5.4] = 0.09686    # extrapolated
+QCD_corr_table[5.5] = 0.09557    # extrapolated
+QCD_corr_table[5.6] = 0.09493    # extrapolated
+QCD_corr_table[5.7] = 0.09428    # extrapolated
+QCD_corr_table[5.8] = 0.09299    # extrapolated
+QCD_corr_table[5.9] = 0.09234    # extrapolated
+QCD_corr_table[6.0] = 0.09170    # extrapolated
 
