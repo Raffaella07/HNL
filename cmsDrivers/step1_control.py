@@ -133,7 +133,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '102X_upgrade2018_realistic_v11
 process.BFilter = cms.EDFilter("MCMultiParticleFilter",
    NumRequired = cms.int32(1),
    AcceptMore = cms.bool(True),
-   ParticleID = cms.vint32(521,511), # abs not needed
+   #ParticleID = cms.vint32(521,511), # abs not needed
+   ParticleID = cms.vint32(521), # abs not needed
    PtMin = cms.vdouble(0.,0.),
    EtaMax = cms.vdouble(10.,10.),
    Status = cms.vint32(0,0), 
@@ -146,7 +147,8 @@ process.SingleMuFilter = cms.EDFilter("PythiaFilterMotherGrandMother",
     ParticleID = cms.untracked.int32(13), # abs value is taken
     #Status = cms.untracked.int32(1),
     MotherID = cms.untracked.int32(443), # require muon to come from J/psi decay B+/B- decay
-    GrandMotherIDs = cms.untracked.vint32(521,511), # require B+/- or B0 mother 
+    #GrandMotherIDs = cms.untracked.vint32(521,511), # require B+/- or B0 mother 
+    GrandMotherIDs = cms.untracked.vint32(521), # require B+/- or B0 mother 
 )
 
 process.generator = cms.EDFilter("Pythia8GeneratorFilter",
@@ -161,8 +163,8 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             list_forced_decays = cms.vstring(       
                 'myB+', 
                 'myB-',
-                'myB0',
-                'myB0bar',
+                #'myB0',
+                #'myB0bar',
                 #'myB0s',
                 #'myB0sbar',
             ),
@@ -170,7 +172,8 @@ process.generator = cms.EDFilter("Pythia8GeneratorFilter",
             ### the list of particles that remain undecayed by Pythia for EvtGen to operate on. 
             ### If the vector has a size 0 or size of 1 with a value of 0, the default list is used. 
             ### These are are hard-coded in: GeneratorInterface/EvtGenInterface/plugins/EvtGen/EvtGenInterface.cc., in the function SetDefault_m_PDGs().            
-            operates_on_particles = cms.vint32(521, -521, 511, -511), #B+, B-, B0, B0bar,    ##  B0s, B0sbar   # 541 is Bc+
+            #operates_on_particles = cms.vint32(521, -521, 511, -511), #B+, B-, B0, B0bar,    ##  B0s, B0sbar   # 541 is Bc+
+            operates_on_particles = cms.vint32(521, -521), #B+, B-, B0, B0bar,    ##  B0s, B0sbar   # 541 is Bc+
 
             ### The file with properties of all particles
             particle_property_file = cms.FileInPath('HNLsGen/evtGenData/evt_2014.pdl'),
