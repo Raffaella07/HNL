@@ -54,9 +54,10 @@ Therefore adopt different strategy:
 ## Drivers 
 ```
 BPH_start_cfg.py                  => mod tau->3mu  with Fall18, starting point
-BPH_mod_cfg.py                    => FROZEN DRIVER, for sharing
-step1.py                          =>                for development
-step1_Bc.py                       =>                for decelopment, Bc showering
+BPH_mod_cfg.py                    => FROZEN DRIVER, for sharing (version shared with Rome)
+step1.py                          => HNL from B species other than Bc
+step1_Bc.py                       => HNL from Bcs 
+step1_control.py                  => control channel generation                
 ```
 
 ## Production
@@ -69,7 +70,7 @@ Create a VXX_points.py files starting from points.py, then submit
 ```
 python prodHelper.py --help
 ```
-Note that using the --dogenonly option is equivalent to using genHelper.py
+The ```genHelper.py``` is now deprecated.
 
 ### Notes for Bc production
 We currently shower Bc+ events, starting from LHE files produced by someone else.
