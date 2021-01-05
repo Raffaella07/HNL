@@ -1,0 +1,1830 @@
+DEBUG 2021-01-02 11:27:41.182 UTC: 	 CRAB Client version: v3.201110
+DEBUG 2021-01-02 11:27:41.182 UTC: 	 Running on: Linux lxplus780.cern.ch 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux - CentOS Linux 7 (Core)
+DEBUG 2021-01-02 11:27:41.182 UTC: 	 Executing command: 'submit'
+DEBUG 2021-01-02 11:27:41.183 UTC: 	 Found CRAB cache file /afs/cern.ch/user/r/ratramon/.crab3
+INFO 2021-01-02 11:27:41.192 UTC: 	 Will use CRAB configuration file submit_on_crab.py
+DEBUG 2021-01-02 11:27:41.192 UTC: 	 Loading CRAB configuration file.
+DEBUG 2021-01-02 11:27:41.326 UTC: 	 Will use CRAB PrivateMC plugin (i.e. will run a MC generation job type).
+DEBUG 2021-01-02 11:27:41.410 UTC: 	 Checking credentials
+DEBUG 2021-01-02 11:27:41.410 UTC: 	 Found proxy file /tmp/x509up_u116646
+DEBUG 2021-01-02 11:27:41.410 UTC: 	 Getting proxy life time left
+DEBUG 2021-01-02 11:27:42.015 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u116646 -timeleft
+ output : 42368
+
+ error: 
+ retcode : 0
+DEBUG 2021-01-02 11:27:42.621 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u116646 -actimeleft
+ output : 42367
+
+ error: 
+ retcode : 0
+DEBUG 2021-01-02 11:27:42.621 UTC: 	 Proxy lifetime 42368 secs is different from voms extension lifetime 42367 secs for proxy: /tmp/x509up_u116646
+DEBUG 2021-01-02 11:27:42.621 UTC: 	 Proxy valid for 11:46:07 hours
+DEBUG 2021-01-02 11:27:43.228 UTC: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u116646 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2021-01-02 11:27:43.304 UTC: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms0105.cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod|dev)-tw(02|01).cern.ch|/DC=ch/DC=cern/OU=computers/CN=(ddi|ddidk|mytw).cern.ch|/DC=ch/DC=cern/OU=computers/CN=stefanov(m|m2).cern.ch
+DEBUG 2021-01-02 11:27:43.915 UTC: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u116646 -identity
+ output : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ratramon/CN=824302/CN=Raffaella Tramontano
+
+ error: 
+ retcode : 0
+DEBUG 2021-01-02 11:27:43.923 UTC: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2021-01-02 11:27:43.923 UTC: 	 using f49b105d4a9cbb7e4d78de284f40e863ad999394 as credential login name
+DEBUG 2021-01-02 11:27:44.330 UTC: 	 Executing : 
+ command : myproxy-info -l f49b105d4a9cbb7e4d78de284f40e863ad999394 -s myproxy.cern.ch
+ output : username: f49b105d4a9cbb7e4d78de284f40e863ad999394
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ratramon/CN=824302/CN=Raffaella Tramontano
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms0105.cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod|dev)-tw(02|01).cern.ch|/DC=ch/DC=cern/OU=computers/CN=(ddi|ddidk|mytw).cern.ch|/DC=ch/DC=cern/OU=computers/CN=stefanov(m|m2).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms0105.cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod|dev)-tw(02|01).cern.ch|/DC=ch/DC=cern/OU=computers/CN=(ddi|ddidk|mytw).cern.ch|/DC=ch/DC=cern/OU=computers/CN=stefanov(m|m2).cern.ch
+  timeleft: 600:03:42  (25.0 days)
+
+ error: 
+ retcode : 0
+DEBUG 2021-01-02 11:27:44.331 UTC: 	 Myproxy is valid: 2160222
+DEBUG 2021-01-02 11:27:44.331 UTC: 	 Retrieving username ...
+DEBUG 2021-01-02 11:27:44.331 UTC: 	 Retrieving username from CRIC...
+DEBUG 2021-01-02 11:27:45.010 UTC: 	 username is ratramon
+DEBUG 2021-01-02 11:27:45.017 UTC: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2021-01-02 11:27:45.017 UTC: 	 using ratramon_CRAB as credential login name
+DEBUG 2021-01-02 11:27:45.321 UTC: 	 Executing : 
+ command : myproxy-info -l ratramon_CRAB -s myproxy.cern.ch
+ output : username: ratramon_CRAB
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=ratramon/CN=824302/CN=Raffaella Tramontano
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms0105.cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod|dev)-tw(02|01).cern.ch|/DC=ch/DC=cern/OU=computers/CN=(ddi|ddidk|mytw).cern.ch|/DC=ch/DC=cern/OU=computers/CN=stefanov(m|m2).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms0105.cern.ch|/DC=ch/DC=cern/OU=computers/CN=crab-(preprod|prod|dev)-tw(02|01).cern.ch|/DC=ch/DC=cern/OU=computers/CN=(ddi|ddidk|mytw).cern.ch|/DC=ch/DC=cern/OU=computers/CN=stefanov(m|m2).cern.ch
+  timeleft: 600:10:26  (25.0 days)
+
+ error: 
+ retcode : 0
+DEBUG 2021-01-02 11:27:45.321 UTC: 	 Myproxy is valid: 2160626
+DEBUG 2021-01-02 11:27:45.322 UTC: 	 Result of myproxy credential check:
+  Credential exists on myproxy: username: f49b105d4a9cbb7e4d78de284f40e863ad999394  - validity: 25 days, 0:03:42
+  Credential exists on myproxy: username: ratramon_CRAB  - validity: 25 days, 0:10:26
+DEBUG 2021-01-02 11:27:45.322 UTC: 	 Command use: submit
+DEBUG 2021-01-02 11:27:45.322 UTC: 	 Options use: ['-c', 'submit_on_crab.py', '--dryrun']
+DEBUG 2021-01-02 11:27:45.432 UTC: 	 CRABClient version: v3.201110
+DEBUG 2021-01-02 11:27:45.433 UTC: 	 Instance is prod
+DEBUG 2021-01-02 11:27:45.433 UTC: 	 Server base url is cmsweb-k8s-prod.cern.ch
+DEBUG 2021-01-02 11:27:45.433 UTC: 	 Command url /crabserver/prod/workflow
+DEBUG 2021-01-02 11:27:45.433 UTC: 	 Started submission
+DEBUG 2021-01-02 11:27:45.433 UTC: 	 Working on /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/crab/crab_privateMCProduction/crab_privateHNL_2021Jan02
+DEBUG 2021-01-02 11:27:45.538 UTC: 	 Loading required information from the environment
+DEBUG 2021-01-02 11:27:45.539 UTC: 	 Found CMSSW_10_2_15 for slc7_amd64_gcc700 with base /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+DEBUG 2021-01-02 11:27:45.539 UTC: 	 UNIQUE NAME: tarUUID b4d1ddb4-e862-48e6-8c1b-8141081662ec 
+DEBUG 2021-01-02 11:27:45.539 UTC: 	 self.config: from WMCore.Configuration import Configuration
+config = Configuration()
+config.section_('General')
+config.General.transferLogs = True
+config.General.transferOutputs = True
+config.General.workArea = 'crab_privateMCProduction'
+config.General.requestName = 'privateHNL_2021Jan02'
+config.section_('JobType')
+config.JobType.maxMemoryMB = 2500
+config.JobType.disableAutomaticOutputCollection = False
+config.JobType.scriptExe = '/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/slurm_mass1.0_ctau107.535167851_prod.sh'
+config.JobType.pluginName = 'PrivateMC'
+config.JobType.allowUndistributedCMSSW = True
+config.JobType.psetName = 'pset.py'
+config.JobType.inputFiles = ['/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/BPH_mod_BtoDMuN_NtoE_cfg.py', '/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/step2.py', '/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/step3.py', '/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/step4.py', '/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/data/pileup_2018.root', '/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/evtGenData/evt_2014_mass1.0_ctau107.535167851.pdl']
+config.JobType.eventsPerLumi = 1
+config.section_('Data')
+config.Data.outputDatasetTag = 'privateHNL_2021Jan02'
+config.Data.publication = False
+config.Data.unitsPerJob = 1
+config.Data.splitting = 'EventBased'
+config.Data.outLFNDirBase = '/store/user/ratramon/HNLGen_ntuples/'
+config.Data.outputPrimaryDataset = 'privateHNL'
+config.Data.totalUnits = 1
+config.section_('Site')
+config.Site.whitelist = ['T2_IT_Rome']
+config.Site.storageSite = 'T2_IT_Rome'
+config.section_('User')
+config.section_('Debug')
+
+DEBUG 2021-01-02 11:27:45.539 UTC: 	 self.config.JobType.psetName: pset.py
+INFO 2021-01-02 11:27:45.547 UTC: 	 Importing CMSSW configuration pset.py
+INFO 2021-01-02 11:27:45.664 UTC: 	 Finished importing CMSSW configuration pset.py
+DEBUG 2021-01-02 11:27:45.665 UTC: 	 Writing CMSSW configuration to /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/crab/crab_privateMCProduction/crab_privateHNL_2021Jan02/inputs/PSet.py
+DEBUG 2021-01-02 11:27:45.726 UTC: 	 The following EDM output files will be collected: []
+DEBUG 2021-01-02 11:27:45.726 UTC: 	 The following TFile output files will be collected: []
+DEBUG 2021-01-02 11:27:45.726 UTC: 	 The following user output files (not listed as PoolOuputModule or TFileService in the CMSSW PSet) will be collected: 
+WARNING 2021-01-02 11:27:45.726 UTC: 	 Warning: CRAB could not detect any output file in the CMSSW configuration nor was any explicitly specified in the CRAB configuration. Hence CRAB will not collect any output file from this task.
+DEBUG 2021-01-02 11:27:45.726 UTC: 	 Loading required information from the environment
+DEBUG 2021-01-02 11:27:45.726 UTC: 	 Found CMSSW_10_2_15 for slc7_amd64_gcc700 with base /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+DEBUG 2021-01-02 11:27:45.726 UTC: 	 Making tarball in /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/crab/crab_privateMCProduction/crab_privateHNL_2021Jan02/inputs/b4d1ddb4-e862-48e6-8c1b-8141081662ecdefault.tgz
+DEBUG 2021-01-02 11:27:45.733 UTC: 	 Checking directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib
+DEBUG 2021-01-02 11:27:45.733 UTC: 	 Adding directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib to tarball
+DEBUG 2021-01-02 11:27:47.327 UTC: 	 Checking directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib
+DEBUG 2021-01-02 11:27:47.327 UTC: 	 Adding directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib to tarball
+DEBUG 2021-01-02 11:27:47.343 UTC: 	 Checking directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/module
+DEBUG 2021-01-02 11:27:48.909 UTC: 	 Adding data directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/GeneratorInterface/GenFilters/interface to tarball
+DEBUG 2021-01-02 11:27:50.657 UTC: 	 Adding data directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/GeneratorInterface/Pythia8Interface/interface to tarball
+DEBUG 2021-01-02 11:27:51.655 UTC: 	 Adding data directory /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/data to tarball
+DEBUG 2021-01-02 11:27:52.230 UTC: 	 Adding file /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/BPH_mod_BtoDMuN_NtoE_cfg.py to tarball
+DEBUG 2021-01-02 11:27:52.231 UTC: 	 Adding file /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/step2.py to tarball
+DEBUG 2021-01-02 11:27:53.317 UTC: 	 Adding file /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/step3.py to tarball
+DEBUG 2021-01-02 11:27:53.348 UTC: 	 Adding file /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/step4.py to tarball
+DEBUG 2021-01-02 11:27:53.375 UTC: 	 Adding file /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/data/pileup_2018.root to tarball
+DEBUG 2021-01-02 11:27:53.376 UTC: 	 Adding file /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/evtGenData/evt_2014_mass1.0_ctau107.535167851.pdl to tarball
+DEBUG 2021-01-02 11:27:53.830 UTC: 	 Uploading archive /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/crab/crab_privateMCProduction/crab_privateHNL_2021Jan02/inputs/b4d1ddb4-e862-48e6-8c1b-8141081662ecdefault.tgz (1.349609.1 MB) to the CRAB cache. Using URI https://cmsweb.cern.ch/crabcache
+DEBUG 2021-01-02 11:27:55.352 UTC: 	 Loading required information from the environment
+DEBUG 2021-01-02 11:27:55.352 UTC: 	 Found CMSSW_10_2_15 for slc7_amd64_gcc700 with base /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+DEBUG 2021-01-02 11:27:55.352 UTC: 	 Making tarball in /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/crab/crab_privateMCProduction/crab_privateHNL_2021Jan02/inputs/debugFiles.tgz
+DEBUG 2021-01-02 11:27:55.374 UTC: 	 Uploading archive /afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/crab/crab_privateMCProduction/crab_privateHNL_2021Jan02/inputs/debugFiles.tgz (2 KB) to the CRAB cache. Using URI https://cmsweb.cern.ch/crabcache
+DEBUG 2021-01-02 11:27:55.426 UTC: 	 Result uploading input files: 2ea2e751515675bf1e6fb32aea559c7c35066e89f572699e3a253f5df600e50f.tar.gz 
+INFO 2021-01-02 11:27:55.426 UTC: 	 Sending the request to the server at cmsweb-k8s-prod.cern.ch
+DEBUG 2021-01-02 11:27:55.427 UTC: 	 Submitting {'maxjobruntime': 1250, 'extrajdl': [], 'lfn': '/store/user/ratramon/HNLGen_ntuples/', 'savelogsflag': 1, 'useparent': 0, 'scriptexe': 'slurm_mass1.0_ctau107.535167851_prod.sh', 'asyncdest': 'T2_IT_Rome', 'algoargs': 1, 'cachefilename': '2ea2e751515675bf1e6fb32aea559c7c35066e89f572699e3a253f5df600e50f.tar.gz', 'numcores': 1, 'addoutputfiles': [], 'generator': 'pythia', 'maxmemory': 2500, 'publishdbsurl': 'https://cmsweb.cern.ch/dbs/prod/phys03/DBSWriter', 'priority': 10, 'jobsw': 'CMSSW_10_2_15', 'eventsperlumi': 1, 'edmoutfiles': [], 'userfiles': [], 'primarydataset': 'privateHNL', 'inputdata': '', 'ignorelocality': 0, 'dryrun': 1, 'workflow': 'crab_privateHNL_2021Jan02', 'sitewhitelist': ['T2_IT_Rome'], 'nonprodsw': 1, 'tfileoutfiles': [], 'oneEventMode': 0, 'debugfilename': 'f6385e39ae818de6403d52b3fa25cd20577c4ba3fd85f02acf06b338fbf241a4.tar.gz', 'cacheurl': u'https://cmsweb.cern.ch/crabcache', 'saveoutput': 1, 'publication': 0, 'jobarch': 'slc7_amd64_gcc700', 'totalunits': 1, 'splitalgo': 'EventBased', 'ignoreglobalblacklist': 0, 'nonvaliddata': 0, 'dbsurl': 'https://cmsweb.cern.ch/dbs/prod/global/DBSReader', 'publishgroupname': 0, 'jobtype': 'PrivateMC', 'publishname2': 'privateHNL_2021Jan02'} 
+DEBUG 2021-01-02 11:27:55.427 UTC: 	 Encoded submit request: maxjobruntime=1250&lfn=%2Fstore%2Fuser%2Fratramon%2FHNLGen_ntuples%2F&savelogsflag=1&useparent=0&scriptexe=slurm_mass1.0_ctau107.535167851_prod.sh&asyncdest=T2_IT_Rome&algoargs=1&cachefilename=2ea2e751515675bf1e6fb32aea559c7c35066e89f572699e3a253f5df600e50f.tar.gz&numcores=1&generator=pythia&maxmemory=2500&publishdbsurl=https%3A%2F%2Fcmsweb.cern.ch%2Fdbs%2Fprod%2Fphys03%2FDBSWriter&priority=10&jobsw=CMSSW_10_2_15&eventsperlumi=1&primarydataset=privateHNL&inputdata=&ignorelocality=0&dryrun=1&workflow=crab_privateHNL_2021Jan02&nonprodsw=1&oneEventMode=0&debugfilename=f6385e39ae818de6403d52b3fa25cd20577c4ba3fd85f02acf06b338fbf241a4.tar.gz&cacheurl=https%3A%2F%2Fcmsweb.cern.ch%2Fcrabcache&saveoutput=1&publication=0&jobarch=slc7_amd64_gcc700&totalunits=1&splitalgo=EventBased&ignoreglobalblacklist=0&nonvaliddata=0&dbsurl=https%3A%2F%2Fcmsweb.cern.ch%2Fdbs%2Fprod%2Fglobal%2FDBSReader&publishgroupname=0&jobtype=PrivateMC&publishname2=privateHNL_2021Jan02&sitewhitelist=T2_IT_Rome
+DEBUG 2021-01-02 11:27:55.555 UTC: 	 Result: {u'result': [{u'RequestName': u'210102_112755:ratramon_crab_privateHNL_2021Jan02'}]}
+INFO 2021-01-02 11:27:55.575 UTC: 	 Success: Your task has been delivered to the prod CRAB3 server.
+INFO 2021-01-02 11:27:55.575 UTC: 	 Waiting for task to be processed
+DEBUG 2021-01-02 11:27:55.575 UTC: 	 Start time:2021-01-02 12:27:55
+DEBUG 2021-01-02 11:27:55.575 UTC: 	 Max wait time: 900 s until : 2021-01-02 12:42:55
+INFO 2021-01-02 11:27:55.575 UTC: 	 Checking task status
+DEBUG 2021-01-02 11:27:55.575 UTC: 	 Looking up detailed status of task 210102_112755:ratramon_crab_privateHNL_2021Jan02
+DEBUG 2021-01-02 11:27:55.647 UTC: 	 Query Time: 2021-01-02 12:27:55 Task status: NEW
+INFO 2021-01-02 11:27:55.647 UTC: 	 Task status: NEW
+INFO 2021-01-02 11:27:55.647 UTC: 	 Please wait...
+DEBUG 2021-01-02 11:28:25.679 UTC: 	 Looking up detailed status of task 210102_112755:ratramon_crab_privateHNL_2021Jan02
+DEBUG 2021-01-02 11:28:25.776 UTC: 	 Query Time: 2021-01-02 12:28:25 Task status: UPLOADED
+INFO 2021-01-02 11:28:25.777 UTC: 	 Task status: UPLOADED
+DEBUG 2021-01-02 11:28:25.777 UTC: 	 Ended submission process.
+INFO 2021-01-02 11:28:25.778 UTC: 	 Creating temporary directory for dry run sandbox in /tmp/ratramon/tmpTplmM5
+INFO 2021-01-02 11:28:26.307 UTC: 	 Executing test, please wait...
+DEBUG 2021-01-02 11:29:09.699 UTC: 	 ======== CMSRunAnalysis.sh STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
+Local time : Sat  2 Jan 12:28:26 CET 2021
+Current system : Linux lxplus780.cern.ch 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+Current processor: model name	: Intel Xeon Processor (Skylake, IBRS)
+==== CMSSW pre-execution environment bootstrap STARTING ====
++ '[' -f /cmsset_default.sh ']'
++ '[' -f /cmssoft/cms/cmsset_default.sh ']'
++ '[' -f /cvmfs/cms.cern.ch/cmsset_default.sh ']'
++ echo 'CVMFS style'
+CVMFS style
++ export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
++ VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
++ set +x
++ declare -a VERSIONS
++ VERSIONS=($(ls /cvmfs/cms.cern.ch/$SCRAM_ARCH/external/python | egrep '2.[67]'))
+++ ls /cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python
+++ egrep '2.[67]'
++ PY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python
++ echo 'python version: ' 2.7.14
+python version:  2.7.14
++ set +x
+==== CMSSW pre-execution environment bootstrap FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ====
+==== Python discovery STARTING ====
+Python found in /cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14
+I found python at..
+/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin/python
+==== Python discovery FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ====
+======== Current environment dump STARTING ========
+== ENV: G4LEVELGAMMADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4PhotonEvaporation/5.2/data/PhotonEvaporation5.2
+== ENV: UTM_XSD_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf
+== ENV: SRT_G4LEVELGAMMADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4PhotonEvaporation/5.2/data/PhotonEvaporation5.2
+== ENV: LC_PAPER=en_GB.UTF-8
+== ENV: CMSSW_RELEASE_BASE=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15
+== ENV: SCRAMRT_SET=CMSSW:CMSSW_10_2_15:slc7_amd64_gcc700:V2_2_9_pre11:SRT_
+== ENV: MANPATH=/cvmfs/cms.cern.ch/share/man:/cvmfs/cms.cern.ch/share/man::/opt/puppetlabs/puppet/share/man
+== ENV: CMSSW_FWLITE_INCLUDE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include
+== ENV: SRT_GCC_RUNTIME_ASAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: XDG_SESSION_ID=c20103
+== ENV: LC_ADDRESS=en_GB.UTF-8
+== ENV: COMPILER_RUNTIME_OBJECTS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
+== ENV: GUESTFISH_INIT=\e[1;34m
+== ENV: HOSTNAME=lxplus780.cern.ch
+== ENV: LC_MONETARY=en_GB.UTF-8
+== ENV: SELINUX_ROLE_REQUESTED=
+== ENV: ROOT_INCLUDE_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/include/LCG:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mctester/1.25.0a-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dd4hep/v01-08x-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtDesigner:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauolapp/1.1.5-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/charybdis/1.003-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtOpenGL:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtGui:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwig/6.521-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt3Support:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lwtnn/2.4-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4/10.04-gnimlf3/include/Geant4:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/classlib/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cgal/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tkonlinesw/4.2.0-1_gcc7-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/starlight/r193-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtCore:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtXml:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mcdb/1.0.3-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libungif/4.1.4-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libtiff/4.0.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libpng/1.6.16-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pcre/8.37-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/include/xrootd/private:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/vdt/0.4.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/toprex/4.23-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tbb/2018_U1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauola/27.121.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sigcpp/2.6.2-omkpbe2/include/sigc++-2.0:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.22.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/protobuf/3.5.2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pacparser/1.3.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/oracle/12.1.0.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/meschach/1.2.pCMS1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libuuid/2.22.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libhepml/0.2.1-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ktjet/1.06-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jimmy/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jemalloc/5.1.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hector/1.3.4_patch1-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gsl/2.2.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libjpeg-turbo/1.3.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/giflib/4.2.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vecgeom/v00.05.00-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/freetype/2.5.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftw3/3.3.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftjet/1.5.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dpm/1.8.0.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xerces-c/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xz/5.2.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dcap/2.47.8-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libxml2/2.9.1-omkpbe2/include/libxml2:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/curl/7.59.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cppunit/1.12.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia6/426-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/photos/215.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/include/python2.7:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tinyxml2/6.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ittnotify/16.06.18-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2/include:/usr/local/include:/usr/include
+== ENV: INTEL_LICENSE_FILE=28518@lxlicen01.cern.ch,28518@lxlicen02.cern.ch,28518@lxlicen03.cern.ch
+== ENV: SRT_TEXMFHOME_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share/Rivet/texmf
+== ENV: SRT_GEANT4_PARFULLCMS_CONFIG_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-parfullcms/2014.01.27-gnimlf3/share/ParFullCMS
+== ENV: TERM=xterm-256color
+== ENV: SHELL=/bin/bash
+== ENV: PDFPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share
+== ENV: SRT_TNS_ADMIN_SCRAMRTDEL=/etc
+== ENV: HISTSIZE=1000
+== ENV: ROOT_GCC_TOOLCHAIN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: TMPDIR=/tmp/ratramon
+== ENV: SSH_CLIENT=93.41.96.37
+== ENV: 8639
+== ENV: 22
+== ENV: PERL5LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/perl5
+== ENV: G4FORCENUMBEROFTHREADS=max
+== ENV: OPENBLAS_NUM_THREADS=1
+== ENV: SRT_QTDIR_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2
+== ENV: SRT_PDFPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share
+== ENV: CONDA_SHLVL=0
+== ENV: CMSSW_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms
+== ENV: LHAPDF_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/share/LHAPDF
+== ENV: SRT_CMS_ORACLEOCCI_LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cms_oracleocci_abi_hack/20180210-omkpbe/lib/libcms_oracleocci_abi_hack.so
+== ENV: CVSROOT=:gserver:cmssw.cvs.cern.ch:/local/reps/CMSSW
+== ENV: SELINUX_USE_CURRENT_RANGE=
+== ENV: CMSSW_GIT_HASH=CMSSW_10_2_15
+== ENV: SRT_G4ABLADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ABLA/3.0/data/G4ABLA3.0
+== ENV: LC_NUMERIC=en_GB.UTF-8
+== ENV: SRT_SCONS_LIB_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/scons/3.0.1/lib
+== ENV: QTDIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2:/usr/lib64/qt-3.3
+== ENV: G4NEUTRONXSDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NEUTRONXS/1.4/data/G4NEUTRONXS1.4
+== ENV: SRT_COMPILER_RUNTIME_OBJECTS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: SCRAM_ARCH=slc7_amd64_gcc700
+== ENV: QTINC=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/usr/lib64/qt-3.3/include
+== ENV: GIT_SSL_CAINFO=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/ssl/certs/ca-bundle.crt
+== ENV: SRT_CMS_OPENLOOPS_PREFIX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openloops/2.0.0-gnimlf
+== ENV: SRT_GIT_EXEC_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/libexec/git-core
+== ENV: SRT_THEPEGPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/share/ThePEG
+== ENV: SSH_TTY=/dev/pts/14
+== ENV: ROOT_TTREECACHE_SIZE=0
+== ENV: EVTGENDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/evtgen/1.6.0-gnimlf4/share
+== ENV: SRT_INTEL_LICENSE_FILE_SCRAMRTDEL=28518@lxlicen01.cern.ch,28518@lxlicen02.cern.ch,28518@lxlicen03.cern.ch
+== ENV: SRT_ROOT_INCLUDE_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/include/LCG:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mctester/1.25.0a-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dd4hep/v01-08x-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtDesigner:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauolapp/1.1.5-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/charybdis/1.003-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtOpenGL:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtGui:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwig/6.521-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt3Support:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lwtnn/2.4-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4/10.04-gnimlf3/include/Geant4:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/classlib/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cgal/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tkonlinesw/4.2.0-1_gcc7-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/starlight/r193-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtCore:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtXml:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mcdb/1.0.3-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libungif/4.1.4-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libtiff/4.0.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libpng/1.6.16-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pcre/8.37-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/include/xrootd/private:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/vdt/0.4.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/toprex/4.23-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tbb/2018_U1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauola/27.121.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sigcpp/2.6.2-omkpbe2/include/sigc++-2.0:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.22.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/protobuf/3.5.2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pacparser/1.3.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/oracle/12.1.0.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/meschach/1.2.pCMS1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libuuid/2.22.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libhepml/0.2.1-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ktjet/1.06-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jimmy/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jemalloc/5.1.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hector/1.3.4_patch1-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gsl/2.2.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libjpeg-turbo/1.3.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/giflib/4.2.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vecgeom/v00.05.00-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/freetype/2.5.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftw3/3.3.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftjet/1.5.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dpm/1.8.0.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xerces-c/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xz/5.2.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dcap/2.47.8-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libxml2/2.9.1-omkpbe2/include/libxml2:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/curl/7.59.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cppunit/1.12.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia6/426-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/photos/215.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/include/python2.7:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tinyxml2/6.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ittnotify/16.06.18-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2/include:/usr/local/include:/usr/include
+== ENV: STAGE_HOST=castorcms
+== ENV: G4LEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4EMLOW/7.3/data/G4EMLOW7.3
+== ENV: SRT_VINCIADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vincia/2.2.01-gnimlf4/share/Vincia/xmldoc
+== ENV: SRT_ROOT_TTREECACHE_PREFILL_SCRAMRTDEL=0
+== ENV: SRT_QTINC_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include
+== ENV: QT_GRAPHICSSYSTEM_CHECKED=1
+== ENV: OPAL_PREFIX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openmpi/2.1.5
+== ENV: USER=ratramon
+== ENV: ROOT_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: SHERPA_INCLUDE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC
+== ENV: SRT_LHAPDF_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/share/LHAPDF
+== ENV: SRT_PYTHON27PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python2.7/site-packages
+== ENV: LD_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.21.0/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libffi/3.2.1/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/db6/6.0.30/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/lib:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cuda/9.2.148/drivers:/your/custom/path/
+== ENV: LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+== ENV: LC_TELEPHONE=en_GB.UTF-8
+== ENV: SRT_CMSSW_RELEASE_BASE_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15
+== ENV: SRT_RIVET_ANALYSIS_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/lib
+== ENV: VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+== ENV: CRAB3_RUNTIME_DEBUG=True
+== ENV: SRT_CMSSW_VERSION_SCRAMRTDEL=CMSSW_10_2_15
+== ENV: GCC_RUNTIME_LSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: SCRAM_CXX11_ABI=1
+== ENV: VALGRIND_LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/lib/valgrind
+== ENV: SRT_CMSSW_GIT_HASH_SCRAMRTDEL=CMSSW_10_2_15
+== ENV: SRT_ROOTSYS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: G4NEUTRONHPDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NDL/4.5/data/G4NDL4.5
+== ENV: GEANT4_PARFULLCMS_CONFIG_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-parfullcms/2014.01.27-gnimlf3/share/ParFullCMS
+== ENV: CSC_TRACK_FINDER_DATA_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/CSCTrackFinderEmulation/1.2-omkpbe2/data/
+== ENV: G4ENSDFSTATEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ENSDFSTATE/2.2/data/G4ENSDFSTATE2.2
+== ENV: G4RADIOACTIVEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4RadioactiveDecay/5.2/data/RadioactiveDecay5.2
+== ENV: ROOFITSYS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_ROOFITSYS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_G4RADIOACTIVEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4RadioactiveDecay/5.2/data/RadioactiveDecay5.2
+== ENV: SRT_G4ENSDFSTATEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ENSDFSTATE/2.2/data/G4ENSDFSTATE2.2
+== ENV: SRT_CLHEP_PARAM_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf
+== ENV: CASTOR_HOME=/castor/cern.ch/user/r/ratramon
+== ENV: G4ABLADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ABLA/3.0/data/G4ABLA3.0
+== ENV: SRT_SHERPA_INCLUDE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC
+== ENV: SRT_G4FORCENUMBEROFTHREADS_SCRAMRTDEL=max
+== ENV: SRT_PERL5LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/perl5
+== ENV: SRT_WORKER_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/blackhat/0.9.9-omkpbe4/share/blackhat/datafiles/
+== ENV: GUESTFISH_PS1=\[\e[1;32m\]><fs>\[\e[0;31m\]
+== ENV: GCC_RUNTIME_TSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libtsan.so
+== ENV: TNS_ADMIN=/etc
+== ENV: SRT_HEPPDT_PARAM_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2
+== ENV: MAIL=/var/spool/mail/ratramon
+== ENV: PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.21.0/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/db6/6.0.30/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/bin:/afs/cern.ch/cms/caf/scripts:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/bin:/cvmfs/cms.cern.ch/share/overrides/bin:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/bin:/afs/cern.ch/cms/caf/scripts:/cvmfs/cms.cern.ch/common:/usr/sue/bin:/usr/lib64/qt-3.3/bin:/usr/condabin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/afs/cern.ch/user/r/ratramon/bin
+== ENV: THEPEGPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/share/ThePEG
+== ENV: SRT_CMSSW_SEARCH_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/data
+== ENV: SRT_GIT_SSL_CAINFO_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/ssl/certs/ca-bundle.crt
+== ENV: SRT_GCC_RUNTIME_LSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: CMS_PATH=/cvmfs/cms.cern.ch
+== ENV: SRT_UTM_XSD_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf
+== ENV: SRT_PATH_SCRAMRT=/cvmfs/cms.cern.ch/share/overrides/bin:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/bin
+== ENV: LC_IDENTIFICATION=en_GB.UTF-8
+== ENV: RIVET_ANALYSIS_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/lib
+== ENV: SRT_LOCALRT_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_CMSSW_BASE_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_LANG_SCRAMRT=C
+== ENV: PWD=/tmp/ratramon/tmpTplmM5
+== ENV: CMS_ORACLEOCCI_LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cms_oracleocci_abi_hack/20180210-omkpbe/lib/libcms_oracleocci_abi_hack.so
+== ENV: PYTHON_VALGRIND_SUPP=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/share/valgrind/valgrind-python.supp
+== ENV: SRT_OPAL_PREFIX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openmpi/2.1.5
+== ENV: EDITOR=/bin/nano
+== ENV: -w
+== ENV: GCC_RUNTIME_UBSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libubsan.so
+== ENV: LANG=C
+== ENV: MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
+== ENV: SRT_G4NEUTRONHPDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NDL/4.5/data/G4NDL4.5
+== ENV: QT_GRAPHICSSYSTEM=native
+== ENV: LOADEDMODULES=
+== ENV: KDEDIRS=/usr
+== ENV: GUESTFISH_OUTPUT=\e[0m
+== ENV: LC_MEASUREMENT=en_GB.UTF-8
+== ENV: SRT_SHERPA_SHARE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/share/SHERPA-MC
+== ENV: SRT_GCC_RUNTIME_TSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libtsan.so
+== ENV: CASCADE_PDFPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/share
+== ENV: SRT_ROOT_GCC_TOOLCHAIN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: SRT_CASCADE_PDFPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/share
+== ENV: MYPROXY_SERVER=myproxy.cern.ch
+== ENV: SELINUX_LEVEL_REQUESTED=
+== ENV: WORKER_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/blackhat/0.9.9-omkpbe4/share/blackhat/datafiles/
+== ENV: GIT_TEMPLATE_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/git-core/templates
+== ENV: G4SAIDXSDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4SAIDDATA/1.1/data/G4SAIDDATA1.1
+== ENV: EOS_MGM_URL=root://eoscms.cern.ch
+== ENV: PYTHON27PATH=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python2.7/site-packages
+== ENV: SRT_CMSSW_FWLITE_INCLUDE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include
+== ENV: ROOTSYS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_PYTHIA8DATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/share/Pythia8/xmldoc
+== ENV: SRT_HERWIGPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/share/Herwig
+== ENV: SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+== ENV: HISTCONTROL=ignoredups
+== ENV: KRB5CCNAME=FILE:/tmp/krb5cc_116646_48S1sc
+== ENV: SRT_PYTHON3PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python3.6/site-packages
+== ENV: TEXINPUTS=:/cvmfs/cms.cern.ch/latex/styles
+== ENV: SHERPA_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/lib/SHERPA-MC
+== ENV: SRT_PYTHON_VALGRIND_SUPP_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/share/valgrind/valgrind-python.supp
+== ENV: SHLVL=3
+== ENV: HOME=/afs/cern.ch/user/r/ratramon
+== ENV: CMSSW_SEARCH_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/:setenv
+== ENV: _VIRTUALENVWRAPPER_API=
+== ENV: mkvirtualenv
+== ENV: rmvirtualenv
+== ENV: lsvirtualenv
+== ENV: showvirtualenv
+== ENV: workon
+== ENV: add2virtualenv
+== ENV: cdsitepackages
+== ENV: cdvirtualenv
+== ENV: lssitepackages
+== ENV: toggleglobalsitepackages
+== ENV: cpvirtualenv
+== ENV: setvirtualenvproject
+== ENV: mkproject
+== ENV: cdproject
+== ENV: mktmpenv
+== ENV: wipeenv
+== ENV: allvirtualenv
+== ENV: GOSAMCONTRIB_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: ROOT_TTREECACHE_PREFILL=0
+== ENV: GENREFLEX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/bin/genreflex
+== ENV: VINCIADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vincia/2.2.01-gnimlf4/share/Vincia/xmldoc
+== ENV: SRT_G4LEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4EMLOW/7.3/data/G4EMLOW7.3
+== ENV: SRT_GENREFLEX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/bin/genreflex
+== ENV: SRT_GOSAMCONTRIB_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: SRT_ROOT_TTREECACHE_SIZE_SCRAMRTDEL=0
+== ENV: SRT_EVTGENDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/evtgen/1.6.0-gnimlf4/share
+== ENV: SRT_QTLIB_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/lib
+== ENV: SRT_CMSSW_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms
+== ENV: PYTHONPATH=/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
+== ENV: HEPPDT_PARAM_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2
+== ENV: SRT_LD_LIBRARY_PATH_SCRAMRT=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cuda/9.2.148/drivers
+== ENV: LCG_GFAL_INFOSYS=lcg-bdii.cern.ch:2170
+== ENV: LOGNAME=ratramon
+== ENV: PYTHON3PATH=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python3.6/site-packages
+== ENV: SCONS_LIB_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/scons/3.0.1/lib
+== ENV: QTLIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/lib:/usr/lib64/qt-3.3/lib
+== ENV: CVS_RSH=ssh
+== ENV: DBS3_CLIENT_ROOT=/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01
+== ENV: XDG_DATA_DIRS=/afs/cern.ch/user/r/ratramon/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+== ENV: SSH_CONNECTION=93.41.96.37
+== ENV: 8639
+== ENV: 188.185.123.54
+== ENV: 22
+== ENV: MODULESHOME=/usr/share/Modules
+== ENV: FRONTIER_CLIENT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/
+== ENV: SRT_G4NEUTRONXSDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NEUTRONXS/1.4/data/G4NEUTRONXS1.4
+== ENV: SRT_SHERPA_LIBRARY_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/lib/SHERPA-MC
+== ENV: LESSOPEN=||/usr/bin/lesspipe.sh
+== ENV: %s
+== ENV: _CONDOR_JOB_AD=Job.submit
+== ENV: CLHEP_PARAM_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf
+== ENV: PYTHIA8DATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/share/Pythia8/xmldoc
+== ENV: HERWIGPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/share/Herwig
+== ENV: SRT_FRONTIER_CLIENT_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/
+== ENV: SRT_CSC_TRACK_FINDER_DATA_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/CSCTrackFinderEmulation/1.2-omkpbe2/data/
+== ENV: CRABCLIENT_TYPE=prod
+== ENV: GCC_RUNTIME_ASAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: SRT_ROOT_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: XDG_RUNTIME_DIR=/run/user/116646
+== ENV: DISPLAY=localhost:15.0
+== ENV: TEXMFHOME=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share/Rivet/texmf
+== ENV: SRT_OPENBLAS_NUM_THREADS_SCRAMRTDEL=1
+== ENV: SRT_GIT_TEMPLATE_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/git-core/templates
+== ENV: SRT_G4SAIDXSDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4SAIDDATA/1.1/data/G4SAIDDATA1.1
+== ENV: QT_PLUGIN_PATH=/usr/lib64/kde4/plugins:/usr/lib/kde4/plugins
+== ENV: CMSSW_VERSION=CMSSW_10_2_15
+== ENV: SRT_GCC_RUNTIME_UBSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libubsan.so
+== ENV: SHERPA_SHARE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/share/SHERPA-MC
+== ENV: GUESTFISH_RESTORE=\e[0m
+== ENV: LC_TIME=en_GB.UTF-8
+== ENV: CMS_OPENLOOPS_PREFIX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openloops/2.0.0-gnimlf
+== ENV: GIT_EXEC_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/libexec/git-core
+== ENV: LOCALRT=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: CMSSW_BASE=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_SCRAM_CXX11_ABI_SCRAMRTDEL=1
+== ENV: SRT_VALGRIND_LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/lib/valgrind
+== ENV: LC_NAME=en_GB.UTF-8
+== ENV: BASH_FUNC_module()=()
+== ENV: {
+== ENV: eval
+== ENV: `/usr/bin/modulecmd
+== ENV: bash
+== ENV: $*`
+== ENV: }
+== ENV: _=/usr/bin/env
+======== Current environment dump FINISHING ========
+======== Tarball initialization STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
++ [[ XTrue == \X ]]
++ echo 'I am in runtime debug mode. I will not extract the sandbox'
+I am in runtime debug mode. I will not extract the sandbox
+++ pwd
+++ pwd
++ export PYTHONPATH=/tmp/ratramon/tmpTplmM5/CRAB3.zip:/tmp/ratramon/tmpTplmM5/WMCore.zip:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
++ PYTHONPATH=/tmp/ratramon/tmpTplmM5/CRAB3.zip:/tmp/ratramon/tmpTplmM5/WMCore.zip:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
++ set +x
+======== Tarball initialization FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ========
+==== Local directory contents dump STARTING ====
+PWD: /tmp/ratramon/tmpTplmM5
+== DIR: AdjustSites.py
+== DIR: ApmonIf.py
+== DIR: BPH_mod_BtoDMuN_NtoE_cfg.py
+== DIR: CMSGroupMapper.py
+== DIR: CMSRunAnalysis.py
+== DIR: CMSRunAnalysis.sh
+== DIR: CMSRunAnalysis.tar.gz
+== DIR: DashboardAPI.py
+== DIR: DashboardFailure.sh
+== DIR: InputFiles.tar.gz
+== DIR: Job.submit
+== DIR: Logger.py
+== DIR: PSet.pkl
+== DIR: PSet.py
+== DIR: PSetDump.py
+== DIR: ProcInfo.py
+== DIR: RESTInteractions.py
+== DIR: RunJobs.dag
+== DIR: ServerUtilities.py
+== DIR: TaskManagerRun.tar.gz
+== DIR: TweakPSet.py
+== DIR: WMCore.zip
+== DIR: apmon.py
+== DIR: biglib
+== DIR: cmscp.py
+== DIR: dag_bootstrap.sh
+== DIR: datadiscovery.pkl
+== DIR: debug
+== DIR: debug_files.tar.gz
+== DIR: dry-run-sandbox.tar.gz
+== DIR: evt_2014_mass1.0_ctau107.535167851.pdl
+== DIR: gWMS-CMSRunAnalysis.sh
+== DIR: input_args.json
+== DIR: input_files.tar.gz
+== DIR: lib
+== DIR: pileup_2018.root
+== DIR: run_and_lumis.tar.gz
+== DIR: sandbox.tar.gz
+== DIR: site.ad
+== DIR: site.ad.json
+== DIR: slurm_mass1.0_ctau107.535167851_prod.sh
+== DIR: splitting-summary.json
+== DIR: src
+== DIR: step2.py
+== DIR: step3.py
+== DIR: step4.py
+== DIR: taskinformation.pkl
+== DIR: taskworkerconfig.pkl
+==== Local directory contents dump FINISHING ====
+======== CMSRunAnalysis.py STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
+Now running the CMSRunAnalysis.py job in /tmp/ratramon/tmpTplmM5...
+++ pwd
++ python CMSRunAnalysis.py -r /tmp/ratramon/tmpTplmM5 -a sandbox.tar.gz --sourceURL=https://cmsweb.cern.ch/crabcache --jobNumber=0 --cmsswVersion=CMSSW_10_2_15 --scramArch=slc7_amd64_gcc700 --inputFile=job_input_file_list_1.txt --runAndLumis=job_lumis_1.json --lheInputFiles=False --firstEvent=1 --firstLumi=1 --lastEvent=11 --firstRun=1 --seeding=AutomaticSeeding --scriptExe=slurm_mass1.0_ctau107.535167851_prod.sh --eventsPerLumi=1 --maxRuntime=-60 '--scriptArgs=[]' -o '{}'
+==== CMSRunAnalysis.py STARTING at Sat Jan  2 11:28:26 2021 ====
+Local time : Sat Jan  2 12:28:26 2021
+==== Parameters Dump at Sat Jan  2 11:28:26 2021 ===
+archiveJob:     sandbox.tar.gz
+runDir:         /tmp/ratramon/tmpTplmM5
+sourceURL:      https://cmsweb.cern.ch/crabcache
+jobNumber:      0
+cmsswVersion:   CMSSW_10_2_15
+scramArch:      slc7_amd64_gcc700
+inputFile       job_input_file_list_1.txt
+outFiles:       {}
+runAndLumis:    job_lumis_1.json
+lheInputFiles:  False
+firstEvent:     1
+firstLumi:      1
+eventsPerLumi:  1
+lastEvent:      11
+firstRun:       1
+seeding:        AutomaticSeeding
+userFiles:      None
+oneEventMode:   0
+scriptExe:      slurm_mass1.0_ctau107.535167851_prod.sh
+scriptArgs:     []
+maxRuntime:     -60
+===================
+==== Sandbox preparation STARTING at Sat Jan  2 11:28:26 2021 ====
+
+==== Sandbox preparation FINISHED at Sat Jan  2 11:28:27 2021 ====
+==== WMCore filesystem preparation STARTING at Sat Jan  2 11:28:27 2021 ====
+==== WMCore filesystem preparation FINISHED at Sat Jan  2 11:28:27 2021 ====
+==== CMSSW Stack Execution STARTING at Sat Jan  2 11:28:27 2021 ====
+==== SCRAM Obj CREATED at Sat Jan  2 11:28:27 2021 ====
+
+==== ScriptEXE Execution started at Sat Jan  2 11:28:30 2021 ====
+Executing python /tmp/ratramon/tmpTplmM5/TweakPSet.py --location=/tmp/ratramon/tmpTplmM5 --inputFile='job_input_file_list_1.txt' --runAndLumis='job_lumis_1.json' --firstEvent=1 --lastEvent=11 --firstLumi=1 --firstRun=1 --seeding=AutomaticSeeding --lheInputFiles=False --oneEventMode=0 --eventsPerLumi=1 --maxRuntime=-60
+Exdcuting user script: /tmp/ratramon/tmpTplmM5/slurm_mass1.0_ctau107.535167851_prod.sh 0 
+WARNING: WMCore did not produce a jobReport.json; FJR will not be useful.
+ERROR: Exceptional exit at Sat Jan  2 11:29:09 2021 (10040): Error executing scriptExe.
+	See stdout log
+== Execution site for failed job from site-local-config.xml: T2_CH_CERN
+==== CMSSW Stack Execution FAILED at Sat Jan  2 11:29:09 2021 ====
+======== CMSSW OUTPUT STARTING ========
+NOTICE: lines longer than 3000 characters will be truncated
+== CMSSW:
+== CMSSW:         Scram Command Diagnostic:
+== CMSSW:         Command : scramv1
+== CMSSW:         Architecture: slc7_amd64_gcc700
+== CMSSW:         Executed: /tmp/ratramon/tmpTplmM5/slurm_mass1.0_ctau107.535167851_prod.sh 0
+== CMSSW:         Exit Status: 5
+== CMSSW:         Stdout: Going to run step1
+== CMSSW: Singletons:
+== CMSSW:   ctau               : 107.535167851
+== CMSSW:                      - ctau of the HNL [mm]
+== CMSSW:   filePrepend        :
+== CMSSW:                      - String to prepend location of all files
+== CMSSW:   mass               : 1.0
+== CMSSW:                      - mass of the HNL
+== CMSSW:   maxEvents          : 10
+== CMSSW:                      - Number of events to process (-1 for all)
+== CMSSW:   nThr               : 1
+== CMSSW:                      - Number of threads
+== CMSSW:   outputFile         : BPH-step1.root
+== CMSSW:                      - Name of output file (if needed)
+== CMSSW:   secondaryOutputFile:
+== CMSSW:                      - Name of second output file (if needed)
+== CMSSW:   section            : 0
+== CMSSW:                      - This section (from 1..totalSections inclusive)
+== CMSSW:   seedOffset         : 0
+== CMSSW:                      - Seed offset
+== CMSSW:   severityLevel      : ERROR
+== CMSSW:                      - severity level for log messages, DEBUG, INFO, WARNING, ERROR
+== CMSSW:   tag                :
+== CMSSW:                      - tag to add to output filename
+== CMSSW:   totalSections      : 0
+== CMSSW:                      - Total number of sections
+== CMSSW: Lists:
+== CMSSW:   inputFiles         : []
+== CMSSW:                      - Files to process
+== CMSSW:   secondaryInputFiles: []
+== CMSSW:                      - Second group of files to process (if needed)
+== CMSSW:
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:32 CET-----------------------
+== CMSSW: An exception of category 'ConfigFileReadError' occurred while
+== CMSSW:    [0] Processing the python configuration file named BPH_mod_BtoDMuN_NtoE_cfg.py
+== CMSSW: Exception Message:
+== CMSSW: python encountered the error: <type 'exceptions.RuntimeError'>
+== CMSSW: edm::FileInPath unable to find file evt_2014_mass1.0_ctau107.535167851.pdl anywhere in the search path.
+== CMSSW: The search path is defined by: CMSSW_SEARCH_PATH
+== CMSSW: ${CMSSW_SEARCH_PATH} is: /tmp/ratramon/tmpTplmM5/CMSSW_10_2_15/src:/tmp/ratramon/tmpTplmM5/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/:setenv:/tmp/ratramon/tmpTplmM5
+== CMSSW: Current directory is: /tmp/ratramon/tmpTplmM5
+== CMSSW:
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step 1
+== CMSSW: Finished running step1
+== CMSSW: AdjustSites.py
+== CMSSW: ApmonIf.py
+== CMSSW: BPH_mod_BtoDMuN_NtoE_cfg.py
+== CMSSW: CMSGroupMapper.py
+== CMSSW: CMSRunAnalysis.py
+== CMSSW: CMSRunAnalysis.sh
+== CMSSW: CMSRunAnalysis.tar.gz
+== CMSSW: CMSSW_10_2_15
+== CMSSW: DashboardAPI.py
+== CMSSW: DashboardAPI.pyc
+== CMSSW: DashboardFailure.sh
+== CMSSW: InputFiles.tar.gz
+== CMSSW: Job.submit
+== CMSSW: Logger.py
+== CMSSW: Logger.pyc
+== CMSSW: PSet.pkl
+== CMSSW: PSet.py
+== CMSSW: PSetDump.py
+== CMSSW: ProcInfo.py
+== CMSSW: ProcInfo.pyc
+== CMSSW: RESTInteractions.py
+== CMSSW: RunJobs.dag
+== CMSSW: ServerUtilities.py
+== CMSSW: TaskManagerRun.tar.gz
+== CMSSW: TweakPSet.py
+== CMSSW: WMCore.zip
+== CMSSW: WMTaskSpace
+== CMSSW: apmon.py
+== CMSSW: apmon.pyc
+== CMSSW: biglib
+== CMSSW: cmscp.py
+== CMSSW: dag_bootstrap.sh
+== CMSSW: datadiscovery.pkl
+== CMSSW: debug
+== CMSSW: debug_files.tar.gz
+== CMSSW: dry-run-sandbox.tar.gz
+== CMSSW: evt_2014_mass1.0_ctau107.535167851.pdl
+== CMSSW: gWMS-CMSRunAnalysis.sh
+== CMSSW: input_args.json
+== CMSSW: input_files.tar.gz
+== CMSSW: lib
+== CMSSW: pileup_2018.root
+== CMSSW: run_and_lumis.tar.gz
+== CMSSW: sandbox.tar.gz
+== CMSSW: site.ad
+== CMSSW: site.ad.json
+== CMSSW: slurm_mass1.0_ctau107.535167851_prod.sh
+== CMSSW: splitting-summary.json
+== CMSSW: src
+== CMSSW: step2.py
+== CMSSW: step3.py
+== CMSSW: step4.py
+== CMSSW: taskinformation.pkl
+== CMSSW: taskworkerconfig.pkl
+== CMSSW: wmagentJob.log
+== CMSSW: wmcore_initialized
+== CMSSW:
+== CMSSW: !!!!! WARNING: The BMTF Packer returns the entire detector information in one fed (# 1376), instead of the real BMTF which owns 2 feds (1376, 1377)  !!!!!
+== CMSSW:
+== CMSSW: 02-Jan-2021 12:28:46 CET  Initiating request to open file file:BPH-step1_numEvent10.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:47 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step1_numEvent10.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step1_numEvent10.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step2
+== CMSSW: 02-Jan-2021 12:28:58 CET  Initiating request to open file file:BPH-step2.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:58 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step2.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step2.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step3
+== CMSSW: rm: cannot remove 'BPH-step2.root': No such file or directory
+== CMSSW: Going to run step4
+== CMSSW: 02-Jan-2021 12:29:09 CET  Initiating request to open file file:BPH-step3.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:29:09 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step3.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step3.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step4
+== CMSSW: rm: cannot remove 'BPH-step3.root': No such file or directory
+== CMSSW:
+== CMSSW:         Stderr: None
+======== CMSSW OUTPUT FINSHING ========
++ jobrc=56
++ set +x
+== The job had an exit code of 56 
+======== CMSRunAnalysis.py FINISHING at Sat  2 Jan 11:29:09 GMT 2021 ========
+
+ERROR 2021-01-02 11:29:09.733 UTC: 	 Dry run failed to execute local test run:
+ StdOut: ======== CMSRunAnalysis.sh STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
+Local time : Sat  2 Jan 12:28:26 CET 2021
+Current system : Linux lxplus780.cern.ch 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+Current processor: model name	: Intel Xeon Processor (Skylake, IBRS)
+==== CMSSW pre-execution environment bootstrap STARTING ====
++ '[' -f /cmsset_default.sh ']'
++ '[' -f /cmssoft/cms/cmsset_default.sh ']'
++ '[' -f /cvmfs/cms.cern.ch/cmsset_default.sh ']'
++ echo 'CVMFS style'
+CVMFS style
++ export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
++ VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
++ set +x
++ declare -a VERSIONS
++ VERSIONS=($(ls /cvmfs/cms.cern.ch/$SCRAM_ARCH/external/python | egrep '2.[67]'))
+++ ls /cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python
+++ egrep '2.[67]'
++ PY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python
++ echo 'python version: ' 2.7.14
+python version:  2.7.14
++ set +x
+==== CMSSW pre-execution environment bootstrap FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ====
+==== Python discovery STARTING ====
+Python found in /cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14
+I found python at..
+/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin/python
+==== Python discovery FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ====
+======== Current environment dump STARTING ========
+== ENV: G4LEVELGAMMADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4PhotonEvaporation/5.2/data/PhotonEvaporation5.2
+== ENV: UTM_XSD_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf
+== ENV: SRT_G4LEVELGAMMADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4PhotonEvaporation/5.2/data/PhotonEvaporation5.2
+== ENV: LC_PAPER=en_GB.UTF-8
+== ENV: CMSSW_RELEASE_BASE=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15
+== ENV: SCRAMRT_SET=CMSSW:CMSSW_10_2_15:slc7_amd64_gcc700:V2_2_9_pre11:SRT_
+== ENV: MANPATH=/cvmfs/cms.cern.ch/share/man:/cvmfs/cms.cern.ch/share/man::/opt/puppetlabs/puppet/share/man
+== ENV: CMSSW_FWLITE_INCLUDE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include
+== ENV: SRT_GCC_RUNTIME_ASAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: XDG_SESSION_ID=c20103
+== ENV: LC_ADDRESS=en_GB.UTF-8
+== ENV: COMPILER_RUNTIME_OBJECTS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
+== ENV: GUESTFISH_INIT=\e[1;34m
+== ENV: HOSTNAME=lxplus780.cern.ch
+== ENV: LC_MONETARY=en_GB.UTF-8
+== ENV: SELINUX_ROLE_REQUESTED=
+== ENV: ROOT_INCLUDE_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/include/LCG:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mctester/1.25.0a-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dd4hep/v01-08x-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtDesigner:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauolapp/1.1.5-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/charybdis/1.003-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtOpenGL:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtGui:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwig/6.521-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt3Support:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lwtnn/2.4-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4/10.04-gnimlf3/include/Geant4:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/classlib/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cgal/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tkonlinesw/4.2.0-1_gcc7-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/starlight/r193-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtCore:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtXml:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mcdb/1.0.3-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libungif/4.1.4-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libtiff/4.0.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libpng/1.6.16-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pcre/8.37-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/include/xrootd/private:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/vdt/0.4.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/toprex/4.23-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tbb/2018_U1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauola/27.121.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sigcpp/2.6.2-omkpbe2/include/sigc++-2.0:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.22.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/protobuf/3.5.2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pacparser/1.3.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/oracle/12.1.0.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/meschach/1.2.pCMS1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libuuid/2.22.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libhepml/0.2.1-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ktjet/1.06-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jimmy/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jemalloc/5.1.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hector/1.3.4_patch1-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gsl/2.2.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libjpeg-turbo/1.3.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/giflib/4.2.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vecgeom/v00.05.00-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/freetype/2.5.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftw3/3.3.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftjet/1.5.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dpm/1.8.0.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xerces-c/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xz/5.2.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dcap/2.47.8-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libxml2/2.9.1-omkpbe2/include/libxml2:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/curl/7.59.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cppunit/1.12.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia6/426-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/photos/215.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/include/python2.7:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tinyxml2/6.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ittnotify/16.06.18-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2/include:/usr/local/include:/usr/include
+== ENV: INTEL_LICENSE_FILE=28518@lxlicen01.cern.ch,28518@lxlicen02.cern.ch,28518@lxlicen03.cern.ch
+== ENV: SRT_TEXMFHOME_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share/Rivet/texmf
+== ENV: SRT_GEANT4_PARFULLCMS_CONFIG_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-parfullcms/2014.01.27-gnimlf3/share/ParFullCMS
+== ENV: TERM=xterm-256color
+== ENV: SHELL=/bin/bash
+== ENV: PDFPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share
+== ENV: SRT_TNS_ADMIN_SCRAMRTDEL=/etc
+== ENV: HISTSIZE=1000
+== ENV: ROOT_GCC_TOOLCHAIN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: TMPDIR=/tmp/ratramon
+== ENV: SSH_CLIENT=93.41.96.37
+== ENV: 8639
+== ENV: 22
+== ENV: PERL5LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/perl5
+== ENV: G4FORCENUMBEROFTHREADS=max
+== ENV: OPENBLAS_NUM_THREADS=1
+== ENV: SRT_QTDIR_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2
+== ENV: SRT_PDFPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share
+== ENV: CONDA_SHLVL=0
+== ENV: CMSSW_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms
+== ENV: LHAPDF_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/share/LHAPDF
+== ENV: SRT_CMS_ORACLEOCCI_LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cms_oracleocci_abi_hack/20180210-omkpbe/lib/libcms_oracleocci_abi_hack.so
+== ENV: CVSROOT=:gserver:cmssw.cvs.cern.ch:/local/reps/CMSSW
+== ENV: SELINUX_USE_CURRENT_RANGE=
+== ENV: CMSSW_GIT_HASH=CMSSW_10_2_15
+== ENV: SRT_G4ABLADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ABLA/3.0/data/G4ABLA3.0
+== ENV: LC_NUMERIC=en_GB.UTF-8
+== ENV: SRT_SCONS_LIB_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/scons/3.0.1/lib
+== ENV: QTDIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2:/usr/lib64/qt-3.3
+== ENV: G4NEUTRONXSDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NEUTRONXS/1.4/data/G4NEUTRONXS1.4
+== ENV: SRT_COMPILER_RUNTIME_OBJECTS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: SCRAM_ARCH=slc7_amd64_gcc700
+== ENV: QTINC=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/usr/lib64/qt-3.3/include
+== ENV: GIT_SSL_CAINFO=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/ssl/certs/ca-bundle.crt
+== ENV: SRT_CMS_OPENLOOPS_PREFIX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openloops/2.0.0-gnimlf
+== ENV: SRT_GIT_EXEC_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/libexec/git-core
+== ENV: SRT_THEPEGPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/share/ThePEG
+== ENV: SSH_TTY=/dev/pts/14
+== ENV: ROOT_TTREECACHE_SIZE=0
+== ENV: EVTGENDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/evtgen/1.6.0-gnimlf4/share
+== ENV: SRT_INTEL_LICENSE_FILE_SCRAMRTDEL=28518@lxlicen01.cern.ch,28518@lxlicen02.cern.ch,28518@lxlicen03.cern.ch
+== ENV: SRT_ROOT_INCLUDE_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/include/LCG:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mctester/1.25.0a-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dd4hep/v01-08x-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtDesigner:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauolapp/1.1.5-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/charybdis/1.003-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtOpenGL:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtGui:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwig/6.521-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt3Support:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lwtnn/2.4-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4/10.04-gnimlf3/include/Geant4:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/classlib/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cgal/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tkonlinesw/4.2.0-1_gcc7-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/starlight/r193-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtCore:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtXml:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mcdb/1.0.3-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libungif/4.1.4-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libtiff/4.0.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libpng/1.6.16-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pcre/8.37-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/include/xrootd/private:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/vdt/0.4.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/toprex/4.23-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tbb/2018_U1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauola/27.121.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sigcpp/2.6.2-omkpbe2/include/sigc++-2.0:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.22.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/protobuf/3.5.2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pacparser/1.3.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/oracle/12.1.0.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/meschach/1.2.pCMS1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libuuid/2.22.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libhepml/0.2.1-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ktjet/1.06-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jimmy/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jemalloc/5.1.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hector/1.3.4_patch1-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gsl/2.2.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libjpeg-turbo/1.3.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/giflib/4.2.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vecgeom/v00.05.00-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/freetype/2.5.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftw3/3.3.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftjet/1.5.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dpm/1.8.0.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xerces-c/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xz/5.2.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dcap/2.47.8-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libxml2/2.9.1-omkpbe2/include/libxml2:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/curl/7.59.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cppunit/1.12.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia6/426-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/photos/215.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/include/python2.7:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tinyxml2/6.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ittnotify/16.06.18-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2/include:/usr/local/include:/usr/include
+== ENV: STAGE_HOST=castorcms
+== ENV: G4LEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4EMLOW/7.3/data/G4EMLOW7.3
+== ENV: SRT_VINCIADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vincia/2.2.01-gnimlf4/share/Vincia/xmldoc
+== ENV: SRT_ROOT_TTREECACHE_PREFILL_SCRAMRTDEL=0
+== ENV: SRT_QTINC_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include
+== ENV: QT_GRAPHICSSYSTEM_CHECKED=1
+== ENV: OPAL_PREFIX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openmpi/2.1.5
+== ENV: USER=ratramon
+== ENV: ROOT_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: SHERPA_INCLUDE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC
+== ENV: SRT_LHAPDF_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/share/LHAPDF
+== ENV: SRT_PYTHON27PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python2.7/site-packages
+== ENV: LD_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.21.0/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libffi/3.2.1/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/db6/6.0.30/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/lib:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cuda/9.2.148/drivers:/your/custom/path/
+== ENV: LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+== ENV: LC_TELEPHONE=en_GB.UTF-8
+== ENV: SRT_CMSSW_RELEASE_BASE_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15
+== ENV: SRT_RIVET_ANALYSIS_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/lib
+== ENV: VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+== ENV: CRAB3_RUNTIME_DEBUG=True
+== ENV: SRT_CMSSW_VERSION_SCRAMRTDEL=CMSSW_10_2_15
+== ENV: GCC_RUNTIME_LSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: SCRAM_CXX11_ABI=1
+== ENV: VALGRIND_LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/lib/valgrind
+== ENV: SRT_CMSSW_GIT_HASH_SCRAMRTDEL=CMSSW_10_2_15
+== ENV: SRT_ROOTSYS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: G4NEUTRONHPDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NDL/4.5/data/G4NDL4.5
+== ENV: GEANT4_PARFULLCMS_CONFIG_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-parfullcms/2014.01.27-gnimlf3/share/ParFullCMS
+== ENV: CSC_TRACK_FINDER_DATA_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/CSCTrackFinderEmulation/1.2-omkpbe2/data/
+== ENV: G4ENSDFSTATEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ENSDFSTATE/2.2/data/G4ENSDFSTATE2.2
+== ENV: G4RADIOACTIVEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4RadioactiveDecay/5.2/data/RadioactiveDecay5.2
+== ENV: ROOFITSYS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_ROOFITSYS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_G4RADIOACTIVEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4RadioactiveDecay/5.2/data/RadioactiveDecay5.2
+== ENV: SRT_G4ENSDFSTATEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ENSDFSTATE/2.2/data/G4ENSDFSTATE2.2
+== ENV: SRT_CLHEP_PARAM_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf
+== ENV: CASTOR_HOME=/castor/cern.ch/user/r/ratramon
+== ENV: G4ABLADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ABLA/3.0/data/G4ABLA3.0
+== ENV: SRT_SHERPA_INCLUDE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC
+== ENV: SRT_G4FORCENUMBEROFTHREADS_SCRAMRTDEL=max
+== ENV: SRT_PERL5LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/perl5
+== ENV: SRT_WORKER_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/blackhat/0.9.9-omkpbe4/share/blackhat/datafiles/
+== ENV: GUESTFISH_PS1=\[\e[1;32m\]><fs>\[\e[0;31m\]
+== ENV: GCC_RUNTIME_TSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libtsan.so
+== ENV: TNS_ADMIN=/etc
+== ENV: SRT_HEPPDT_PARAM_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2
+== ENV: MAIL=/var/spool/mail/ratramon
+== ENV: PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.21.0/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/db6/6.0.30/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/bin:/afs/cern.ch/cms/caf/scripts:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/bin:/cvmfs/cms.cern.ch/share/overrides/bin:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/bin:/afs/cern.ch/cms/caf/scripts:/cvmfs/cms.cern.ch/common:/usr/sue/bin:/usr/lib64/qt-3.3/bin:/usr/condabin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/afs/cern.ch/user/r/ratramon/bin
+== ENV: THEPEGPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/share/ThePEG
+== ENV: SRT_CMSSW_SEARCH_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/data
+== ENV: SRT_GIT_SSL_CAINFO_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/ssl/certs/ca-bundle.crt
+== ENV: SRT_GCC_RUNTIME_LSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: CMS_PATH=/cvmfs/cms.cern.ch
+== ENV: SRT_UTM_XSD_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf
+== ENV: SRT_PATH_SCRAMRT=/cvmfs/cms.cern.ch/share/overrides/bin:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/bin
+== ENV: LC_IDENTIFICATION=en_GB.UTF-8
+== ENV: RIVET_ANALYSIS_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/lib
+== ENV: SRT_LOCALRT_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_CMSSW_BASE_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_LANG_SCRAMRT=C
+== ENV: PWD=/tmp/ratramon/tmpTplmM5
+== ENV: CMS_ORACLEOCCI_LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cms_oracleocci_abi_hack/20180210-omkpbe/lib/libcms_oracleocci_abi_hack.so
+== ENV: PYTHON_VALGRIND_SUPP=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/share/valgrind/valgrind-python.supp
+== ENV: SRT_OPAL_PREFIX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openmpi/2.1.5
+== ENV: EDITOR=/bin/nano
+== ENV: -w
+== ENV: GCC_RUNTIME_UBSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libubsan.so
+== ENV: LANG=C
+== ENV: MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
+== ENV: SRT_G4NEUTRONHPDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NDL/4.5/data/G4NDL4.5
+== ENV: QT_GRAPHICSSYSTEM=native
+== ENV: LOADEDMODULES=
+== ENV: KDEDIRS=/usr
+== ENV: GUESTFISH_OUTPUT=\e[0m
+== ENV: LC_MEASUREMENT=en_GB.UTF-8
+== ENV: SRT_SHERPA_SHARE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/share/SHERPA-MC
+== ENV: SRT_GCC_RUNTIME_TSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libtsan.so
+== ENV: CASCADE_PDFPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/share
+== ENV: SRT_ROOT_GCC_TOOLCHAIN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: SRT_CASCADE_PDFPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/share
+== ENV: MYPROXY_SERVER=myproxy.cern.ch
+== ENV: SELINUX_LEVEL_REQUESTED=
+== ENV: WORKER_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/blackhat/0.9.9-omkpbe4/share/blackhat/datafiles/
+== ENV: GIT_TEMPLATE_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/git-core/templates
+== ENV: G4SAIDXSDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4SAIDDATA/1.1/data/G4SAIDDATA1.1
+== ENV: EOS_MGM_URL=root://eoscms.cern.ch
+== ENV: PYTHON27PATH=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python2.7/site-packages
+== ENV: SRT_CMSSW_FWLITE_INCLUDE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include
+== ENV: ROOTSYS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_PYTHIA8DATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/share/Pythia8/xmldoc
+== ENV: SRT_HERWIGPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/share/Herwig
+== ENV: SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+== ENV: HISTCONTROL=ignoredups
+== ENV: KRB5CCNAME=FILE:/tmp/krb5cc_116646_48S1sc
+== ENV: SRT_PYTHON3PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python3.6/site-packages
+== ENV: TEXINPUTS=:/cvmfs/cms.cern.ch/latex/styles
+== ENV: SHERPA_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/lib/SHERPA-MC
+== ENV: SRT_PYTHON_VALGRIND_SUPP_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/share/valgrind/valgrind-python.supp
+== ENV: SHLVL=3
+== ENV: HOME=/afs/cern.ch/user/r/ratramon
+== ENV: CMSSW_SEARCH_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/:setenv
+== ENV: _VIRTUALENVWRAPPER_API=
+== ENV: mkvirtualenv
+== ENV: rmvirtualenv
+== ENV: lsvirtualenv
+== ENV: showvirtualenv
+== ENV: workon
+== ENV: add2virtualenv
+== ENV: cdsitepackages
+== ENV: cdvirtualenv
+== ENV: lssitepackages
+== ENV: toggleglobalsitepackages
+== ENV: cpvirtualenv
+== ENV: setvirtualenvproject
+== ENV: mkproject
+== ENV: cdproject
+== ENV: mktmpenv
+== ENV: wipeenv
+== ENV: allvirtualenv
+== ENV: GOSAMCONTRIB_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: ROOT_TTREECACHE_PREFILL=0
+== ENV: GENREFLEX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/bin/genreflex
+== ENV: VINCIADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vincia/2.2.01-gnimlf4/share/Vincia/xmldoc
+== ENV: SRT_G4LEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4EMLOW/7.3/data/G4EMLOW7.3
+== ENV: SRT_GENREFLEX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/bin/genreflex
+== ENV: SRT_GOSAMCONTRIB_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: SRT_ROOT_TTREECACHE_SIZE_SCRAMRTDEL=0
+== ENV: SRT_EVTGENDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/evtgen/1.6.0-gnimlf4/share
+== ENV: SRT_QTLIB_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/lib
+== ENV: SRT_CMSSW_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms
+== ENV: PYTHONPATH=/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
+== ENV: HEPPDT_PARAM_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2
+== ENV: SRT_LD_LIBRARY_PATH_SCRAMRT=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cuda/9.2.148/drivers
+== ENV: LCG_GFAL_INFOSYS=lcg-bdii.cern.ch:2170
+== ENV: LOGNAME=ratramon
+== ENV: PYTHON3PATH=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python3.6/site-packages
+== ENV: SCONS_LIB_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/scons/3.0.1/lib
+== ENV: QTLIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/lib:/usr/lib64/qt-3.3/lib
+== ENV: CVS_RSH=ssh
+== ENV: DBS3_CLIENT_ROOT=/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01
+== ENV: XDG_DATA_DIRS=/afs/cern.ch/user/r/ratramon/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+== ENV: SSH_CONNECTION=93.41.96.37
+== ENV: 8639
+== ENV: 188.185.123.54
+== ENV: 22
+== ENV: MODULESHOME=/usr/share/Modules
+== ENV: FRONTIER_CLIENT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/
+== ENV: SRT_G4NEUTRONXSDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NEUTRONXS/1.4/data/G4NEUTRONXS1.4
+== ENV: SRT_SHERPA_LIBRARY_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/lib/SHERPA-MC
+== ENV: LESSOPEN=||/usr/bin/lesspipe.sh
+== ENV: %s
+== ENV: _CONDOR_JOB_AD=Job.submit
+== ENV: CLHEP_PARAM_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf
+== ENV: PYTHIA8DATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/share/Pythia8/xmldoc
+== ENV: HERWIGPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/share/Herwig
+== ENV: SRT_FRONTIER_CLIENT_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/
+== ENV: SRT_CSC_TRACK_FINDER_DATA_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/CSCTrackFinderEmulation/1.2-omkpbe2/data/
+== ENV: CRABCLIENT_TYPE=prod
+== ENV: GCC_RUNTIME_ASAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: SRT_ROOT_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: XDG_RUNTIME_DIR=/run/user/116646
+== ENV: DISPLAY=localhost:15.0
+== ENV: TEXMFHOME=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share/Rivet/texmf
+== ENV: SRT_OPENBLAS_NUM_THREADS_SCRAMRTDEL=1
+== ENV: SRT_GIT_TEMPLATE_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/git-core/templates
+== ENV: SRT_G4SAIDXSDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4SAIDDATA/1.1/data/G4SAIDDATA1.1
+== ENV: QT_PLUGIN_PATH=/usr/lib64/kde4/plugins:/usr/lib/kde4/plugins
+== ENV: CMSSW_VERSION=CMSSW_10_2_15
+== ENV: SRT_GCC_RUNTIME_UBSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libubsan.so
+== ENV: SHERPA_SHARE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/share/SHERPA-MC
+== ENV: GUESTFISH_RESTORE=\e[0m
+== ENV: LC_TIME=en_GB.UTF-8
+== ENV: CMS_OPENLOOPS_PREFIX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openloops/2.0.0-gnimlf
+== ENV: GIT_EXEC_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/libexec/git-core
+== ENV: LOCALRT=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: CMSSW_BASE=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_SCRAM_CXX11_ABI_SCRAMRTDEL=1
+== ENV: SRT_VALGRIND_LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/lib/valgrind
+== ENV: LC_NAME=en_GB.UTF-8
+== ENV: BASH_FUNC_module()=()
+== ENV: {
+== ENV: eval
+== ENV: `/usr/bin/modulecmd
+== ENV: bash
+== ENV: $*`
+== ENV: }
+== ENV: _=/usr/bin/env
+======== Current environment dump FINISHING ========
+======== Tarball initialization STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
++ [[ XTrue == \X ]]
++ echo 'I am in runtime debug mode. I will not extract the sandbox'
+I am in runtime debug mode. I will not extract the sandbox
+++ pwd
+++ pwd
++ export PYTHONPATH=/tmp/ratramon/tmpTplmM5/CRAB3.zip:/tmp/ratramon/tmpTplmM5/WMCore.zip:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
++ PYTHONPATH=/tmp/ratramon/tmpTplmM5/CRAB3.zip:/tmp/ratramon/tmpTplmM5/WMCore.zip:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
++ set +x
+======== Tarball initialization FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ========
+==== Local directory contents dump STARTING ====
+PWD: /tmp/ratramon/tmpTplmM5
+== DIR: AdjustSites.py
+== DIR: ApmonIf.py
+== DIR: BPH_mod_BtoDMuN_NtoE_cfg.py
+== DIR: CMSGroupMapper.py
+== DIR: CMSRunAnalysis.py
+== DIR: CMSRunAnalysis.sh
+== DIR: CMSRunAnalysis.tar.gz
+== DIR: DashboardAPI.py
+== DIR: DashboardFailure.sh
+== DIR: InputFiles.tar.gz
+== DIR: Job.submit
+== DIR: Logger.py
+== DIR: PSet.pkl
+== DIR: PSet.py
+== DIR: PSetDump.py
+== DIR: ProcInfo.py
+== DIR: RESTInteractions.py
+== DIR: RunJobs.dag
+== DIR: ServerUtilities.py
+== DIR: TaskManagerRun.tar.gz
+== DIR: TweakPSet.py
+== DIR: WMCore.zip
+== DIR: apmon.py
+== DIR: biglib
+== DIR: cmscp.py
+== DIR: dag_bootstrap.sh
+== DIR: datadiscovery.pkl
+== DIR: debug
+== DIR: debug_files.tar.gz
+== DIR: dry-run-sandbox.tar.gz
+== DIR: evt_2014_mass1.0_ctau107.535167851.pdl
+== DIR: gWMS-CMSRunAnalysis.sh
+== DIR: input_args.json
+== DIR: input_files.tar.gz
+== DIR: lib
+== DIR: pileup_2018.root
+== DIR: run_and_lumis.tar.gz
+== DIR: sandbox.tar.gz
+== DIR: site.ad
+== DIR: site.ad.json
+== DIR: slurm_mass1.0_ctau107.535167851_prod.sh
+== DIR: splitting-summary.json
+== DIR: src
+== DIR: step2.py
+== DIR: step3.py
+== DIR: step4.py
+== DIR: taskinformation.pkl
+== DIR: taskworkerconfig.pkl
+==== Local directory contents dump FINISHING ====
+======== CMSRunAnalysis.py STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
+Now running the CMSRunAnalysis.py job in /tmp/ratramon/tmpTplmM5...
+++ pwd
++ python CMSRunAnalysis.py -r /tmp/ratramon/tmpTplmM5 -a sandbox.tar.gz --sourceURL=https://cmsweb.cern.ch/crabcache --jobNumber=0 --cmsswVersion=CMSSW_10_2_15 --scramArch=slc7_amd64_gcc700 --inputFile=job_input_file_list_1.txt --runAndLumis=job_lumis_1.json --lheInputFiles=False --firstEvent=1 --firstLumi=1 --lastEvent=11 --firstRun=1 --seeding=AutomaticSeeding --scriptExe=slurm_mass1.0_ctau107.535167851_prod.sh --eventsPerLumi=1 --maxRuntime=-60 '--scriptArgs=[]' -o '{}'
+==== CMSRunAnalysis.py STARTING at Sat Jan  2 11:28:26 2021 ====
+Local time : Sat Jan  2 12:28:26 2021
+==== Parameters Dump at Sat Jan  2 11:28:26 2021 ===
+archiveJob:     sandbox.tar.gz
+runDir:         /tmp/ratramon/tmpTplmM5
+sourceURL:      https://cmsweb.cern.ch/crabcache
+jobNumber:      0
+cmsswVersion:   CMSSW_10_2_15
+scramArch:      slc7_amd64_gcc700
+inputFile       job_input_file_list_1.txt
+outFiles:       {}
+runAndLumis:    job_lumis_1.json
+lheInputFiles:  False
+firstEvent:     1
+firstLumi:      1
+eventsPerLumi:  1
+lastEvent:      11
+firstRun:       1
+seeding:        AutomaticSeeding
+userFiles:      None
+oneEventMode:   0
+scriptExe:      slurm_mass1.0_ctau107.535167851_prod.sh
+scriptArgs:     []
+maxRuntime:     -60
+===================
+==== Sandbox preparation STARTING at Sat Jan  2 11:28:26 2021 ====
+
+==== Sandbox preparation FINISHED at Sat Jan  2 11:28:27 2021 ====
+==== WMCore filesystem preparation STARTING at Sat Jan  2 11:28:27 2021 ====
+==== WMCore filesystem preparation FINISHED at Sat Jan  2 11:28:27 2021 ====
+==== CMSSW Stack Execution STARTING at Sat Jan  2 11:28:27 2021 ====
+==== SCRAM Obj CREATED at Sat Jan  2 11:28:27 2021 ====
+
+==== ScriptEXE Execution started at Sat Jan  2 11:28:30 2021 ====
+Executing python /tmp/ratramon/tmpTplmM5/TweakPSet.py --location=/tmp/ratramon/tmpTplmM5 --inputFile='job_input_file_list_1.txt' --runAndLumis='job_lumis_1.json' --firstEvent=1 --lastEvent=11 --firstLumi=1 --firstRun=1 --seeding=AutomaticSeeding --lheInputFiles=False --oneEventMode=0 --eventsPerLumi=1 --maxRuntime=-60
+Exdcuting user script: /tmp/ratramon/tmpTplmM5/slurm_mass1.0_ctau107.535167851_prod.sh 0 
+WARNING: WMCore did not produce a jobReport.json; FJR will not be useful.
+ERROR: Exceptional exit at Sat Jan  2 11:29:09 2021 (10040): Error executing scriptExe.
+	See stdout log
+== Execution site for failed job from site-local-config.xml: T2_CH_CERN
+==== CMSSW Stack Execution FAILED at Sat Jan  2 11:29:09 2021 ====
+======== CMSSW OUTPUT STARTING ========
+NOTICE: lines longer than 3000 characters will be truncated
+== CMSSW:
+== CMSSW:         Scram Command Diagnostic:
+== CMSSW:         Command : scramv1
+== CMSSW:         Architecture: slc7_amd64_gcc700
+== CMSSW:         Executed: /tmp/ratramon/tmpTplmM5/slurm_mass1.0_ctau107.535167851_prod.sh 0
+== CMSSW:         Exit Status: 5
+== CMSSW:         Stdout: Going to run step1
+== CMSSW: Singletons:
+== CMSSW:   ctau               : 107.535167851
+== CMSSW:                      - ctau of the HNL [mm]
+== CMSSW:   filePrepend        :
+== CMSSW:                      - String to prepend location of all files
+== CMSSW:   mass               : 1.0
+== CMSSW:                      - mass of the HNL
+== CMSSW:   maxEvents          : 10
+== CMSSW:                      - Number of events to process (-1 for all)
+== CMSSW:   nThr               : 1
+== CMSSW:                      - Number of threads
+== CMSSW:   outputFile         : BPH-step1.root
+== CMSSW:                      - Name of output file (if needed)
+== CMSSW:   secondaryOutputFile:
+== CMSSW:                      - Name of second output file (if needed)
+== CMSSW:   section            : 0
+== CMSSW:                      - This section (from 1..totalSections inclusive)
+== CMSSW:   seedOffset         : 0
+== CMSSW:                      - Seed offset
+== CMSSW:   severityLevel      : ERROR
+== CMSSW:                      - severity level for log messages, DEBUG, INFO, WARNING, ERROR
+== CMSSW:   tag                :
+== CMSSW:                      - tag to add to output filename
+== CMSSW:   totalSections      : 0
+== CMSSW:                      - Total number of sections
+== CMSSW: Lists:
+== CMSSW:   inputFiles         : []
+== CMSSW:                      - Files to process
+== CMSSW:   secondaryInputFiles: []
+== CMSSW:                      - Second group of files to process (if needed)
+== CMSSW:
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:32 CET-----------------------
+== CMSSW: An exception of category 'ConfigFileReadError' occurred while
+== CMSSW:    [0] Processing the python configuration file named BPH_mod_BtoDMuN_NtoE_cfg.py
+== CMSSW: Exception Message:
+== CMSSW: python encountered the error: <type 'exceptions.RuntimeError'>
+== CMSSW: edm::FileInPath unable to find file evt_2014_mass1.0_ctau107.535167851.pdl anywhere in the search path.
+== CMSSW: The search path is defined by: CMSSW_SEARCH_PATH
+== CMSSW: ${CMSSW_SEARCH_PATH} is: /tmp/ratramon/tmpTplmM5/CMSSW_10_2_15/src:/tmp/ratramon/tmpTplmM5/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/:setenv:/tmp/ratramon/tmpTplmM5
+== CMSSW: Current directory is: /tmp/ratramon/tmpTplmM5
+== CMSSW:
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step 1
+== CMSSW: Finished running step1
+== CMSSW: AdjustSites.py
+== CMSSW: ApmonIf.py
+== CMSSW: BPH_mod_BtoDMuN_NtoE_cfg.py
+== CMSSW: CMSGroupMapper.py
+== CMSSW: CMSRunAnalysis.py
+== CMSSW: CMSRunAnalysis.sh
+== CMSSW: CMSRunAnalysis.tar.gz
+== CMSSW: CMSSW_10_2_15
+== CMSSW: DashboardAPI.py
+== CMSSW: DashboardAPI.pyc
+== CMSSW: DashboardFailure.sh
+== CMSSW: InputFiles.tar.gz
+== CMSSW: Job.submit
+== CMSSW: Logger.py
+== CMSSW: Logger.pyc
+== CMSSW: PSet.pkl
+== CMSSW: PSet.py
+== CMSSW: PSetDump.py
+== CMSSW: ProcInfo.py
+== CMSSW: ProcInfo.pyc
+== CMSSW: RESTInteractions.py
+== CMSSW: RunJobs.dag
+== CMSSW: ServerUtilities.py
+== CMSSW: TaskManagerRun.tar.gz
+== CMSSW: TweakPSet.py
+== CMSSW: WMCore.zip
+== CMSSW: WMTaskSpace
+== CMSSW: apmon.py
+== CMSSW: apmon.pyc
+== CMSSW: biglib
+== CMSSW: cmscp.py
+== CMSSW: dag_bootstrap.sh
+== CMSSW: datadiscovery.pkl
+== CMSSW: debug
+== CMSSW: debug_files.tar.gz
+== CMSSW: dry-run-sandbox.tar.gz
+== CMSSW: evt_2014_mass1.0_ctau107.535167851.pdl
+== CMSSW: gWMS-CMSRunAnalysis.sh
+== CMSSW: input_args.json
+== CMSSW: input_files.tar.gz
+== CMSSW: lib
+== CMSSW: pileup_2018.root
+== CMSSW: run_and_lumis.tar.gz
+== CMSSW: sandbox.tar.gz
+== CMSSW: site.ad
+== CMSSW: site.ad.json
+== CMSSW: slurm_mass1.0_ctau107.535167851_prod.sh
+== CMSSW: splitting-summary.json
+== CMSSW: src
+== CMSSW: step2.py
+== CMSSW: step3.py
+== CMSSW: step4.py
+== CMSSW: taskinformation.pkl
+== CMSSW: taskworkerconfig.pkl
+== CMSSW: wmagentJob.log
+== CMSSW: wmcore_initialized
+== CMSSW:
+== CMSSW: !!!!! WARNING: The BMTF Packer returns the entire detector information in one fed (# 1376), instead of the real BMTF which owns 2 feds (1376, 1377)  !!!!!
+== CMSSW:
+== CMSSW: 02-Jan-2021 12:28:46 CET  Initiating request to open file file:BPH-step1_numEvent10.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:47 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step1_numEvent10.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step1_numEvent10.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step2
+== CMSSW: 02-Jan-2021 12:28:58 CET  Initiating request to open file file:BPH-step2.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:58 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step2.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step2.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step3
+== CMSSW: rm: cannot remove 'BPH-step2.root': No such file or directory
+== CMSSW: Going to run step4
+== CMSSW: 02-Jan-2021 12:29:09 CET  Initiating request to open file file:BPH-step3.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:29:09 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step3.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step3.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step4
+== CMSSW: rm: cannot remove 'BPH-step3.root': No such file or directory
+== CMSSW:
+== CMSSW:         Stderr: None
+======== CMSSW OUTPUT FINSHING ========
++ jobrc=56
++ set +x
+== The job had an exit code of 56 
+======== CMSRunAnalysis.py FINISHING at Sat  2 Jan 11:29:09 GMT 2021 ========
+
+ StdErr: 
+ERROR 2021-01-02 11:29:09.735 UTC: 	 Caught ClientException exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/bin/crab", line 165, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/bin/crab", line 152, in __call__
+    self.cmd()
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib/CRABClient/Commands/submit.py", line 158, in __call__
+    self.printDryRunResults(*self.executeTestRun(filecacheurl))
+  File "/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib/CRABClient/Commands/submit.py", line 405, in executeTestRun
+    raise ClientException('Dry run failed to execute local test run:\n StdOut: %s\n StdErr: %s' % (out, err))
+ClientException: Dry run failed to execute local test run:
+ StdOut: ======== CMSRunAnalysis.sh STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
+Local time : Sat  2 Jan 12:28:26 CET 2021
+Current system : Linux lxplus780.cern.ch 3.10.0-1160.6.1.el7.x86_64 #1 SMP Tue Nov 17 13:59:11 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+Current processor: model name	: Intel Xeon Processor (Skylake, IBRS)
+==== CMSSW pre-execution environment bootstrap STARTING ====
++ '[' -f /cmsset_default.sh ']'
++ '[' -f /cmssoft/cms/cmsset_default.sh ']'
++ '[' -f /cvmfs/cms.cern.ch/cmsset_default.sh ']'
++ echo 'CVMFS style'
+CVMFS style
++ export VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
++ VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
++ set +x
++ declare -a VERSIONS
++ VERSIONS=($(ls /cvmfs/cms.cern.ch/$SCRAM_ARCH/external/python | egrep '2.[67]'))
+++ ls /cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python
+++ egrep '2.[67]'
++ PY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python
++ echo 'python version: ' 2.7.14
+python version:  2.7.14
++ set +x
+==== CMSSW pre-execution environment bootstrap FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ====
+==== Python discovery STARTING ====
+Python found in /cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14
+I found python at..
+/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin/python
+==== Python discovery FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ====
+======== Current environment dump STARTING ========
+== ENV: G4LEVELGAMMADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4PhotonEvaporation/5.2/data/PhotonEvaporation5.2
+== ENV: UTM_XSD_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf
+== ENV: SRT_G4LEVELGAMMADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4PhotonEvaporation/5.2/data/PhotonEvaporation5.2
+== ENV: LC_PAPER=en_GB.UTF-8
+== ENV: CMSSW_RELEASE_BASE=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15
+== ENV: SCRAMRT_SET=CMSSW:CMSSW_10_2_15:slc7_amd64_gcc700:V2_2_9_pre11:SRT_
+== ENV: MANPATH=/cvmfs/cms.cern.ch/share/man:/cvmfs/cms.cern.ch/share/man::/opt/puppetlabs/puppet/share/man
+== ENV: CMSSW_FWLITE_INCLUDE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include
+== ENV: SRT_GCC_RUNTIME_ASAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: XDG_SESSION_ID=c20103
+== ENV: LC_ADDRESS=en_GB.UTF-8
+== ENV: COMPILER_RUNTIME_OBJECTS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: VIRTUALENVWRAPPER_SCRIPT=/usr/bin/virtualenvwrapper.sh
+== ENV: GUESTFISH_INIT=\e[1;34m
+== ENV: HOSTNAME=lxplus780.cern.ch
+== ENV: LC_MONETARY=en_GB.UTF-8
+== ENV: SELINUX_ROLE_REQUESTED=
+== ENV: ROOT_INCLUDE_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/include/LCG:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mctester/1.25.0a-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dd4hep/v01-08x-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtDesigner:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauolapp/1.1.5-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/charybdis/1.003-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtOpenGL:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtGui:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwig/6.521-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt3Support:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lwtnn/2.4-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4/10.04-gnimlf3/include/Geant4:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/classlib/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cgal/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tkonlinesw/4.2.0-1_gcc7-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/starlight/r193-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtCore:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtXml:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mcdb/1.0.3-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libungif/4.1.4-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libtiff/4.0.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libpng/1.6.16-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pcre/8.37-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/include/xrootd/private:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/vdt/0.4.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/toprex/4.23-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tbb/2018_U1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauola/27.121.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sigcpp/2.6.2-omkpbe2/include/sigc++-2.0:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.22.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/protobuf/3.5.2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pacparser/1.3.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/oracle/12.1.0.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/meschach/1.2.pCMS1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libuuid/2.22.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libhepml/0.2.1-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ktjet/1.06-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jimmy/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jemalloc/5.1.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hector/1.3.4_patch1-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gsl/2.2.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libjpeg-turbo/1.3.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/giflib/4.2.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vecgeom/v00.05.00-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/freetype/2.5.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftw3/3.3.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftjet/1.5.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dpm/1.8.0.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xerces-c/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xz/5.2.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dcap/2.47.8-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libxml2/2.9.1-omkpbe2/include/libxml2:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/curl/7.59.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cppunit/1.12.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia6/426-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/photos/215.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/include/python2.7:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tinyxml2/6.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ittnotify/16.06.18-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2/include:/usr/local/include:/usr/include
+== ENV: INTEL_LICENSE_FILE=28518@lxlicen01.cern.ch,28518@lxlicen02.cern.ch,28518@lxlicen03.cern.ch
+== ENV: SRT_TEXMFHOME_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share/Rivet/texmf
+== ENV: SRT_GEANT4_PARFULLCMS_CONFIG_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-parfullcms/2014.01.27-gnimlf3/share/ParFullCMS
+== ENV: TERM=xterm-256color
+== ENV: SHELL=/bin/bash
+== ENV: PDFPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share
+== ENV: SRT_TNS_ADMIN_SCRAMRTDEL=/etc
+== ENV: HISTSIZE=1000
+== ENV: ROOT_GCC_TOOLCHAIN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: TMPDIR=/tmp/ratramon
+== ENV: SSH_CLIENT=93.41.96.37
+== ENV: 8639
+== ENV: 22
+== ENV: PERL5LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/perl5
+== ENV: G4FORCENUMBEROFTHREADS=max
+== ENV: OPENBLAS_NUM_THREADS=1
+== ENV: SRT_QTDIR_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2
+== ENV: SRT_PDFPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share
+== ENV: CONDA_SHLVL=0
+== ENV: CMSSW_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms
+== ENV: LHAPDF_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/share/LHAPDF
+== ENV: SRT_CMS_ORACLEOCCI_LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cms_oracleocci_abi_hack/20180210-omkpbe/lib/libcms_oracleocci_abi_hack.so
+== ENV: CVSROOT=:gserver:cmssw.cvs.cern.ch:/local/reps/CMSSW
+== ENV: SELINUX_USE_CURRENT_RANGE=
+== ENV: CMSSW_GIT_HASH=CMSSW_10_2_15
+== ENV: SRT_G4ABLADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ABLA/3.0/data/G4ABLA3.0
+== ENV: LC_NUMERIC=en_GB.UTF-8
+== ENV: SRT_SCONS_LIB_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/scons/3.0.1/lib
+== ENV: QTDIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2:/usr/lib64/qt-3.3
+== ENV: G4NEUTRONXSDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NEUTRONXS/1.4/data/G4NEUTRONXS1.4
+== ENV: SRT_COMPILER_RUNTIME_OBJECTS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: SCRAM_ARCH=slc7_amd64_gcc700
+== ENV: QTINC=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/usr/lib64/qt-3.3/include
+== ENV: GIT_SSL_CAINFO=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/ssl/certs/ca-bundle.crt
+== ENV: SRT_CMS_OPENLOOPS_PREFIX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openloops/2.0.0-gnimlf
+== ENV: SRT_GIT_EXEC_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/libexec/git-core
+== ENV: SRT_THEPEGPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/share/ThePEG
+== ENV: SSH_TTY=/dev/pts/14
+== ENV: ROOT_TTREECACHE_SIZE=0
+== ENV: EVTGENDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/evtgen/1.6.0-gnimlf4/share
+== ENV: SRT_INTEL_LICENSE_FILE_SCRAMRTDEL=28518@lxlicen01.cern.ch,28518@lxlicen02.cern.ch,28518@lxlicen03.cern.ch
+== ENV: SRT_ROOT_INCLUDE_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/include/LCG:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mctester/1.25.0a-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dd4hep/v01-08x-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtDesigner:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauolapp/1.1.5-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/charybdis/1.003-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtOpenGL:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtGui:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwig/6.521-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt3Support:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lwtnn/2.4-gnimlf4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4/10.04-gnimlf3/include/Geant4:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/classlib/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cgal/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tkonlinesw/4.2.0-1_gcc7-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/starlight/r193-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/Qt:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtCore:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include/QtXml:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/mcdb/1.0.3-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libungif/4.1.4-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libtiff/4.0.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libpng/1.6.16-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pcre/8.37-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/include/xrootd/private:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/vdt/0.4.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/toprex/4.23-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tbb/2018_U1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tauola/27.121.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sigcpp/2.6.2-omkpbe2/include/sigc++-2.0:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.22.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/protobuf/3.5.2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pacparser/1.3.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/oracle/12.1.0.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/meschach/1.2.pCMS1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libuuid/2.22.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libhepml/0.2.1-omkpbe2/interface:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ktjet/1.06-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jimmy/4.2-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/jemalloc/5.1.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hector/1.3.4_patch1-gnimlf6/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gsl/2.2.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libjpeg-turbo/1.3.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/giflib/4.2.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vecgeom/v00.05.00-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/freetype/2.5.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftw3/3.3.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fftjet/1.5.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dpm/1.8.0.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xerces-c/3.1.3-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xz/5.2.2-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/dcap/2.47.8-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libxml2/2.9.1-omkpbe2/include/libxml2:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/curl/7.59.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cppunit/1.12.1-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia6/426-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/photos/215.5-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/include/python2.7:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/tinyxml2/6.2.0/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/ittnotify/16.06.18-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2/include:/usr/local/include:/usr/include
+== ENV: STAGE_HOST=castorcms
+== ENV: G4LEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4EMLOW/7.3/data/G4EMLOW7.3
+== ENV: SRT_VINCIADATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vincia/2.2.01-gnimlf4/share/Vincia/xmldoc
+== ENV: SRT_ROOT_TTREECACHE_PREFILL_SCRAMRTDEL=0
+== ENV: SRT_QTINC_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/include
+== ENV: QT_GRAPHICSSYSTEM_CHECKED=1
+== ENV: OPAL_PREFIX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openmpi/2.1.5
+== ENV: USER=ratramon
+== ENV: ROOT_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: SHERPA_INCLUDE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC
+== ENV: SRT_LHAPDF_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/lhapdf/6.2.1-gnimlf2/share/LHAPDF
+== ENV: SRT_PYTHON27PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python2.7/site-packages
+== ENV: LD_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.21.0/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/libffi/3.2.1/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/db6/6.0.30/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/zlib-x86_64/1.2.11/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/lib:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cuda/9.2.148/drivers:/your/custom/path/
+== ENV: LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+== ENV: LC_TELEPHONE=en_GB.UTF-8
+== ENV: SRT_CMSSW_RELEASE_BASE_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15
+== ENV: SRT_RIVET_ANALYSIS_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/lib
+== ENV: VO_CMS_SW_DIR=/cvmfs/cms.cern.ch
+== ENV: CRAB3_RUNTIME_DEBUG=True
+== ENV: SRT_CMSSW_VERSION_SCRAMRTDEL=CMSSW_10_2_15
+== ENV: GCC_RUNTIME_LSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: SCRAM_CXX11_ABI=1
+== ENV: VALGRIND_LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/lib/valgrind
+== ENV: SRT_CMSSW_GIT_HASH_SCRAMRTDEL=CMSSW_10_2_15
+== ENV: SRT_ROOTSYS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: G4NEUTRONHPDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NDL/4.5/data/G4NDL4.5
+== ENV: GEANT4_PARFULLCMS_CONFIG_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-parfullcms/2014.01.27-gnimlf3/share/ParFullCMS
+== ENV: CSC_TRACK_FINDER_DATA_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/CSCTrackFinderEmulation/1.2-omkpbe2/data/
+== ENV: G4ENSDFSTATEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ENSDFSTATE/2.2/data/G4ENSDFSTATE2.2
+== ENV: G4RADIOACTIVEDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4RadioactiveDecay/5.2/data/RadioactiveDecay5.2
+== ENV: ROOFITSYS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_ROOFITSYS_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_G4RADIOACTIVEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4RadioactiveDecay/5.2/data/RadioactiveDecay5.2
+== ENV: SRT_G4ENSDFSTATEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ENSDFSTATE/2.2/data/G4ENSDFSTATE2.2
+== ENV: SRT_CLHEP_PARAM_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf
+== ENV: CASTOR_HOME=/castor/cern.ch/user/r/ratramon
+== ENV: G4ABLADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4ABLA/3.0/data/G4ABLA3.0
+== ENV: SRT_SHERPA_INCLUDE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include/SHERPA-MC
+== ENV: SRT_G4FORCENUMBEROFTHREADS_SCRAMRTDEL=max
+== ENV: SRT_PERL5LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/perl5
+== ENV: SRT_WORKER_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/blackhat/0.9.9-omkpbe4/share/blackhat/datafiles/
+== ENV: GUESTFISH_PS1=\[\e[1;32m\]><fs>\[\e[0;31m\]
+== ENV: GCC_RUNTIME_TSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libtsan.so
+== ENV: TNS_ADMIN=/etc
+== ENV: SRT_HEPPDT_PARAM_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2
+== ENV: MAIL=/var/spool/mail/ratramon
+== ENV: PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sqlite/3.21.0/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gdbm/1.10/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/db6/6.0.30/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/expat/2.1.0/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/bz2lib/1.0.6/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openssl/1.0.2d/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0/bin:/afs/cern.ch/cms/caf/scripts:/cvmfs/cms.cern.ch/common:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/bin:/cvmfs/cms.cern.ch/share/overrides/bin:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/bin:/afs/cern.ch/cms/caf/scripts:/cvmfs/cms.cern.ch/common:/usr/sue/bin:/usr/lib64/qt-3.3/bin:/usr/condabin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin:/afs/cern.ch/user/r/ratramon/bin
+== ENV: THEPEGPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/thepeg/2.1.4-gnimlf/share/ThePEG
+== ENV: SRT_CMSSW_SEARCH_PATH_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/data
+== ENV: SRT_GIT_SSL_CAINFO_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/ssl/certs/ca-bundle.crt
+== ENV: SRT_GCC_RUNTIME_LSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: CMS_PATH=/cvmfs/cms.cern.ch
+== ENV: SRT_UTM_XSD_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/utm/utm_0.7.1-gnimlf
+== ENV: SRT_PATH_SCRAMRT=/cvmfs/cms.cern.ch/share/overrides/bin:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/bin/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/bin:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/bin
+== ENV: LC_IDENTIFICATION=en_GB.UTF-8
+== ENV: RIVET_ANALYSIS_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/lib
+== ENV: SRT_LOCALRT_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_CMSSW_BASE_SCRAMRTDEL=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_LANG_SCRAMRT=C
+== ENV: PWD=/tmp/ratramon/tmpTplmM5
+== ENV: CMS_ORACLEOCCI_LIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cms_oracleocci_abi_hack/20180210-omkpbe/lib/libcms_oracleocci_abi_hack.so
+== ENV: PYTHON_VALGRIND_SUPP=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/share/valgrind/valgrind-python.supp
+== ENV: SRT_OPAL_PREFIX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openmpi/2.1.5
+== ENV: EDITOR=/bin/nano
+== ENV: -w
+== ENV: GCC_RUNTIME_UBSAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libubsan.so
+== ENV: LANG=C
+== ENV: MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
+== ENV: SRT_G4NEUTRONHPDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NDL/4.5/data/G4NDL4.5
+== ENV: QT_GRAPHICSSYSTEM=native
+== ENV: LOADEDMODULES=
+== ENV: KDEDIRS=/usr
+== ENV: GUESTFISH_OUTPUT=\e[0m
+== ENV: LC_MEASUREMENT=en_GB.UTF-8
+== ENV: SRT_SHERPA_SHARE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/share/SHERPA-MC
+== ENV: SRT_GCC_RUNTIME_TSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libtsan.so
+== ENV: CASCADE_PDFPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/share
+== ENV: SRT_ROOT_GCC_TOOLCHAIN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2
+== ENV: SRT_CASCADE_PDFPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cascade/2.2.04-gnimlf2/share
+== ENV: MYPROXY_SERVER=myproxy.cern.ch
+== ENV: SELINUX_LEVEL_REQUESTED=
+== ENV: WORKER_DATA_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/blackhat/0.9.9-omkpbe4/share/blackhat/datafiles/
+== ENV: GIT_TEMPLATE_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/git-core/templates
+== ENV: G4SAIDXSDATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4SAIDDATA/1.1/data/G4SAIDDATA1.1
+== ENV: EOS_MGM_URL=root://eoscms.cern.ch
+== ENV: PYTHON27PATH=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/coral/CORAL_2_3_21-gnimlf9/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/xrootd/4.8.3-gnimlf/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/fastjet/3.3.0-omkpbe/lib/python2.7/site-packages:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python2.7/site-packages
+== ENV: SRT_CMSSW_FWLITE_INCLUDE_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/hepmc/2.06.07-omkpbe2/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf/include:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/boost/1.63.0-gnimlf/include
+== ENV: ROOTSYS=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/
+== ENV: SRT_PYTHIA8DATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/share/Pythia8/xmldoc
+== ENV: SRT_HERWIGPATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/share/Herwig
+== ENV: SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+== ENV: HISTCONTROL=ignoredups
+== ENV: KRB5CCNAME=FILE:/tmp/krb5cc_116646_48S1sc
+== ENV: SRT_PYTHON3PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python3.6/site-packages
+== ENV: TEXINPUTS=:/cvmfs/cms.cern.ch/latex/styles
+== ENV: SHERPA_LIBRARY_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/lib/SHERPA-MC
+== ENV: SRT_PYTHON_VALGRIND_SUPP_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/python/2.7.14-omkpbe4/share/valgrind/valgrind-python.supp
+== ENV: SHLVL=3
+== ENV: HOME=/afs/cern.ch/user/r/ratramon
+== ENV: CMSSW_SEARCH_PATH=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/:setenv
+== ENV: _VIRTUALENVWRAPPER_API=
+== ENV: mkvirtualenv
+== ENV: rmvirtualenv
+== ENV: lsvirtualenv
+== ENV: showvirtualenv
+== ENV: workon
+== ENV: add2virtualenv
+== ENV: cdsitepackages
+== ENV: cdvirtualenv
+== ENV: lssitepackages
+== ENV: toggleglobalsitepackages
+== ENV: cpvirtualenv
+== ENV: setvirtualenvproject
+== ENV: mkproject
+== ENV: cdproject
+== ENV: mktmpenv
+== ENV: wipeenv
+== ENV: allvirtualenv
+== ENV: GOSAMCONTRIB_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: ROOT_TTREECACHE_PREFILL=0
+== ENV: GENREFLEX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/bin/genreflex
+== ENV: VINCIADATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/vincia/2.2.01-gnimlf4/share/Vincia/xmldoc
+== ENV: SRT_G4LEDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4EMLOW/7.3/data/G4EMLOW7.3
+== ENV: SRT_GENREFLEX_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/lcg/root/6.12.07-gnimlf5/bin/genreflex
+== ENV: SRT_GOSAMCONTRIB_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: SRT_ROOT_TTREECACHE_SIZE_SCRAMRTDEL=0
+== ENV: SRT_EVTGENDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/evtgen/1.6.0-gnimlf4/share
+== ENV: SRT_QTLIB_SCRAMRT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/lib
+== ENV: SRT_CMSSW_DATA_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms
+== ENV: PYTHONPATH=/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
+== ENV: HEPPDT_PARAM_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/heppdt/3.03.00-omkpbe2
+== ENV: SRT_LD_LIBRARY_PATH_SCRAMRT=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/biglib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/llvm/6.0.0-ogkkac/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/cuda/9.2.148/drivers
+== ENV: LCG_GFAL_INFOSYS=lcg-bdii.cern.ch:2170
+== ENV: LOGNAME=ratramon
+== ENV: PYTHON3PATH=/cvmfs/cms.cern.ch/share/overrides/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/python:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/python:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/lib/slc7_amd64_gcc700:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw-tool-conf/45.0-gnimlf2/lib/python3.6/site-packages
+== ENV: SCONS_LIB_DIR=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/scons/3.0.1/lib
+== ENV: QTLIB=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/qt/4.8.7-omkpbe2/lib:/usr/lib64/qt-3.3/lib
+== ENV: CVS_RSH=ssh
+== ENV: DBS3_CLIENT_ROOT=/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01
+== ENV: XDG_DATA_DIRS=/afs/cern.ch/user/r/ratramon/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+== ENV: SSH_CONNECTION=93.41.96.37
+== ENV: 8639
+== ENV: 188.185.123.54
+== ENV: 22
+== ENV: MODULESHOME=/usr/share/Modules
+== ENV: FRONTIER_CLIENT=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/
+== ENV: SRT_G4NEUTRONXSDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4NEUTRONXS/1.4/data/G4NEUTRONXS1.4
+== ENV: SRT_SHERPA_LIBRARY_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/lib/SHERPA-MC
+== ENV: LESSOPEN=||/usr/bin/lesspipe.sh
+== ENV: %s
+== ENV: _CONDOR_JOB_AD=Job.submit
+== ENV: CLHEP_PARAM_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/clhep/2.4.0.0-gnimlf
+== ENV: PYTHIA8DATA=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/pythia8/230-gnimlf4/share/Pythia8/xmldoc
+== ENV: HERWIGPATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/herwigpp/7.1.4-gnimlf2/share/Herwig
+== ENV: SRT_FRONTIER_CLIENT_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/frontier_client/2.8.20-omkpbe4/
+== ENV: SRT_CSC_TRACK_FINDER_DATA_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/CSCTrackFinderEmulation/1.2-omkpbe2/data/
+== ENV: CRABCLIENT_TYPE=prod
+== ENV: GCC_RUNTIME_ASAN=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libasan.so
+== ENV: SRT_ROOT_PATH_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/madgraph5amcatnlo/2.6.0-gnimlf8:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gosamcontrib/2.0-20150803-omkpbe2
+== ENV: XDG_RUNTIME_DIR=/run/user/116646
+== ENV: DISPLAY=localhost:15.0
+== ENV: TEXMFHOME=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/rivet/2.5.4-gnimlf6/share/Rivet/texmf
+== ENV: SRT_OPENBLAS_NUM_THREADS_SCRAMRTDEL=1
+== ENV: SRT_GIT_TEMPLATE_DIR_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/share/git-core/templates
+== ENV: SRT_G4SAIDXSDATA_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/geant4-G4SAIDDATA/1.1/data/G4SAIDDATA1.1
+== ENV: QT_PLUGIN_PATH=/usr/lib64/kde4/plugins:/usr/lib/kde4/plugins
+== ENV: CMSSW_VERSION=CMSSW_10_2_15
+== ENV: SRT_GCC_RUNTIME_UBSAN_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/gcc/7.0.0-omkpbe2/lib64/libubsan.so
+== ENV: SHERPA_SHARE_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/sherpa/2.2.6-gnimlf/share/SHERPA-MC
+== ENV: GUESTFISH_RESTORE=\e[0m
+== ENV: LC_TIME=en_GB.UTF-8
+== ENV: CMS_OPENLOOPS_PREFIX=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/openloops/2.0.0-gnimlf
+== ENV: GIT_EXEC_PATH=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/git/2.17.0/libexec/git-core
+== ENV: LOCALRT=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: CMSSW_BASE=/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15
+== ENV: SRT_SCRAM_CXX11_ABI_SCRAMRTDEL=1
+== ENV: SRT_VALGRIND_LIB_SCRAMRTDEL=/cvmfs/cms.cern.ch/slc7_amd64_gcc700/external/valgrind/3.13.0-omkpbe2/lib/valgrind
+== ENV: LC_NAME=en_GB.UTF-8
+== ENV: BASH_FUNC_module()=()
+== ENV: {
+== ENV: eval
+== ENV: `/usr/bin/modulecmd
+== ENV: bash
+== ENV: $*`
+== ENV: }
+== ENV: _=/usr/bin/env
+======== Current environment dump FINISHING ========
+======== Tarball initialization STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
++ [[ XTrue == \X ]]
++ echo 'I am in runtime debug mode. I will not extract the sandbox'
+I am in runtime debug mode. I will not extract the sandbox
+++ pwd
+++ pwd
++ export PYTHONPATH=/tmp/ratramon/tmpTplmM5/CRAB3.zip:/tmp/ratramon/tmpTplmM5/WMCore.zip:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
++ PYTHONPATH=/tmp/ratramon/tmpTplmM5/CRAB3.zip:/tmp/ratramon/tmpTplmM5/WMCore.zip:/cvmfs/cms.cern.ch/share/cms/crab-prod/v3.201110.01/lib:/cvmfs/cms.cern.ch/share/cms/crab/1.0/lib/prod::/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen
++ set +x
+======== Tarball initialization FINISHING at Sat  2 Jan 11:28:26 GMT 2021 ========
+==== Local directory contents dump STARTING ====
+PWD: /tmp/ratramon/tmpTplmM5
+== DIR: AdjustSites.py
+== DIR: ApmonIf.py
+== DIR: BPH_mod_BtoDMuN_NtoE_cfg.py
+== DIR: CMSGroupMapper.py
+== DIR: CMSRunAnalysis.py
+== DIR: CMSRunAnalysis.sh
+== DIR: CMSRunAnalysis.tar.gz
+== DIR: DashboardAPI.py
+== DIR: DashboardFailure.sh
+== DIR: InputFiles.tar.gz
+== DIR: Job.submit
+== DIR: Logger.py
+== DIR: PSet.pkl
+== DIR: PSet.py
+== DIR: PSetDump.py
+== DIR: ProcInfo.py
+== DIR: RESTInteractions.py
+== DIR: RunJobs.dag
+== DIR: ServerUtilities.py
+== DIR: TaskManagerRun.tar.gz
+== DIR: TweakPSet.py
+== DIR: WMCore.zip
+== DIR: apmon.py
+== DIR: biglib
+== DIR: cmscp.py
+== DIR: dag_bootstrap.sh
+== DIR: datadiscovery.pkl
+== DIR: debug
+== DIR: debug_files.tar.gz
+== DIR: dry-run-sandbox.tar.gz
+== DIR: evt_2014_mass1.0_ctau107.535167851.pdl
+== DIR: gWMS-CMSRunAnalysis.sh
+== DIR: input_args.json
+== DIR: input_files.tar.gz
+== DIR: lib
+== DIR: pileup_2018.root
+== DIR: run_and_lumis.tar.gz
+== DIR: sandbox.tar.gz
+== DIR: site.ad
+== DIR: site.ad.json
+== DIR: slurm_mass1.0_ctau107.535167851_prod.sh
+== DIR: splitting-summary.json
+== DIR: src
+== DIR: step2.py
+== DIR: step3.py
+== DIR: step4.py
+== DIR: taskinformation.pkl
+== DIR: taskworkerconfig.pkl
+==== Local directory contents dump FINISHING ====
+======== CMSRunAnalysis.py STARTING at Sat  2 Jan 11:28:26 GMT 2021 ========
+Now running the CMSRunAnalysis.py job in /tmp/ratramon/tmpTplmM5...
+++ pwd
++ python CMSRunAnalysis.py -r /tmp/ratramon/tmpTplmM5 -a sandbox.tar.gz --sourceURL=https://cmsweb.cern.ch/crabcache --jobNumber=0 --cmsswVersion=CMSSW_10_2_15 --scramArch=slc7_amd64_gcc700 --inputFile=job_input_file_list_1.txt --runAndLumis=job_lumis_1.json --lheInputFiles=False --firstEvent=1 --firstLumi=1 --lastEvent=11 --firstRun=1 --seeding=AutomaticSeeding --scriptExe=slurm_mass1.0_ctau107.535167851_prod.sh --eventsPerLumi=1 --maxRuntime=-60 '--scriptArgs=[]' -o '{}'
+==== CMSRunAnalysis.py STARTING at Sat Jan  2 11:28:26 2021 ====
+Local time : Sat Jan  2 12:28:26 2021
+==== Parameters Dump at Sat Jan  2 11:28:26 2021 ===
+archiveJob:     sandbox.tar.gz
+runDir:         /tmp/ratramon/tmpTplmM5
+sourceURL:      https://cmsweb.cern.ch/crabcache
+jobNumber:      0
+cmsswVersion:   CMSSW_10_2_15
+scramArch:      slc7_amd64_gcc700
+inputFile       job_input_file_list_1.txt
+outFiles:       {}
+runAndLumis:    job_lumis_1.json
+lheInputFiles:  False
+firstEvent:     1
+firstLumi:      1
+eventsPerLumi:  1
+lastEvent:      11
+firstRun:       1
+seeding:        AutomaticSeeding
+userFiles:      None
+oneEventMode:   0
+scriptExe:      slurm_mass1.0_ctau107.535167851_prod.sh
+scriptArgs:     []
+maxRuntime:     -60
+===================
+==== Sandbox preparation STARTING at Sat Jan  2 11:28:26 2021 ====
+
+==== Sandbox preparation FINISHED at Sat Jan  2 11:28:27 2021 ====
+==== WMCore filesystem preparation STARTING at Sat Jan  2 11:28:27 2021 ====
+==== WMCore filesystem preparation FINISHED at Sat Jan  2 11:28:27 2021 ====
+==== CMSSW Stack Execution STARTING at Sat Jan  2 11:28:27 2021 ====
+==== SCRAM Obj CREATED at Sat Jan  2 11:28:27 2021 ====
+
+==== ScriptEXE Execution started at Sat Jan  2 11:28:30 2021 ====
+Executing python /tmp/ratramon/tmpTplmM5/TweakPSet.py --location=/tmp/ratramon/tmpTplmM5 --inputFile='job_input_file_list_1.txt' --runAndLumis='job_lumis_1.json' --firstEvent=1 --lastEvent=11 --firstLumi=1 --firstRun=1 --seeding=AutomaticSeeding --lheInputFiles=False --oneEventMode=0 --eventsPerLumi=1 --maxRuntime=-60
+Exdcuting user script: /tmp/ratramon/tmpTplmM5/slurm_mass1.0_ctau107.535167851_prod.sh 0 
+WARNING: WMCore did not produce a jobReport.json; FJR will not be useful.
+ERROR: Exceptional exit at Sat Jan  2 11:29:09 2021 (10040): Error executing scriptExe.
+	See stdout log
+== Execution site for failed job from site-local-config.xml: T2_CH_CERN
+==== CMSSW Stack Execution FAILED at Sat Jan  2 11:29:09 2021 ====
+======== CMSSW OUTPUT STARTING ========
+NOTICE: lines longer than 3000 characters will be truncated
+== CMSSW:
+== CMSSW:         Scram Command Diagnostic:
+== CMSSW:         Command : scramv1
+== CMSSW:         Architecture: slc7_amd64_gcc700
+== CMSSW:         Executed: /tmp/ratramon/tmpTplmM5/slurm_mass1.0_ctau107.535167851_prod.sh 0
+== CMSSW:         Exit Status: 5
+== CMSSW:         Stdout: Going to run step1
+== CMSSW: Singletons:
+== CMSSW:   ctau               : 107.535167851
+== CMSSW:                      - ctau of the HNL [mm]
+== CMSSW:   filePrepend        :
+== CMSSW:                      - String to prepend location of all files
+== CMSSW:   mass               : 1.0
+== CMSSW:                      - mass of the HNL
+== CMSSW:   maxEvents          : 10
+== CMSSW:                      - Number of events to process (-1 for all)
+== CMSSW:   nThr               : 1
+== CMSSW:                      - Number of threads
+== CMSSW:   outputFile         : BPH-step1.root
+== CMSSW:                      - Name of output file (if needed)
+== CMSSW:   secondaryOutputFile:
+== CMSSW:                      - Name of second output file (if needed)
+== CMSSW:   section            : 0
+== CMSSW:                      - This section (from 1..totalSections inclusive)
+== CMSSW:   seedOffset         : 0
+== CMSSW:                      - Seed offset
+== CMSSW:   severityLevel      : ERROR
+== CMSSW:                      - severity level for log messages, DEBUG, INFO, WARNING, ERROR
+== CMSSW:   tag                :
+== CMSSW:                      - tag to add to output filename
+== CMSSW:   totalSections      : 0
+== CMSSW:                      - Total number of sections
+== CMSSW: Lists:
+== CMSSW:   inputFiles         : []
+== CMSSW:                      - Files to process
+== CMSSW:   secondaryInputFiles: []
+== CMSSW:                      - Second group of files to process (if needed)
+== CMSSW:
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:32 CET-----------------------
+== CMSSW: An exception of category 'ConfigFileReadError' occurred while
+== CMSSW:    [0] Processing the python configuration file named BPH_mod_BtoDMuN_NtoE_cfg.py
+== CMSSW: Exception Message:
+== CMSSW: python encountered the error: <type 'exceptions.RuntimeError'>
+== CMSSW: edm::FileInPath unable to find file evt_2014_mass1.0_ctau107.535167851.pdl anywhere in the search path.
+== CMSSW: The search path is defined by: CMSSW_SEARCH_PATH
+== CMSSW: ${CMSSW_SEARCH_PATH} is: /tmp/ratramon/tmpTplmM5/CMSSW_10_2_15/src:/tmp/ratramon/tmpTplmM5/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/src:/cvmfs/cms.cern.ch/slc7_amd64_gcc700/cms/cmssw/CMSSW_10_2_15/external/slc7_amd64_gcc700/data:/afs/cern.ch/work/r/ratramon/HNL/CMSSW_10_2_15/src/HNLsGen/slurm/V00_v00_n10_njt1/:setenv:/tmp/ratramon/tmpTplmM5
+== CMSSW: Current directory is: /tmp/ratramon/tmpTplmM5
+== CMSSW:
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step 1
+== CMSSW: Finished running step1
+== CMSSW: AdjustSites.py
+== CMSSW: ApmonIf.py
+== CMSSW: BPH_mod_BtoDMuN_NtoE_cfg.py
+== CMSSW: CMSGroupMapper.py
+== CMSSW: CMSRunAnalysis.py
+== CMSSW: CMSRunAnalysis.sh
+== CMSSW: CMSRunAnalysis.tar.gz
+== CMSSW: CMSSW_10_2_15
+== CMSSW: DashboardAPI.py
+== CMSSW: DashboardAPI.pyc
+== CMSSW: DashboardFailure.sh
+== CMSSW: InputFiles.tar.gz
+== CMSSW: Job.submit
+== CMSSW: Logger.py
+== CMSSW: Logger.pyc
+== CMSSW: PSet.pkl
+== CMSSW: PSet.py
+== CMSSW: PSetDump.py
+== CMSSW: ProcInfo.py
+== CMSSW: ProcInfo.pyc
+== CMSSW: RESTInteractions.py
+== CMSSW: RunJobs.dag
+== CMSSW: ServerUtilities.py
+== CMSSW: TaskManagerRun.tar.gz
+== CMSSW: TweakPSet.py
+== CMSSW: WMCore.zip
+== CMSSW: WMTaskSpace
+== CMSSW: apmon.py
+== CMSSW: apmon.pyc
+== CMSSW: biglib
+== CMSSW: cmscp.py
+== CMSSW: dag_bootstrap.sh
+== CMSSW: datadiscovery.pkl
+== CMSSW: debug
+== CMSSW: debug_files.tar.gz
+== CMSSW: dry-run-sandbox.tar.gz
+== CMSSW: evt_2014_mass1.0_ctau107.535167851.pdl
+== CMSSW: gWMS-CMSRunAnalysis.sh
+== CMSSW: input_args.json
+== CMSSW: input_files.tar.gz
+== CMSSW: lib
+== CMSSW: pileup_2018.root
+== CMSSW: run_and_lumis.tar.gz
+== CMSSW: sandbox.tar.gz
+== CMSSW: site.ad
+== CMSSW: site.ad.json
+== CMSSW: slurm_mass1.0_ctau107.535167851_prod.sh
+== CMSSW: splitting-summary.json
+== CMSSW: src
+== CMSSW: step2.py
+== CMSSW: step3.py
+== CMSSW: step4.py
+== CMSSW: taskinformation.pkl
+== CMSSW: taskworkerconfig.pkl
+== CMSSW: wmagentJob.log
+== CMSSW: wmcore_initialized
+== CMSSW:
+== CMSSW: !!!!! WARNING: The BMTF Packer returns the entire detector information in one fed (# 1376), instead of the real BMTF which owns 2 feds (1376, 1377)  !!!!!
+== CMSSW:
+== CMSSW: 02-Jan-2021 12:28:46 CET  Initiating request to open file file:BPH-step1_numEvent10.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:47 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step1_numEvent10.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step1_numEvent10.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step2
+== CMSSW: 02-Jan-2021 12:28:58 CET  Initiating request to open file file:BPH-step2.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:28:58 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step2.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step2.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step3
+== CMSSW: rm: cannot remove 'BPH-step2.root': No such file or directory
+== CMSSW: Going to run step4
+== CMSSW: 02-Jan-2021 12:29:09 CET  Initiating request to open file file:BPH-step3.root
+== CMSSW: ----- Begin Fatal Exception 02-Jan-2021 12:29:09 CET-----------------------
+== CMSSW: An exception of category 'FileOpenError' occurred while
+== CMSSW:    [0] Constructing the EventProcessor
+== CMSSW:    [1] Constructing input source of type PoolSource
+== CMSSW:    [2] Calling RootFileSequenceBase::initTheFile()
+== CMSSW:    [3] Calling StorageFactory::open()
+== CMSSW:    [4] Calling File::sysopen()
+== CMSSW: Exception Message:
+== CMSSW: Failed to open the file 'BPH-step3.root'
+== CMSSW:    Additional Info:
+== CMSSW:       [a] Input file file:BPH-step3.root could not be opened.
+== CMSSW:       [b] open() failed with system error 'No such file or directory' (error code 2)
+== CMSSW: ----- End Fatal Exception -------------------------------------------------
+== CMSSW: Successfully run step
+== CMSSW: Finished running step4
+== CMSSW: rm: cannot remove 'BPH-step3.root': No such file or directory
+== CMSSW:
+== CMSSW:         Stderr: None
+======== CMSSW OUTPUT FINSHING ========
++ jobrc=56
++ set +x
+== The job had an exit code of 56 
+======== CMSRunAnalysis.py FINISHING at Sat  2 Jan 11:29:09 GMT 2021 ========
+
+ StdErr: 
